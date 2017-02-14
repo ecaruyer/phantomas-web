@@ -7,9 +7,13 @@ is a sphere.
 function FiberSource(control_points, tangents, scale) {
   // Initialize properties. By default tangents = 'symmetric', scale = 1.
   this.control_points = control_points;
-  if (!tangents) tangents = 'symmetric';
+  if (tangents === undefined) {
+    tangents = 'symmetric';
+  }
   this.tangents = tangents;
-  if (!scale) scale = 1;
+  if (scale === undefined) {
+    scale = 1;
+  }
   this.scale = scale;
    /*
     When called, coeficients are calculated.
@@ -31,18 +35,18 @@ function FiberSource(control_points, tangents, scale) {
   */
   nb_points = control_points.length;
   // Take distance of each pair of given control points
-  var dist = [];
+  var distances = [];
   for (var i = 0; i < nb_points-1; i++) {
-    var a = 0;
+    var squared_distance = 0;
     for (var j = 0; j < 3; j++) {
-      a += Math.pow(control_points[i+1][j]-control_points[i][j], 2);
+      squared_distance += Math.pow(control_points[i+1][j]-control_points[i][j], 2);
     }
-    dist[i] = Math.sqrt(a);
+    distances[i] = Math.sqrt(squared_distance);
   }
   // Make time interval proportional to distance between control points
-  var ts = [0, dist[0]];
+  var ts = [0, distances[0]];
   for (var i = 2; i < nb_points; i++) {
-    ts[i] = ts[i-1]+dist[i-1];
+    ts[i] = ts[i-1]+distances[i-1];
   }
   length = ts[ts.length - 1];
   for (var i = 0; i < nb_points; i++) {
@@ -53,10 +57,11 @@ function FiberSource(control_points, tangents, scale) {
   // as [x y z] for each point
   var derivatives = [];
   // For start and ending points; normal to the surface
-  derivatives[nb_points-1] = control_points[nb_points-1];
   derivatives[0]=[];
+  derivatives[nb_points-1] = [];
   for (var i = 0; i < 3; i++) {
     derivatives[0][i] = -control_points[0][i];
+    derivatives[nb_points-1][i] = control_points[nb_points-1][i];
   }
   // As for other derivatives, we use discrete approx
   switch (tangents) {
@@ -89,15 +94,15 @@ function FiberSource(control_points, tangents, scale) {
         'incoming', 'outgoing', 'symmetric'");
   }
   for (var i = 0; i < derivatives.length; i++) {
-    var m = 0;
+    var squared_derivative_norm = 0;
     for (var j = 0; j < 3; j++) {
-        m += Math.pow(derivatives[i][j], 2);
+        squared_derivative_norm += Math.pow(derivatives[i][j], 2);
     }
-    var a = [];
+    var derivative_vector = [];
     for (var j = 0; j < 3; j++) {
-        a[j] = (derivatives[i][j]/Math.sqrt(m))*length;
+        derivative_vector[j] = (derivatives[i][j]/Math.sqrt(squared_derivative_norm))*length;
     }
-    derivatives[i] = a;
+    derivatives[i] = derivative_vector;
   }
   // RETURN POLYNOMIALS:
   // Define functions for calculus
@@ -207,8 +212,11 @@ FiberSource.prototype = {
     var trajectory = [];
     traj: for (var i = 0; i < N; i++) {
       for (var j = 0; j < this.ts.length-1; j++) {
-        if ((ts[i] >= this.ts[j]) && (ts[i] <= this.ts[j+1])) break;
-        if (j == this.ts.length-2) {console.error('Value '+i+' (being '+ts[i]+
+        if ((ts[i] >= this.ts[j]) && (ts[i] <= this.ts[j+1])) {
+          break;
+        }
+        if (j == this.ts.length-2) {
+          console.error('Value '+i+' (being '+ts[i]+
           ') is out of bounds ['+this.ts[0]+','
           +this.ts[this.ts.length-1]+'].');
           continue traj;
@@ -242,20 +250,23 @@ FiberSource.prototype = {
     var tangents = [];
     traj: for (var i = 0; i < N; i++) {
       for (var j = 0; j < this.ts.length-1; j++) {
-        if ((ts[i] >= this.ts[j]) && (ts[i] <= this.ts[j+1])) break;
-        if (j == this.ts.length-2) {console.error('Value '+i+' (being '+ts[i]+
+        if ((ts[i] >= this.ts[j]) && (ts[i] <= this.ts[j+1])) {
+         break;
+        }
+        if (j == this.ts.length-2) {
+          console.error('Value '+i+' (being '+ts[i]+
           ') is out of bounds ['+this.ts[0]+','
           +this.ts[this.ts.length-1]+'].');
           continue traj;
         }
       }
       tangents[i] = [];
-      var tan = Math.pow(interp(this.xpoly[j], ts[i]), 2)+
-        Math.pow(interp(this.ypoly[j], ts[i]), 2)+
-        Math.pow(interp(this.zpoly[j], ts[i]), 2);
-      tangents[i][0]=interp(this.xpoly[j], ts[i])/Math.sqrt(tan);
-      tangents[i][1]=interp(this.ypoly[j], ts[i])/Math.sqrt(tan);
-      tangents[i][2]=interp(this.zpoly[j], ts[i])/Math.sqrt(tan);
+      var squared_tangent_norm = Math.pow(interp(this.xpoly[j], ts[i]), 2)+
+                                 Math.pow(interp(this.ypoly[j], ts[i]), 2)+
+                                 Math.pow(interp(this.zpoly[j], ts[i]), 2);
+      tangents[i][0]=interp(this.xpoly[j], ts[i])/Math.sqrt(squared_tangent_norm);
+      tangents[i][1]=interp(this.ypoly[j], ts[i])/Math.sqrt(squared_tangent_norm);
+      tangents[i][2]=interp(this.zpoly[j], ts[i])/Math.sqrt(squared_tangent_norm);
     }
     return tangents;
   },
@@ -286,8 +297,11 @@ FiberSource.prototype = {
     var curv = [];
     traj: for (var i = 0; i < N; i++) {
       for (var j = 0; j < this.ts.length-1; j++) {
-        if ((ts[i] >= this.ts[j]) && (ts[i] <= this.ts[j+1])) break;
-        if (j == this.ts.length-2) {console.error('Value '+i+' (being '+ts[i]+
+        if ((ts[i] >= this.ts[j]) && (ts[i] <= this.ts[j+1])) {
+          break;
+        }
+        if (j == this.ts.length-2) {
+          console.error('Value '+i+' (being '+ts[i]+
           ') is out of bounds ['+this.ts[0]+','
           +this.ts[this.ts.length-1]+'].');
           continue traj;
@@ -302,7 +316,7 @@ FiberSource.prototype = {
       curv[i] = Math.sqrt((Math.pow((d2z*d1y-d2y*d1z), 2)+
         Math.pow((d2x*d1z-d2z*d1x), 2)+
         Math.pow((d2y*d1x-d2x*d1y), 2))/
-        Math.pow((Math.pow(d1x, 2)+Math.pow(d1y, 2)+Math.pow(d1z, 2)), 3)) ;
+        Math.pow((Math.pow(d1x, 2)+Math.pow(d1y, 2)+Math.pow(d1z, 2)), 3));
     }
     return curv;
   }
