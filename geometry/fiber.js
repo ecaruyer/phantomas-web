@@ -156,6 +156,8 @@ FiberSource.prototype = {
       ----------
       ts : array-like, shape (N, )
           A list of "timesteps" between 0 and 1.
+          OR
+          A single value for a timestep between 0 and 1.
 
       Returns
       -------
@@ -169,7 +171,13 @@ FiberSource.prototype = {
       return coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
               coef[3]*Math.pow(factor,3);
     }
-    var N = ts.length;
+    // Single value option
+    if (typeof(ts) == "number") {
+      var N = 1;
+      ts = [ts];
+    } else {
+        var N = ts.length;
+      }
     var trajectory = [];
     traj: for (var i = 0; i < N; i++) {
       for (var j = 0; j < this.ts.length-1; j++) {
@@ -187,6 +195,9 @@ FiberSource.prototype = {
       trajectory[i][0] = interp(this.xpoly[j], ts[i], this.ts[j], this.ts[j+1]);
       trajectory[i][1] = interp(this.ypoly[j], ts[i], this.ts[j], this.ts[j+1]);
       trajectory[i][2] = interp(this.zpoly[j], ts[i], this.ts[j], this.ts[j+1]);
+      if (typeof(ts) == "number") {
+        trajectory = trajectory[0];
+      }
     }
       return trajectory;
   }
