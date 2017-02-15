@@ -125,10 +125,11 @@ function FiberSource(control_points, tangents, scale) {
     return array;
   }
 
-  this.xpoly = poly(ts, col(control_points, 0), col(derivatives, 0);
-  this.ypoly = poly(ts, col(control_points, 1), col(derivatives, 1);
-  this.zpoly = poly(ts, col(control_points, 2), col(derivatives, 2);
+  this.xpoly = poly(ts, col(control_points, 0), col(derivatives, 0));
+  this.ypoly = poly(ts, col(control_points, 1), col(derivatives, 1));
+  this.zpoly = poly(ts, col(control_points, 2), col(derivatives, 2));
   this.ts = ts;
+  this.length=length;
 }
 
 /* FiberSource methods definition
