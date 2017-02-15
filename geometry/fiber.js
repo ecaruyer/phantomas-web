@@ -104,67 +104,19 @@ function FiberSource(control_points, tangents, scale) {
     }
     derivatives[i] = derivative_vector;
   }
-  // RETURN POLYNOMIALS:
-  // Define functions for calculus
-  // Function that returns determinant of 4x4 matrix
-  function det(m) {
-    var result = m[0][0] * (
-      m[1][1]*m[2][2]*m[3][3]+m[1][3]*m[2][1]*m[3][2]+m[1][2]*m[2][3]*m[3][1]
-    -(m[1][3]*m[2][2]*m[3][1]+m[1][1]*m[2][3]*m[3][2]+m[1][2]*m[3][3]*m[2][1])
-    ) - m[0][1] * (
-      m[1][0]*m[2][2]*m[3][3]+m[1][3]*m[2][0]*m[3][2]+m[1][2]*m[2][3]*m[3][0]
-    -(m[1][3]*m[2][2]*m[3][0]+m[1][0]*m[2][3]*m[3][2]+m[1][2]*m[3][3]*m[2][0])
-    ) + m[0][2] * (
-      m[1][0]*m[2][1]*m[3][3]+m[1][3]*m[2][0]*m[3][1]+m[1][1]*m[2][3]*m[3][0]
-    -(m[1][3]*m[2][1]*m[3][0]+m[1][0]*m[2][3]*m[3][1]+m[1][1]*m[3][3]*m[2][0])
-    ) - m[0][3] * (
-      m[1][0]*m[2][1]*m[3][2]+m[1][2]*m[2][0]*m[3][1]+m[1][1]*m[2][2]*m[3][0]
-    -(m[1][2]*m[2][1]*m[3][0]+m[1][0]*m[2][2]*m[3][1]+m[1][1]*m[3][2]*m[2][0])
-    );
-  return result;
-}
-  // Function that returns coefficients of 3rd grade polynomial for given
-  // pairs of points. Uses Cramer method.
-  function poly(ts, fx, dfx) {
-    function cp(mat) {
-      var mat2 = [];
-      for (var i = 0; i < mat.length; i++) {
-        mat2[i] = [];
-        for (var j = 0; j < mat[i].length; j++) {
-          mat2[i][j] = mat[i][j];
-        }
-      }
-    return mat2;
-  }
-    var coef = [];
-    for (var i = 0; i < nb_points-1; i++) {
-      var mat = [];
-      mat[0] = [1, ts[i], Math.pow(ts[i], 2), Math.pow(ts[i], 3)];
-      mat[1] = [1, ts[i+1], Math.pow(ts[i+1], 2), Math.pow(ts[i+1], 3)];
-      mat[2] = [0, 1, 2*ts[i], 3*Math.pow(ts[i], 2)];
-      mat[3] = [0, 1, 2*ts[i+1], 3*Math.pow(ts[i+1], 2)];
-      var col=[fx[i], fx[i+1], dfx[i], dfx[i+1]];
-      var mat0 = cp(mat);
-        mat0[0][0]=col[0]; mat0[1][0]=col[1];
-        mat0[2][0]=col[2]; mat0[3][0]=col[3];
-      var mat1= cp(mat);
-        mat1[0][1]=col[0]; mat1[1][1]=col[1];
-        mat1[2][1]=col[2]; mat1[3][1]=col[3];
-      var mat2= cp(mat);
-        mat2[0][2]=col[0]; mat2[1][2]=col[1];
-        mat2[2][2]=col[2]; mat2[3][2]=col[3];
-      var mat3= cp(mat);
-        mat3[0][3]=col[0]; mat3[1][3]=col[1];
-        mat3[2][3]=col[2]; mat3[3][3]=col[3];
-      var matn = [mat0, mat1, mat2, mat3];
-      coef[i] = [];
-      for (var j = 0; j < 4; j++) {
-        coef[i][j] = det(matn[j])/det(mat);
-      }
+
+  // RETURN POLYNOMIALS
+  function poly(t, p, pd) {
+    coef = [];
+    for (var i = 0; i < t.length-1; i++) {
+      coef[i] = [p[i],
+              (t[i+1]-t[i]) * pd[i],
+              3*p[i+1] - (t[i+1]-t[i])*pd[i] - 2*(t[i+1]-t[i])*pd[i] - 3*p[i],
+              (t[i+1]-t[i])*pd[i+1] - 2*p[i+1] + (t[i+1]-t[i])*pd[i] + 2*p[i]
+      ];
     }
     return coef;
   }
-  // Function that returns requested column of given matrix
   function col(matrix, column) {
     var array = [];
     for (var i = 0; i < matrix.length; i++) {
@@ -173,11 +125,9 @@ function FiberSource(control_points, tangents, scale) {
     return array;
   }
 
-  // Coefficients for each axis are calculated
-  this.xpoly = poly(ts, col(control_points, 0), col(derivatives, 0));
-  this.ypoly = poly(ts, col(control_points, 1), col(derivatives, 1));
-  this.zpoly = poly(ts, col(control_points, 2), col(derivatives, 2));
-  // Timestamps are given as a property
+  this.xpoly = poly(ts, col(control_points, 0), col(derivatives, 0);
+  this.ypoly = poly(ts, col(control_points, 1), col(derivatives, 1);
+  this.zpoly = poly(ts, col(control_points, 2), col(derivatives, 2);
   this.ts = ts;
 }
 
