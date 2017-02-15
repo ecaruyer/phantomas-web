@@ -100,7 +100,8 @@ function FiberSource(control_points, tangents, scale) {
     }
     var derivative_vector = [];
     for (var j = 0; j < 3; j++) {
-        derivative_vector[j] = (derivatives[i][j]/Math.sqrt(squared_derivative_norm))*length;
+        derivative_vector[j] = (derivatives[i][j]
+          /Math.sqrt(squared_derivative_norm))*length;
     }
     derivatives[i] = derivative_vector;
   }
@@ -111,7 +112,7 @@ function FiberSource(control_points, tangents, scale) {
     for (var i = 0; i < t.length-1; i++) {
       coef[i] = [p[i],
               (t[i+1]-t[i]) * pd[i],
-              3*p[i+1] - (t[i+1]-t[i])*pd[i] - 2*(t[i+1]-t[i])*pd[i] - 3*p[i],
+              3*p[i+1] - (t[i+1]-t[i])*pd[i+1] - 2*(t[i+1]-t[i])*pd[i] - 3*p[i],
               (t[i+1]-t[i])*pd[i+1] - 2*p[i+1] + (t[i+1]-t[i])*pd[i] + 2*p[i]
       ];
     }
@@ -129,7 +130,7 @@ function FiberSource(control_points, tangents, scale) {
   this.ypoly = poly(ts, col(control_points, 1), col(derivatives, 1));
   this.zpoly = poly(ts, col(control_points, 2), col(derivatives, 2));
   this.ts = ts;
-  this.length=length;
+  this.length = length;
 }
 
 /* FiberSource methods definition
@@ -156,8 +157,10 @@ FiberSource.prototype = {
           The trajectory of the fiber, discretized over the provided
           timesteps.
   */
-    function interp(coef, x) {
-      return coef[0]+coef[1]*x+coef[2]*Math.pow(x, 2)+coef[3]*Math.pow(x, 3);
+    function interp(coef, t, ti, ti1) {
+      factor = (t-ti) / (ti1-ti);
+      return coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
+              coef[3]*Math.pow(factor,3);
     }
     var N = ts.length;
     var trajectory = [];
@@ -174,9 +177,9 @@ FiberSource.prototype = {
         }
       }
       trajectory[i] = [];
-      trajectory[i][0] = interp(this.xpoly[j], ts[i]);
-      trajectory[i][1] = interp(this.ypoly[j], ts[i]);
-      trajectory[i][2] = interp(this.zpoly[j], ts[i]);
+      trajectory[i][0] = interp(this.xpoly[j], ts[i], this.ts[j], this.ts[j+1]);
+      trajectory[i][1] = interp(this.ypoly[j], ts[i], this.ts[j], this.ts[j+1]);
+      trajectory[i][2] = interp(this.zpoly[j], ts[i], this.ts[j], this.ts[j+1]);
     }
     return trajectory;
   },
