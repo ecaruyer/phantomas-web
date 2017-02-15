@@ -1,5 +1,5 @@
 // An example of how to use Three.js to display a tubular shape.
-
+var points=[[-9,5,-6],[5,8,-4],[4,-2,8],[7,2,-5],[2,3,-9],[-7,-5,-2],[-1,9,2]];
 var mesh, renderer, scene, camera;
 init();
 
@@ -19,25 +19,18 @@ function init(){
 
   // We create a scene and a camera
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(50, 
-                                       window.innerWidth / window.innerHeight, 
-                                       1, 
+  camera = new THREE.PerspectiveCamera(50,
+                                       window.innerWidth / window.innerHeight,
+                                       1,
                                        10000);
   camera.position.set(0, 0, 100);
   scene.add(camera);
-  
-  // We create a line and a tubular mesh around that centerline
-  var path = new CustomSinCurve(10);
-  var geometry = new THREE.TubeGeometry(path, 50, 2, 16, false);
-  var material = new THREE.MeshPhongMaterial( { color:0xffffff, 
-                                                shading: THREE.FlatShading } );
-  var mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
-
+  // scene.add(newFiber(points,4));
+  scene=addFiberSkeleton(scene,points,5);
 
   // Lights
-  scene.add(new THREE.AmbientLight( 0x111111 ) );
-  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.125);
+  scene.add(new THREE.AmbientLight( 0x888888 ) );
+  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
   directionalLight.position.x = Math.random() - 0.5;
   directionalLight.position.y = Math.random() - 0.5;
   directionalLight.position.z = Math.random() - 0.5;
@@ -49,6 +42,6 @@ function init(){
 
   // Add mouse control to the camera
   var controls = new THREE.OrbitControls( camera, renderer.domElement );
-  controls.addEventListener('change', render); 
+  controls.addEventListener('change', render);
   controls.enableZoom = true;
 }
