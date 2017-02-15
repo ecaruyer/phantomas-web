@@ -107,6 +107,12 @@ function FiberSource(control_points, tangents, scale) {
   }
 
   // RETURN POLYNOMIALS
+  /*Function that returns 4x4 array with polynomials [a,b,c,d] for given ts (t),
+      control points (p) and derivatives (pd).
+      Values of a, b, c and d are found by solving the system
+       (t)= a + b[(t-ti)/(ti1-ti)] + c[(t-ti)/(ti1-ti)]^2 + d[(t-ti)/(ti1-ti)]^3
+      along with its derivative, being ti and ti1 t_i and t_(i+1).
+  */
   function poly(t, p, pd) {
     coef = [];
     for (var i = 0; i < t.length-1; i++) {
@@ -118,6 +124,7 @@ function FiberSource(control_points, tangents, scale) {
     }
     return coef;
   }
+  // Col extracts columns for matrices as array-of-arrays.
   function col(matrix, column) {
     var array = [];
     for (var i = 0; i < matrix.length; i++) {
@@ -125,7 +132,6 @@ function FiberSource(control_points, tangents, scale) {
     }
     return array;
   }
-
   this.xpoly = poly(ts, col(control_points, 0), col(derivatives, 0));
   this.ypoly = poly(ts, col(control_points, 1), col(derivatives, 1));
   this.zpoly = poly(ts, col(control_points, 2), col(derivatives, 2));
@@ -157,6 +163,7 @@ FiberSource.prototype = {
           The trajectory of the fiber, discretized over the provided
           timesteps.
   */
+  // interp implements equation used for coefficients [a,b,c,d], described above.
     function interp(coef, t, ti, ti1) {
       factor = (t-ti) / (ti1-ti);
       return coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
@@ -181,7 +188,6 @@ FiberSource.prototype = {
       trajectory[i][1] = interp(this.ypoly[j], ts[i], this.ts[j], this.ts[j+1]);
       trajectory[i][2] = interp(this.zpoly[j], ts[i], this.ts[j], this.ts[j+1]);
     }
-    return trajectory;
-  }
+      return trajectory;
   }
 }
