@@ -9,6 +9,15 @@ function render() {
   renderer.render(scene, camera);
 }
 
+function randomPoints(N) {
+  array = [];
+  for (var i = 0; i < N; i++) {
+    array[i] = [Math.floor(Math.random()*20-10),
+                Math.floor(Math.random()*20-10),
+                Math.floor(Math.random()*20-10)]
+  }
+  return array;
+}
 
 function init(){
   // The rendering engine is initialized
@@ -27,7 +36,7 @@ function init(){
   camera.position.set(0, 0, 100);
   scene.add(camera);
   // scene.add(newFiber(points, 4));
-  scene = addFiberSkeleton(scene, points, 5);
+  scene = addFiberSkeleton(scene, randomPoints(8), 5);
 
   // Lights
   scene.add(new THREE.AmbientLight( 0x888888 ) );
