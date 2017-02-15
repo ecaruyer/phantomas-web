@@ -1,5 +1,6 @@
 // An example of how to use Three.js to display a tubular shape.
-var points=[[-9,5,-6],[5,8,-4],[4,-2,8],[7,2,-5],[2,3,-9],[-7,-5,-2],[-1,9,2]];
+var points = [[-9, 5, -6], [5, 8, -4], [4, -2, 8], [7, 2, -5],
+              [2, 3, -9], [-7, -5, -2], [-1, 9, 2]];
 var mesh, renderer, scene, camera;
 init();
 
@@ -25,8 +26,8 @@ function init(){
                                        10000);
   camera.position.set(0, 0, 100);
   scene.add(camera);
-  // scene.add(newFiber(points,4));
-  scene=addFiberSkeleton(scene,points,5);
+  // scene.add(newFiber(points, 4));
+  scene = addFiberSkeleton(scene, points, 5);
 
   // Lights
   scene.add(new THREE.AmbientLight( 0x888888 ) );
