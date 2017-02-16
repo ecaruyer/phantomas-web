@@ -23,6 +23,11 @@ function changeFiber() {
   scene = new THREE.Scene();
   scene.add(camera);
   scene.add(new THREE.AmbientLight( 0x888888 ) );
+  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  directionalLight.position.x = Math.random() - 0.5;
+  directionalLight.position.y = Math.random() - 0.5;
+  directionalLight.position.z = Math.random() - 0.5;
+  directionalLight.position.normalize();
   scene.add(directionalLight);
   scene = addFiberSkeleton(scene, randomPoints(8));
   renderer.render(scene, camera);
@@ -43,13 +48,6 @@ function init(){
                                        1,
                                        10000);
   camera.position.set(0, 0, 40);
-
-  // Lights
-  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.x = Math.random() - 0.5;
-  directionalLight.position.y = Math.random() - 0.5;
-  directionalLight.position.z = Math.random() - 0.5;
-  directionalLight.position.normalize();
 
   // Create, the scene and add cameras, lights and fiber.
   changeFiber();
