@@ -30,32 +30,30 @@ Fiber.prototype.getPoint = function(t) {
 
 /* skeletonFiber adds to the scene a line displaying the fiber's skeleton
    with visual control points as spheres.*/
-function addFiberSkeleton(scene, points, scale, tangents) {
-  var path = new FiberSource(points, tangents, scale);
-  segments = Math.floor(path.length*1.5);
-  discrete_points = new Float32Array(3*segments+3);
+function FiberSkeleton(scene, fiber) {
+  this.fiber = fiber;
+  this.segments = Math.floor(fiber.length*1.5);
+  discrete_points = new Float32Array(3*this.segments+3);
   for (var i = 0; i <= segments; i++) {
-    discrete_points.set([path.interpolate([i/segments])[0][0],
-                         path.interpolate([i/segments])[0][1],
-                         path.interpolate([i/segments])[0][2]], 3*i);
+    discrete_points.set([fiber.interpolate([i/segments])[0][0],
+                         fiber.interpolate([i/segments])[0][1],
+                         fiber.interpolate([i/segments])[0][2]], 3*i);
   }
-  var trajectory = new THREE.BufferGeometry(path);
-  trajectory.addAttribute('position', new THREE.BufferAttribute(discrete_points, 3));
-  var thread = new THREE.LineBasicMaterial( { color:colors[Math.floor(Math.random()*colors.length)]
-                                               ,linewidth: 1 } );
-  var line = new THREE.Line(trajectory, thread);
-  scene.add(line)
+  var trajectory = new THREE.BufferGeometry();
+  trajectory.addAttribute('position',
+              new THREE.BufferAttribute(discrete_points, 3));
+  var thread = new THREE.LineBasicMaterial(
+    { color:colors[Math.floor(Math.random()*colors.length)], linewidth: 1 } );
+  var this.line = new THREE.Line(trajectory, thread);
 
   var geometry = new THREE.SphereGeometry( .5, 32, 32 );
   var surface = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-  var spheres = [];
+  var this.spheres = [];
   for (var i = 0; i < points.length; i++) {
     // sphere.position = new THREE.Vector3(points[i][0],points[i][1],points[i][2]);
-    spheres[i] = new THREE.Mesh(geometry, surface );
-    spheres[i].position.set(points[i][0], points[i][1], points[i][2]);
-    scene.add(spheres[i]);
+    this.spheres[i] = new THREE.Mesh(geometry, surface );
+    this.spheres[i].position.set(points[i][0], points[i][1], points[i][2]);
   }
-  return scene;
 }
 
 // newFiberMesh returns a mesh displaying the fiber in a tubular form
