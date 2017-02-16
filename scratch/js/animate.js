@@ -1,7 +1,5 @@
 // An example of how to use Three.js to display a tubular shape.
-var points = [[-9, 5, -6], [5, 8, -4], [4, -2, 8], [7, 2, -5],
-              [2, 3, -9], [-7, -5, -2], [-1, 9, 2]];
-var mesh, renderer, scene, camera;
+var mesh, renderer, scene, camera, directionalLight;
 init();
 
 
@@ -9,6 +7,7 @@ function render() {
   renderer.render(scene, camera);
 }
 
+// Generate N random points for constructing fiber. Points between [-1,10]
 function randomPoints(N) {
   array = [];
   for (var i = 0; i < N; i++) {
@@ -19,6 +18,16 @@ function randomPoints(N) {
   return array;
 }
 
+// Create new scene, overwriting, for a new one with a new fiber.
+function changeFiber() {
+  scene = new THREE.Scene();
+  scene.add(camera);
+  scene.add(new THREE.AmbientLight( 0x888888 ) );
+  scene.add(directionalLight);
+  scene = addFiberSkeleton(scene, randomPoints(8));
+  renderer.render(scene, camera);
+}
+
 function init(){
   // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
@@ -26,32 +35,30 @@ function init(){
 
   // It is appended to the div container in the HTML5 tree
   document.getElementById('container').appendChild(renderer.domElement);
+  var k=0;
 
   // We create a scene and a camera
-  scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(50,
                                        window.innerWidth / window.innerHeight,
                                        1,
                                        10000);
-  camera.position.set(0, 0, 100);
-  scene.add(camera);
-  // scene.add(newFiber(points, 4));
-  scene = addFiberSkeleton(scene, randomPoints(8), 5);
+  camera.position.set(0, 0, 40);
 
   // Lights
-  scene.add(new THREE.AmbientLight( 0x888888 ) );
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
   directionalLight.position.x = Math.random() - 0.5;
   directionalLight.position.y = Math.random() - 0.5;
   directionalLight.position.z = Math.random() - 0.5;
   directionalLight.position.normalize();
-  scene.add(directionalLight);
 
-  // Where the scene is actually rendered
-  renderer.render(scene, camera);
+  // Create, the scene and add cameras, lights and fiber.
+  changeFiber();
 
   // Add mouse control to the camera
   var controls = new THREE.OrbitControls( camera, renderer.domElement );
   controls.addEventListener('change', render);
   controls.enableZoom = true;
+
+// Change the fiber for a new one in 3 secs from load.
+  setTimeout(function(){changeFiber();},3000);
 }
