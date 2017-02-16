@@ -30,37 +30,41 @@ Fiber.prototype.getPoint = function(t) {
 
 /* skeletonFiber adds to the scene a line displaying the fiber's skeleton
    with visual control points as spheres.*/
-function FiberSkeleton(scene, fiber) {
+function FiberSkeleton(fiber) {
   this.fiber = fiber;
   this.segments = Math.floor(fiber.length*1.5);
   discrete_points = new Float32Array(3*this.segments+3);
-  for (var i = 0; i <= segments; i++) {
-    discrete_points.set([fiber.interpolate([i/segments])[0][0],
-                         fiber.interpolate([i/segments])[0][1],
-                         fiber.interpolate([i/segments])[0][2]], 3*i);
+  for (var i = 0; i <= this.segments; i++) {
+    discrete_points.set([fiber.interpolate(i/this.segments)[0][0],
+                         fiber.interpolate(i/this.segments)[0][1],
+                         fiber.interpolate(i/this.segments)[0][2]], 3*i);
   }
   var trajectory = new THREE.BufferGeometry();
   trajectory.addAttribute('position',
               new THREE.BufferAttribute(discrete_points, 3));
   var thread = new THREE.LineBasicMaterial(
     { color:colors[Math.floor(Math.random()*colors.length)], linewidth: 1 } );
-  var this.line = new THREE.Line(trajectory, thread);
+  this.line = new THREE.Line(trajectory, thread);
 
-  var geometry = new THREE.SphereGeometry( .5, 32, 32 );
-  var surface = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-  var this.spheres = [];
+  var sphere = new THREE.SphereGeometry( .5, 32, 32 );
+  var sphereGeometry = new THREE.Geometry();
+  var meshes = [];
   for (var i = 0; i < points.length; i++) {
-    // sphere.position = new THREE.Vector3(points[i][0],points[i][1],points[i][2]);
-    this.spheres[i] = new THREE.Mesh(geometry, surface );
-    this.spheres[i].position.set(points[i][0], points[i][1], points[i][2]);
+    meshes[i] = new THREE.Mesh(sphere);
+    meshes[i].position.set(points[i][0], points[i][1], points[i][2]);
+    meshes[i].updateMatrix();
+    sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
+  var surface = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+  this.spheres = new THREE.Mesh(sphereGeometry, surface);
 }
+FiberSkeleton.prototype.constructor = FiberSkeleton;
 
 // newFiberMesh returns a mesh displaying the fiber in a tubular form
-function newFiberMesh(points, scale, radius, tangents) {
-  var path = new Fiber(points, scale, radius, tangents);
-  var geometry = new THREE.TubeGeometry(path, path.segments, path.radius, path.radius*16);
-  var material = new THREE.MeshPhongMaterial( { color:path.color,
+function FiberMesh(fiber) {
+  this.fiber = fiber;
+  var geometry = new THREE.TubeGeometry(this.fiber, fiber.segments, fiber.radius, fiber.radius*16);
+  this.material = new THREE.MeshPhongMaterial( { color:path.color,
                                                 shading: THREE.FlatShading } );
   var mesh = new THREE.Mesh(geometry, material);
   return mesh;

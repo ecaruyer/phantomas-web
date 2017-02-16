@@ -51,7 +51,19 @@ function init() {
 
   // Create, the scene and add cameras, lights and fiber.
   points = randomPoints(10);
-  newFiber();
+  scene = new THREE.Scene();
+  scene.add(camera);
+  scene.add(new THREE.AmbientLight( 0x888888 ) );
+  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  directionalLight.position.x = Math.random() - 0.5;
+  directionalLight.position.y = Math.random() - 0.5;
+  directionalLight.position.z = Math.random() - 0.5;
+  directionalLight.position.normalize();
+  scene.add(directionalLight);
+  var fiber = new FiberSource(points);
+  var skeleton = new FiberSkeleton(fiber);
+  scene.add(skeleton.line, skeleton.spheres)
+  renderer.render(scene, camera);
 
   // Add mouse control to the camera
   var controls = new THREE.OrbitControls( camera, renderer.domElement );
