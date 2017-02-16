@@ -18,8 +18,8 @@ function randomPoints(N) {
   return array;
 }
 
-// Create new scene, overwriting, for a new one with a new fiber.
-function changeFiber() {
+// Create new scene with a new fiber.
+function newFiber() {
   scene = new THREE.Scene();
   scene.add(camera);
   scene.add(new THREE.AmbientLight( 0x888888 ) );
@@ -29,11 +29,11 @@ function changeFiber() {
   directionalLight.position.z = Math.random() - 0.5;
   directionalLight.position.normalize();
   scene.add(directionalLight);
-  scene = addFiberSkeleton(scene, randomPoints(8));
+  scene = addFiberSkeleton(scene, points);
   renderer.render(scene, camera);
 }
 
-function init(){
+function init() {
   // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -50,13 +50,11 @@ function init(){
   camera.position.set(0, 0, 40);
 
   // Create, the scene and add cameras, lights and fiber.
-  changeFiber();
+  points = randomPoints(10);
+  newFiber();
 
   // Add mouse control to the camera
   var controls = new THREE.OrbitControls( camera, renderer.domElement );
   controls.addEventListener('change', render);
   controls.enableZoom = true;
-
-// Change the fiber for a new one in 3 secs from load.
-  setTimeout(function(){changeFiber();},3000);
 }
