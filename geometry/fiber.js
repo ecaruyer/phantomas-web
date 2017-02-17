@@ -166,13 +166,14 @@ FiberSource.prototype = {
           timesteps.
   */
   // interp implements equation used for coefficients [a,b,c,d], described above.
+    var scale = this.scale;
     function interp(coef, t, ti, ti1) {
       factor = (t-ti) / (ti1-ti);
-      return coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
-              coef[3]*Math.pow(factor,3);
+      return (coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
+              coef[3]*Math.pow(factor,3)) * scale;
     }
     // Single value option
-    if (typeof(ts) == "number") {
+    if (ts.constructor !== Array) {
       var N = 1;
       ts = [ts];
     } else {
@@ -195,7 +196,7 @@ FiberSource.prototype = {
       trajectory[i][0] = interp(this.xpoly[j], ts[i], this.ts[j], this.ts[j+1]);
       trajectory[i][1] = interp(this.ypoly[j], ts[i], this.ts[j], this.ts[j+1]);
       trajectory[i][2] = interp(this.zpoly[j], ts[i], this.ts[j], this.ts[j+1]);
-      if (typeof(ts) == "number") {
+      if (ts.constructor !== Array) {
         trajectory = trajectory[0];
       }
     }
