@@ -22,6 +22,7 @@ colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
     .segments - The amount of length segments in which the fiber is divided
         for representation. By default, 1.5 times the length of the fiber.
 */
+var color = colors[Math.floor(Math.random()*colors.length)];
 function FiberSkeleton(fiber) {
   this.fiber = fiber;
   points = fiber.control_points;
@@ -36,7 +37,7 @@ function FiberSkeleton(fiber) {
   trajectory.addAttribute('position',
               new THREE.BufferAttribute(discrete_points, 3));
   var thread = new THREE.LineBasicMaterial(
-    { color:colors[Math.floor(Math.random()*colors.length)], linewidth: 1 } );
+    { color:color, linewidth: 1 } );
   this.line = new THREE.Line(trajectory, thread);
 
   var sphere = new THREE.SphereGeometry( .4 * fiber.scale, 32, 32 );

@@ -18,11 +18,6 @@ function randomPoints(N) {
 }
 
 function init() {
-  function switchtoTubeDisplay() {
-    scene.remove(skeleton.spheres, skeleton.line);
-    scene.add(tube.mesh);
-    render();
-  }
 
   // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
@@ -50,13 +45,23 @@ function init() {
   scene.add(directionalLight);
 
   // Add the fiber and position camera
-  var fiber = new FiberSource(randomPoints(4));
+  var fiber = new FiberSource(randomPoints(5));
   var skeleton = new FiberSkeleton(fiber);
   scene.add(skeleton.line, skeleton.spheres)
   var tube = new FiberTube(fiber);
   camera.position.set(0, 0, 40 * fiber.scale);
 
-  window.addEventListener( 'keypress', switchtoTubeDisplay, false );
+  window.addEventListener( 'keypress', movePoint, false );
+  function movePoint() {
+    fiber.control_points[2] = [fiber.control_points[2][0]+.25,
+                               fiber.control_points[2][1]+.25,
+                               fiber.control_points[2][2]+.25];
+    scene.remove(skeleton.line, skeleton.spheres)
+    fiber = new FiberSource(fiber.control_points);
+    skeleton = new FiberSkeleton(fiber)
+    scene.add(skeleton.line, skeleton.spheres)
+    render();
+  }
 
   renderer.render(scene, camera);
 
