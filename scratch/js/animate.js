@@ -18,6 +18,12 @@ function randomPoints(N) {
 }
 
 function init() {
+  function switchtoTubeDisplay() {
+    scene.remove(skeleton.spheres, skeleton.line);
+    scene.add(tube.mesh);
+    render();
+  }
+
   // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -48,13 +54,9 @@ function init() {
   var skeleton = new FiberSkeleton(fiber);
   scene.add(skeleton.line, skeleton.spheres)
   var tube = new FiberTube(fiber);
-  // Timeout: In 5 secs from load, skeleton to turn into a tube fiber.
-  setTimeout(function(){
-    scene.add(tube.mesh);
-    scene.remove(skeleton.spheres, skeleton.line)
-    render()
-  }, 5000);
   camera.position.set(0, 0, 40 * fiber.scale);
+
+  window.addEventListener( 'keypress', switchtoTubeDisplay, false );
 
   renderer.render(scene, camera);
 
