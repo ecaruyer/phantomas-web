@@ -137,7 +137,6 @@ function FiberSource(control_points, tangents, scale) {
   this.zpoly = poly(ts, col(control_points, 2), col(derivatives, 2));
   this.ts = ts;
   this.length = length;
-  this.scale = scale;
 }
 
 /* FiberSource methods definition
@@ -167,10 +166,11 @@ FiberSource.prototype = {
           timesteps.
   */
   // interp implements equation used for coefficients [a,b,c,d], described above.
+    var scale = this.scale;
     function interp(coef, t, ti, ti1) {
       factor = (t-ti) / (ti1-ti);
-      return coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
-              coef[3]*Math.pow(factor,3);
+      return (coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
+              coef[3]*Math.pow(factor,3)) * scale;
     }
     // Single value option
     if (ts.constructor !== Array) {
@@ -201,11 +201,5 @@ FiberSource.prototype = {
       }
     }
       return trajectory;
-  },
-  getPoint:  function(t) {
-    var tx = this.interpolate(t)[0][0];
-    var ty = this.interpolate(t)[0][1];
-    var tz = this.interpolate(t)[0][2];
-    return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
   }
 }

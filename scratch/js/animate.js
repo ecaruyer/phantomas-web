@@ -2,7 +2,6 @@
 var mesh, renderer, scene, camera, directionalLight;
 init();
 
-
 function render() {
   renderer.render(scene, camera);
 }
@@ -16,21 +15,6 @@ function randomPoints(N) {
                 Math.floor(Math.random()*20-10)]
   }
   return array;
-}
-
-// Create new scene with a new fiber.
-function newFiber() {
-  scene = new THREE.Scene();
-  scene.add(camera);
-  scene.add(new THREE.AmbientLight( 0x888888 ) );
-  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.x = Math.random() - 0.5;
-  directionalLight.position.y = Math.random() - 0.5;
-  directionalLight.position.z = Math.random() - 0.5;
-  directionalLight.position.normalize();
-  scene.add(directionalLight);
-  scene = addFiberSkeleton(scene, points);
-  renderer.render(scene, camera);
 }
 
 function init() {
@@ -47,10 +31,8 @@ function init() {
                                        window.innerWidth / window.innerHeight,
                                        1,
                                        10000);
-  camera.position.set(0, 0, 40);
 
-  // Create, the scene and add cameras, lights and fiber.
-  points = randomPoints(10);
+  // Create, the scene and add cameras, lights.
   scene = new THREE.Scene();
   scene.add(camera);
   scene.add(new THREE.AmbientLight( 0x888888 ) );
@@ -60,9 +42,20 @@ function init() {
   directionalLight.position.z = Math.random() - 0.5;
   directionalLight.position.normalize();
   scene.add(directionalLight);
-  var fiber = new FiberSource(points);
+
+  // Add the fiber and position camera
+  var fiber = new FiberSource(randomPoints(4));
   var skeleton = new FiberSkeleton(fiber);
   scene.add(skeleton.line, skeleton.spheres)
+  var tube = new FiberTube(fiber);
+  // Timeout: In 5 secs from load, skeleton to turn into a tube fiber.
+  setTimeout(function(){
+    scene.add(tube.mesh);
+    scene.remove(skeleton.spheres, skeleton.line)
+    render()
+  }, 5000);
+  camera.position.set(0, 0, 40 * fiber.scale);
+
   renderer.render(scene, camera);
 
   // Add mouse control to the camera
