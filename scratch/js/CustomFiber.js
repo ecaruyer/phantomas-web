@@ -53,7 +53,8 @@ function FiberSkeleton(fiber) {
   var surface = new THREE.MeshBasicMaterial( {color: 0xffff00} );
   this.spheres = new THREE.Mesh(sphereGeometry, surface);
 }
-FiberSkeleton.prototype.constructor = FiberSkeleton;
+
+
 
 /* FiberTube creates a 3D representation of a given fiber in a tubular form
  of given radius.
@@ -92,5 +93,9 @@ function FiberTube(fiber, radius) {
     { color:colors[Math.floor(Math.random()*colors.length)],
                                                 shading: THREE.FlatShading } );
   this.mesh = new THREE.Mesh(geometry, material);
+
 }
-FiberSkeleton.prototype.constructor = FiberTube;
+FiberTube.prototype.refresh = function() {
+  this.mesh.geometry = new THREE.TubeGeometry(this.curve,
+                            this.segments[0], this.radius, this.segments[1]);
+}
