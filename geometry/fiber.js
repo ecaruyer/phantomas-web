@@ -1,8 +1,16 @@
 /*
 This module contains the definition of ``FiberSource``, which is a continuous
 representation of a fiber. All the fibers created are supposed to connect two
-cortical areas. Currently, the only supported shape for the "cortical surface"
-is a sphere.
+cortical areas.
+
+Parameters
+----------
+control_points : array-of-arrays shape (N, 3)
+tangents : 'incoming', 'outgoing', 'symmetric'
+scale : multiplication factor.
+    This is useful when the coodinates are given dimensionless, and we
+    want a specific size for the phantom.
+
 */
 function FiberSource(control_points, tangents, scale) {
   // Initialize properties. By default tangents = 'symmetric', scale = 1.
@@ -15,31 +23,24 @@ function FiberSource(control_points, tangents, scale) {
     scale = 1;
   }
   this.scale = scale;
+
+  // Calculate coefficients
   this.polycalc();
 }
 
 /* FiberSource methods definition
+  'polycalc' calculates coefficients for each polynomial. Needed in constructor
+    and once any of the three FiberSource input change.
   'interpolate' goes from the continuous representation of FiberSource to a
   discretization to given timesteps (ts) between 0 and 1.
   Return is an array which lists [x y z] for each timestep.
-  'tangent' outputs normalized derivative as an [x y z] vector for each timestep.
-  'curvature' outputs the curvature of the trajectory for each timestep given.
 */
 FiberSource.prototype = {
   polycalc: function() {
     /*
-     When called, coeficients are calculated.
+     When called, coefficients are calculated.
      This takes the FiberSource instance from control points, and a specified
      mode to compute the tangents.
-
-        Parameters
-        ----------
-        control_points : ndarray shape (N, 3)
-        tangents : 'incoming', 'outgoing', 'symmetric'
-        scale : multiplication factor.
-            This is useful when the coodinates are given dimensionless, and we
-            want a specific size for the phantom.
-
 
      The output is the coefficients as f(x)=a0+a1x+a2x^2+a3x^3 for each x, y and
      z and for each pair of points, as this.xpoly, this.ypoly and this.zpoly.

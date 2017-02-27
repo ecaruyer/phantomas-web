@@ -46,10 +46,10 @@ function init() {
 
   // Add the fiber and position camera
   var fiber = new FiberSource(randomPoints(5));
-  // var skeleton = new FiberSkeleton(fiber);
-  // scene.add(skeleton.line, skeleton.spheres)
-  var tube = new FiberTube(fiber);
-  scene.add(tube.mesh);
+  var skeleton = new FiberSkeleton(fiber);
+  scene.add(skeleton.line, skeleton.spheres)
+  // var tube = new FiberTube(fiber);
+  // scene.add(tube.mesh);
   camera.position.set(0, 0, 40 * fiber.scale);
 
   window.addEventListener( 'keypress', movePoint, false );
@@ -57,11 +57,8 @@ function init() {
     fiber.control_points[2] = [fiber.control_points[2][0]+.25,
                                fiber.control_points[2][1]+.25,
                                fiber.control_points[2][2]+.25];
-    // scene.remove(skeleton.line, skeleton.spheres)
-    // fiber = new FiberSource(fiber.control_points);
-    // skeleton = new FiberSkeleton(fiber)
-    // scene.add(skeleton.line, skeleton.spheres)
     fiber.polycalc();
+    skeleton.refresh();
     tube.refresh();
     render();
   }

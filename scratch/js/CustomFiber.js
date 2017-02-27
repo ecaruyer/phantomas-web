@@ -21,6 +21,10 @@ colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
     .fiber - The fiber from which the representation constructed (FiberSource)
     .segments - The amount of length segments in which the fiber is divided
         for representation. By default, 1.5 times the length of the fiber.
+
+  Methods:
+    .refresh - Updates meshes after fiber change. No input no output.
+
 */
 var color = colors[Math.floor(Math.random()*colors.length)];
 function FiberSkeleton(fiber) {
@@ -54,6 +58,30 @@ function FiberSkeleton(fiber) {
   this.spheres = new THREE.Mesh(sphereGeometry, surface);
 }
 
+FiberSkeleton.prototype.refresh = function() {
+  var sphere = new THREE.SphereGeometry( .4 * this.fiber.scale, 32, 32 );
+  var sphereGeometry = new THREE.Geometry();
+  var meshes = [];
+  for (var i = 0; i < points.length; i++) {
+    meshes[i] = new THREE.Mesh(sphere);
+    meshes[i].position.set(points[i][0] * this.fiber.scale,
+              points[i][1] * this.fiber.scale, points[i][2] * this.fiber.scale);
+    meshes[i].updateMatrix();
+    sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
+  }
+  this.spheres.geometry = sphereGeometry;
+
+  var discrete_points = new Float32Array(3*this.segments+3);
+  for (var i = 0; i <= this.segments; i++) {
+    discrete_points.set([this.fiber.interpolate(i/this.segments)[0][0],
+                         this.fiber.interpolate(i/this.segments)[0][1],
+                         this.fiber.interpolate(i/this.segments)[0][2]], 3*i);
+  }
+  var trajectory = new THREE.BufferGeometry();
+  trajectory.addAttribute('position',
+                            new THREE.BufferAttribute(discrete_points, 3));
+  this.line.geometry = trajectory;
+}
 
 
 /* FiberTube creates a 3D representation of a given fiber in a tubular form
@@ -72,6 +100,9 @@ function FiberSkeleton(fiber) {
               for representation. By default, 3 times the length of the fiber.
             [1]: The amount of radius segments in which the tube is divided
               for representation. By default, 64.
+
+  Methods:
+   .refresh - Updates mesh after fiber change. No input no output.
  */
 function FiberTube(fiber, radius) {
   this.fiber = fiber;
