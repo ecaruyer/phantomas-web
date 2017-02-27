@@ -59,7 +59,7 @@ function init() {
                                fiber.control_points[2][2]+.25];
     fiber.polycalc();
     skeleton.refresh();
-    tube.refresh();
+    // tube.refresh();
     render();
   }
 
