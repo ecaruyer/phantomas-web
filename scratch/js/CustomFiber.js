@@ -95,11 +95,8 @@ FiberSkeleton.prototype.refresh = function() {
  Other properties:
    .fiber - The fiber from which the representation constructed (FiberSource)
    .curve - THREE.Curve object used for representation
-   .segments - Array of two scalars:
-            [0]: The amount of length segments in which the fiber is divided
-              for representation. By default, 3 times the length of the fiber.
-            [1]: The amount of radius segments in which the tube is divided
-              for representation. By default, 64.
+   .axialSegments and .radialSegments: The segments that make up the tube in
+      each dimension. Default is 256 and 64.
 
   Methods:
    .refresh - Updates mesh after fiber change. No input no output.
@@ -113,13 +110,14 @@ function FiberTube(fiber, radius) {
       var tz = fiber.interpolate(t)[0][2];
   return new THREE.Vector3(tx, ty, tz);
   }
-  this.segments = [Math.floor(fiber.length*3), 64];
+  this.axialSegments = 256;
+  this.radialSegments = 64;
   if (radius === undefined) {
     radius = .5;
   }
   this.radius = radius;
   var geometry = new THREE.TubeGeometry(this.curve,
-                            this.segments[0], this.radius, this.segments[1]);
+                        this.axialSegments , this.radius, this.radialSegments);
   var material = new THREE.MeshPhongMaterial(
     { color:colors[Math.floor(Math.random()*colors.length)],
                                                 shading: THREE.FlatShading } );
@@ -128,5 +126,5 @@ function FiberTube(fiber, radius) {
 }
 FiberTube.prototype.refresh = function() {
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
-                            this.segments[0], this.radius, this.segments[1]);
+                        this.axialSegments , this.radius, this.radialSegments);
 }
