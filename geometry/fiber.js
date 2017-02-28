@@ -26,6 +26,9 @@ function FiberSource(control_points, tangents, scale) {
 
   // Calculate coefficients
   this.polycalc();
+
+  // FiberSource objects will act as subjects to FiberTube or FiberSkeleton
+  this.observers = [];
 }
 
 /* FiberSource methods definition
@@ -211,8 +214,21 @@ FiberSource.prototype = {
     }
       return trajectory;
   },
+  // Pushes an object to the observer list. Once added, will be notified.
+  AddObserver: function(object) {
+    this.observers.push(object)
+  },
+  // Refreshes objects in the observer list
+  notify: function() {
+    for(var i = 0; i < this.observers.length; i++) {
+      this.observers[i].refresh();
+    }
+  },
+  // SetControlPoint changes a control point for this Fiber.
+  // inputs: n (position in control_points array) and x, y, z coordinates.
   SetControlPoint: function(n, x, y, z) {
     this.control_points[n] = [x, y, z];
+    this.polycalc();
+    this.notify();
   }
-
 }
