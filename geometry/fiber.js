@@ -210,34 +210,9 @@ FiberSource.prototype = {
       }
     }
       return trajectory;
+  },
+  SetControlPoint: function(n, x, y, z) {
+    this.control_points[n] = [x, y, z];
   }
 
-  // recalc: function(control_point) {
-  //   function poly(t, p, pd) {
-  //     coef = [];
-  //     for (var i = 0; i < t.length-1; i++) {
-  //       coef[i] = [p[i],
-  //               (t[i+1]-t[i]) * pd[i],
-  //               3*p[i+1] - (t[i+1]-t[i])*pd[i+1] - 2*(t[i+1]-t[i])*pd[i] - 3*p[i],
-  //               (t[i+1]-t[i])*pd[i+1] - 2*p[i+1] + (t[i+1]-t[i])*pd[i] + 2*p[i]
-  //       ];
-  //     }
-  //     return coef;
-  //   }
-  //   // Col extracts columns for matrices as array-of-arrays.
-  //   function col(matrix, column) {
-  //     var array = [];
-  //     for (var i = 0; i < matrix.length; i++) {
-  //       array[i] = matrix[i][column];
-  //     }
-  //     return array;
-  //   }
-  //   for (var i = control_point-2; i < control_point+3; i++) {
-  //     this.xpoly[i] = poly([this.ts[i],this.ts[i+1]],
-  //                          [this.control_points[i][0],this.control_points[i+1][0],
-  //                          col(derivatives, 0));
-  //     this.ypoly[i] = poly(ts, col(control_points, 1), col(derivatives, 1));
-  //     this.zpoly[i] = poly(ts, col(control_points, 2), col(derivatives, 2));
-  //   }
-  // }
 }
