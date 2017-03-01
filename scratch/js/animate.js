@@ -27,11 +27,12 @@ function init() {
   document.getElementById('container').appendChild(renderer.domElement);
   var k=0;
 
-  // We create a scene and a camera
+  // We create a scene and a camera. Position is to be corrected further in the code.
   camera = new THREE.PerspectiveCamera(50,
                                        window.innerWidth / window.innerHeight,
                                        1,
                                        10000);
+  camera.position.set(0, 0, 0);
 
   // Create, the scene and add cameras, lights.
   scene = new THREE.Scene();
@@ -44,22 +45,11 @@ function init() {
   directionalLight.position.normalize();
   scene.add(directionalLight);
 
-  // Add the fiber and position camera
-  var fiber = new FiberSource(randomPoints(5));
-  // var skeleton = new FiberSkeleton(fiber);
-  // fiber.AddObserver(skeleton);
-  // scene.add(skeleton.line, skeleton.spheres)
-  var tube = new FiberTube(fiber);
-  fiber.AddObserver(tube);
-  scene.add(tube.mesh);
-  camera.position.set(0, 0, 40 * fiber.scale);
-
-  window.addEventListener( 'keypress', movePoint, false );
-  function movePoint() {
-    fiber.SetControlPoint(2, fiber.control_points[2][0]+.25,
-                             fiber.control_points[2][1]+.25,
-                             fiber.control_points[2][2]+.25);
-    render();
+  var example = loadFibers("examples/isbi_challenge_2013.txt")
+  for (var i = 0; i < example.length; i++) {
+    var tube = new FiberTube(example[i], example[i].radius);
+    if (camera.position.z/6 < example[i].length) camera.position.z = example[i].length*6;
+    scene.add(tube.mesh)
   }
 
   renderer.render(scene, camera);
