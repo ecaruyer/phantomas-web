@@ -121,11 +121,27 @@ function FiberTube(fiber, radius) {
   var material = new THREE.MeshPhongMaterial(
     { color:colors[Math.floor(Math.random()*colors.length)],
                                                 shading: THREE.FlatShading } );
-  material.side = THREE.DoubleSide;                                              
+  material.side = THREE.DoubleSide;
   this.mesh = new THREE.Mesh(geometry, material);
 
 }
 FiberTube.prototype.refresh = function() {
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
                         this.axialSegments , this.radius, this.radialSegments);
+}
+
+function IsotropicRegion(source) {
+  this.source = source;
+  var geometry = new THREE.SphereGeometry( source.radius, 32, 32 );
+  var material = new THREE.MeshPhongMaterial(
+    { color:colors[Math.floor(Math.random()*colors.length)],
+                                                shading: THREE.FlatShading } );
+  this.mesh = new THREE.Mesh(geometry, material);
+  this.mesh.position.set(source.center[0], source.center[1], source.center[2]);
+}
+IsotropicRegion.prototype = {
+  refresh: function() {
+    this.mesh.geometry = new THREE.SphereGeometry(this.source.radius, 32, 32 );
+    this.mesh.position.set(this.source.center[0], this.source.center[1], this.source.center[2]);
+  }
 }

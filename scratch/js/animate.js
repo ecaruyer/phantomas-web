@@ -45,7 +45,7 @@ function init() {
   directionalLight.position.normalize();
   scene.add(directionalLight);
 
-  var example = loadFibers("examples/3Dfanning_13bundles.txt")
+  var example = loadFibers("examples/fibers.txt")
   for (var i = 0; i < example.length; i++) {
     var tube = new FiberTube(example[i], example[i].radius);
     if (camera.position.z/1.5 < example[i].length)

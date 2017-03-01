@@ -245,7 +245,7 @@ IsotropicRegionSource.prototype = {
   },
   SetRadius: function(radius) {
     this.radius = radius;
-  }
+  },
   AddObserver: function(object) {
     this.observers.push(object)
   },
