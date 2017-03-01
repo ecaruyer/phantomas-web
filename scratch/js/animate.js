@@ -45,12 +45,17 @@ function init() {
   directionalLight.position.normalize();
   scene.add(directionalLight);
 
-  var example = loadFibers("examples/fibers.txt")
-  for (var i = 0; i < example.length; i++) {
-    var tube = new FiberTube(example[i], example[i].radius);
-    if (camera.position.z/1.5 < example[i].length)
-        camera.position.z = example[i].length*1.5;
-    scene.add(tube.mesh)
+  var fibers = loadFibers("examples/isbi_challenge_2013.txt");
+  for (var i = 0; i < fibers.length; i++) {
+    var tube = new FiberTube(fibers[i], fibers[i].radius);
+    if (camera.position.z/1.5 < fibers[i].length)
+        camera.position.z = fibers[i].length*1.5;
+    scene.add(tube.mesh);
+  }
+  var regions = loadRegions("examples/isbi_challenge_2013.txt");
+  for (var i = 0; i < regions.length; i++) {
+    var region = new IsotropicRegion(regions[i]);
+    scene.add(region.mesh);
   }
 
   renderer.render(scene, camera);

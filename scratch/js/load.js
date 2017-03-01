@@ -24,6 +24,28 @@ function loadFibers( path ) {
     }
   }
   // log an error in case fibers were not found.
-  if (fibers.length == 0) console.error('Any fiber found in file'+path);
+  if (fibers.length == 0) console.error('Any fiber found in file '+path);
   return fibers;
+}
+
+// loadRegions returns an IsotropicRegionSource array of regions contained in a JSON file.
+function loadRegions( path ) {
+  var request = new XMLHttpRequest();
+  request.overrideMimeType("text/plain");
+  request.open("get", path, false);
+  request.send(null);
+  // Only geometries are loaded for the moment
+  var loaded = JSON.parse(request.response).isotropic_regions;
+
+  // Return will be a FiberSource array for each fiber geometry.
+  var regions = [];
+  for (var property in loaded) {
+    if (loaded.hasOwnProperty(property)) {
+      var region = loaded[property.toString()];
+      regions.push(new IsotropicRegionSource(region.center, region.radius));
+    }
+  }
+  // log an error in case regions were not found.
+  if (regions.length == 0) console.error('Any region found in file '+path);
+  return regions;
 }

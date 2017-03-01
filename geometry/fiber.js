@@ -240,19 +240,21 @@ function IsotropicRegionSource(center, radius) {
   this.observers = [];
 }
 IsotropicRegionSource.prototype = {
-  SetCenter: function(x, y, z) {
-    this.center = [x, y, z];
-  },
-  SetRadius: function(radius) {
-    this.radius = radius;
-  },
-  AddObserver: function(object) {
-    this.observers.push(object)
-  },
   // Refreshes objects in the observer list
   notify: function() {
     for(var i = 0; i < this.observers.length; i++) {
       this.observers[i].refresh();
     }
+  },
+  SetCenter: function(x, y, z) {
+    this.center = [x, y, z];
+    this.notify();
+  },
+  SetRadius: function(radius) {
+    this.radius = radius;
+    this.notify();
+  },
+  AddObserver: function(object) {
+    this.observers.push(object)
   }
 }
