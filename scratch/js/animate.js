@@ -45,10 +45,11 @@ function init() {
   directionalLight.position.normalize();
   scene.add(directionalLight);
 
-  var example = loadFibers("examples/isbi_challenge_2013.txt")
+  var example = loadFibers("examples/3Dfanning_13bundles.txt")
   for (var i = 0; i < example.length; i++) {
     var tube = new FiberTube(example[i], example[i].radius);
-    if (camera.position.z/6 < example[i].length) camera.position.z = example[i].length*6;
+    if (camera.position.z/1.5 < example[i].length)
+        camera.position.z = example[i].length*1.5;
     scene.add(tube.mesh)
   }
 

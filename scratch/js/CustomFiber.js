@@ -121,6 +121,7 @@ function FiberTube(fiber, radius) {
   var material = new THREE.MeshPhongMaterial(
     { color:colors[Math.floor(Math.random()*colors.length)],
                                                 shading: THREE.FlatShading } );
+  material.side = THREE.DoubleSide;                                              
   this.mesh = new THREE.Mesh(geometry, material);
 
 }
