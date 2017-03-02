@@ -37,22 +37,28 @@ function init() {
   // Create, the scene and add cameras, lights.
   scene = new THREE.Scene();
   scene.add(camera);
-  scene.add(new THREE.AmbientLight( 0x888888 ) );
-  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.x = Math.random() - 0.5;
-  directionalLight.position.y = Math.random() - 0.5;
-  directionalLight.position.z = Math.random() - 0.5;
-  directionalLight.position.normalize();
-  scene.add(directionalLight);
-
-  var fibers = loadFibers("examples/isbi_challenge_2013.txt");
+  scene.add(new THREE.AmbientLight( 0xffffff, .5 ) );
+  // Directional lights are added in all directions
+  for (var x = -100; x <= 100; x=x+200) {
+    for (var y = -100; y <= 100; y=y+200) {
+      for (var z = -100; z <= 100; z=z+20) {
+        var directionalLight = new THREE.DirectionalLight(0x555555, .15);
+        directionalLight.position.x = x;
+        directionalLight.position.y = y;
+        directionalLight.position.z = z;
+        scene.add(directionalLight);
+      }
+    }
+  }
+  var path = "examples/isbi_challenge_2013.txt";
+  var fibers = loadFibers(path);
   for (var i = 0; i < fibers.length; i++) {
     var tube = new FiberTube(fibers[i], fibers[i].radius);
     if (camera.position.z/1.5 < fibers[i].length)
         camera.position.z = fibers[i].length*1.5;
     scene.add(tube.mesh);
   }
-  var regions = loadRegions("examples/isbi_challenge_2013.txt");
+  var regions = loadRegions(path);
   for (var i = 0; i < regions.length; i++) {
     var region = new IsotropicRegion(regions[i]);
     scene.add(region.mesh);
