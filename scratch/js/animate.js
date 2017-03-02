@@ -1,10 +1,16 @@
 // An example of how to use Three.js to display a tubular shape.
-var mesh, renderer, scene, camera, directionalLight;
+var mesh, renderer, scene, camera, directionalLight, controls;
 init();
+animate();
 
 function render() {
   renderer.render(scene, camera);
 }
+function animate() {
+  requestAnimationFrame( animate );
+  controls.update();
+}
+
 
 // Generate N random points for constructing fiber. Points between [-1,10]
 function randomPoints(N) {
@@ -67,7 +73,10 @@ function init() {
   renderer.render(scene, camera);
 
   // Add mouse control to the camera
-  var controls = new THREE.OrbitControls( camera, renderer.domElement );
-  controls.addEventListener('change', render);
+  controls = new THREE.TrackballControls( camera );
   controls.enableZoom = true;
+  controls.rotateSpeed = 2.5;
+  controls.zoomSpeed = 1;
+  controls.noPan=true;
+  controls.addEventListener('change', render);
 }
