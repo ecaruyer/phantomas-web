@@ -1,17 +1,18 @@
 // loadFibers returns a FiberSource array of fibers contained in a JSON file.
-function loadFibers( path ) {
+function loadPhantom( path ) {
   var request = new XMLHttpRequest();
   request.overrideMimeType("text/plain");
   request.open("get", path, false);
   request.send(null);
-  // Only geometries are loaded for the moment
-  var loaded = JSON.parse(request.response).fiber_geometries;
 
-  // Return will be a FiberSource array for each fiber geometry.
-  var fibers = [];
-  for (var property in loaded) {
-    if (loaded.hasOwnProperty(property)) {
-      var fiber = loaded[property.toString()];
+  var phantom = new Phantom();
+  var loadedfibers = JSON.parse(request.response).fiber_geometries;
+  var loadedregions = JSON.parse(request.response).isotropic_regions;
+
+  // Objects will be added in Phantom
+  for (var property in loadedfibers) {
+    if (loadedfibers.hasOwnProperty(property)) {
+      var fiber = loadedfibers[property.toString()];
       // Control points need to be transleted to array-of-arrays form
       var newcp = [];
       for (var i = 0; i < fiber.control_points.length; i = i + 3) {
@@ -19,32 +20,18 @@ function loadFibers( path ) {
                     fiber.control_points[i+1],
                     fiber.control_points[i+2]]);
       }
-      fibers.push(new FiberSource(newcp, fiber.tangents, fiber.radius));
+      phantom.AddFiber(new FiberSource(newcp, fiber.tangents, fiber.radius));
     }
   }
-  // log an error in case fibers were not found.
-  if (fibers.length == 0) console.warn('Any fiber found in file '+path);
-  return fibers;
-}
-
-// loadRegions returns an IsotropicRegionSource array of regions contained in a JSON file.
-function loadRegions( path ) {
-  var request = new XMLHttpRequest();
-  request.overrideMimeType("text/plain");
-  request.open("get", path, false);
-  request.send(null);
-  // Only geometries are loaded for the moment
-  var loaded = JSON.parse(request.response).isotropic_regions;
-
-  // Return will be a FiberSource array for each fiber geometry.
-  var regions = [];
-  for (var property in loaded) {
-    if (loaded.hasOwnProperty(property)) {
-      var region = loaded[property.toString()];
-      regions.push(new IsotropicRegionSource(region.center, region.radius));
+  for (var property in loadedregions) {
+    if (loadedregions.hasOwnProperty(property)) {
+      var region = loadedregions[property.toString()];
+      phantom.AddIsotropicRegion(new IsotropicRegionSource(region.center, region.radius));
     }
   }
-  // log an error in case regions were not found.
-  if (regions.length == 0) console.warn('Any region found in file '+path);
-  return regions;
+
+  // log an error in case fibers or regions were not found.
+  if (phantom.isotropicregions.length == 0) console.warn('Any region found in file '+path);
+  if (phantom.fibers.length == 0) console.warn('Any fiber found in file '+path);
+  return phantom;
 }
