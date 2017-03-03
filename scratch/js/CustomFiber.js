@@ -26,10 +26,10 @@ colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
     .refresh - Updates meshes after fiber change. No input no output.
 
 */
-var color = colors[Math.floor(Math.random()*colors.length)];
 function FiberSkeleton(fiber) {
   this.fiber = fiber;
   points = fiber.control_points;
+  this.color = colors[Math.floor(Math.random()*colors.length)];
   this.segments = Math.floor(fiber.length*1.5);
   discrete_points = new Float32Array(3*this.segments+3);
   for (var i = 0; i <= this.segments; i++) {
@@ -41,7 +41,7 @@ function FiberSkeleton(fiber) {
   trajectory.addAttribute('position',
               new THREE.BufferAttribute(discrete_points, 3));
   var thread = new THREE.LineBasicMaterial(
-    { color:color, linewidth: 1 } );
+    { color:this.color, linewidth: 1 } );
   this.line = new THREE.Line(trajectory, thread);
 
   var sphere = new THREE.SphereGeometry( .4 * fiber.scale, 32, 32 );
@@ -112,6 +112,7 @@ function FiberTube(fiber, radius) {
   }
   this.axialSegments = 256;
   this.radialSegments = 64;
+  this.color = colors[Math.floor(Math.random()*colors.length)];
   if (radius === undefined) {
     radius = .5;
   }
@@ -119,11 +120,10 @@ function FiberTube(fiber, radius) {
   var geometry = new THREE.TubeGeometry(this.curve,
                         this.axialSegments , this.radius, this.radialSegments);
   var material = new THREE.MeshPhongMaterial(
-    { color:colors[Math.floor(Math.random()*colors.length)],
-                                                shading: THREE.FlatShading } );
+    { color:this.color, shading: THREE.FlatShading } );
+  material.transparent = true;
   material.side = THREE.DoubleSide;
   this.mesh = new THREE.Mesh(geometry, material);
-
 }
 FiberTube.prototype.refresh = function() {
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
@@ -134,10 +134,11 @@ function IsotropicRegion(source) {
   this.source = source;
   this.widthSegments = 128;
   this.heightSegments = 128;
+  this.color = colors[Math.floor(Math.random()*colors.length)];
   var geometry = new THREE.SphereGeometry( source.radius, this.widthSegments, this.heightSegments );
   var material = new THREE.MeshPhongMaterial(
-    { color:colors[Math.floor(Math.random()*colors.length)],
-                                                shading: THREE.FlatShading } );
+    { color:this.color, shading: THREE.FlatShading } );
+  material.transparent = true;
   this.mesh = new THREE.Mesh(geometry, material);
   this.mesh.position.set(source.center[0], source.center[1], source.center[2]);
 }
