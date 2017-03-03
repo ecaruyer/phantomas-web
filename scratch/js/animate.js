@@ -1,5 +1,5 @@
 // An example of how to use Three.js to display a tubular shape.
-var mesh, renderer, scene, camera, directionalLight, controls;
+var mesh, renderer, scene, camera, directionalLight, controls, phantom;
 init();
 animate();
 
@@ -56,19 +56,9 @@ function init() {
       }
     }
   }
-  var path = "examples/60crossing_3bundles.txt";
-  var fibers = loadFibers(path);
-  for (var i = 0; i < fibers.length; i++) {
-    var tube = new FiberTube(fibers[i], fibers[i].radius);
-    if (camera.position.z/1.5 < fibers[i].length)
-        camera.position.z = fibers[i].length*1.5;
-    scene.add(tube.mesh);
-  }
-  var regions = loadRegions(path);
-  for (var i = 0; i < regions.length; i++) {
-    var region = new IsotropicRegion(regions[i]);
-    scene.add(region.mesh);
-  }
+  phantom = loadPhantom("examples/60crossing_3bundles.txt");
+  phantom.addToScene(scene);
+  camera.position.z = phantom.length()*1.5;
 
   renderer.render(scene, camera);
 
