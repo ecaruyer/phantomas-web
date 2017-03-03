@@ -9,6 +9,8 @@ function Phantom() {
     source: [],
     sphere: [],
   }
+  this.highlightcolor = new THREE.Color(0xFFFF00);
+  this.highlightopacity = .3;
 }
 
 Phantom.prototype = {
@@ -35,24 +37,35 @@ Phantom.prototype = {
     var n = this.isotropicregions.source.length + 1;
     region.AddObserver(this.isotropicregions.sphere[n]);
   },
+  resetColors: function(){
+    for (var i = 0; i < this.fibers.tube.length; i++) {
+      this.fibers.tube[i].mesh.material.color = this.fibers.tube[i].color;
+    }
+    for (var i = 0; i < this.isotropicregions.sphere.length; i++) {
+      this.isotropicregions.sphere[i].mesh.material.color = this.isotropicregions.sphere[i].color;
+    }
+    render();
+  },
   fadeAll: function(opacity) {
+    this.resetColors();
     if ((opacity === undefined) || (opacity > 1) || (opacity < 0)) {
-      opacity = .4;
-    } console.log(this);
+      opacity = this.highlightopacity;
+    }
     for (var i = 0; i < this.fibers.tube.length; i++) {
       this.fibers.tube[i].mesh.material.opacity = opacity;
     }
     for (var i = 0; i < this.isotropicregions.sphere.length; i++) {
-      this.fisotropicregions.sphere[i].mesh.material.opacity = opacity;
+      this.isotropicregions.sphere[i].mesh.material.opacity = opacity;
     }
     render();
   },
   unfadeAll: function() {
+    this.resetColors();
     for (var i = 0; i < this.fibers.tube.length; i++) {
       this.fibers.tube[i].mesh.material.opacity = 1;
     }
     for (var i = 0; i < this.isotropicregions.sphere.length; i++) {
-      this.fisotropicregions.sphere[i].mesh.material.opacity = 1;
+      this.isotropicregions.sphere[i].mesh.material.opacity = 1;
     }
     render();
   },
@@ -80,4 +93,16 @@ Phantom.prototype = {
     });
     render();
   },
+  fiberhighlight: function(n) {
+    this.fadeAll();
+    this.fibers.tube[n].mesh.material.opacity = 1;
+    this.fibers.tube[n].mesh.material.color = this.highlightcolor;
+    render();
+  },
+  regionhighlight: function(n) {
+    this.fadeAll();
+    this.isotropicregions.sphere[n].mesh.material.opacity = 1;
+    this.isotropicregions.sphere[n].mesh.material.color = this.highlightcolor;
+    render();
+  }
 }

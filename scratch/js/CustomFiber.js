@@ -29,7 +29,7 @@ colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
 function FiberSkeleton(fiber) {
   this.fiber = fiber;
   points = fiber.control_points;
-  this.color = colors[Math.floor(Math.random()*colors.length)];
+  this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
   this.segments = Math.floor(fiber.length*1.5);
   discrete_points = new Float32Array(3*this.segments+3);
   for (var i = 0; i <= this.segments; i++) {
@@ -110,7 +110,7 @@ function FiberTube(fiber) {
   }
   this.axialSegments = 256;
   this.radialSegments = 64;
-  this.color = colors[Math.floor(Math.random()*colors.length)];
+  this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
   if (radius === undefined) {
     radius = .5;
   }
@@ -132,7 +132,7 @@ function IsotropicRegion(source) {
   this.source = source;
   this.widthSegments = 128;
   this.heightSegments = 128;
-  this.color = colors[Math.floor(Math.random()*colors.length)];
+  this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
   var geometry = new THREE.SphereGeometry( source.radius, this.widthSegments, this.heightSegments );
   var material = new THREE.MeshPhongMaterial(
     { color:this.color, shading: THREE.FlatShading } );

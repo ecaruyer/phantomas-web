@@ -56,15 +56,27 @@ function init() {
       }
     }
   }
-  phantom = loadPhantom("examples/60crossing_3bundles.txt");
+  phantom = loadPhantom("examples/isbi_challenge_2013.txt");
+  phantom.highlightopacity = .2;
   phantom.addToScene(scene);
   camera.position.z = phantom.radius()*1.5;
 
   renderer.render(scene, camera);
 
+  var presscount = 0;
   keypress = function() {
-    if (phantom.fibers.tube[1].mesh.material.opacity == .4) phantom.unfadeAll();
-    else phantom.fadeAll();
+    if (presscount < phantom.fibers.source.length) {
+      phantom.fiberhighlight(presscount);
+      presscount++;
+    }
+    else if (presscount-phantom.fibers.source.length < phantom.isotropicregions.source.length) {
+      phantom.regionhighlight(presscount-phantom.fibers.source.length);
+      presscount++;
+    }
+    else {
+      phantom.unfadeAll();
+      presscount = 0;
+    }
   }
   window.addEventListener('keypress', keypress);
 
