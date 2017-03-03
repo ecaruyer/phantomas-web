@@ -7,22 +7,23 @@ Parameters
 ----------
 control_points : array-of-arrays shape (N, 3)
 tangents : 'incoming', 'outgoing', 'symmetric'
-scale : multiplication factor.
+radius : fiber radius; same dimensions as control_points.
+[ deprecated ] scale : multiplication factor.
     This is useful when the coodinates are given dimensionless, and we
     want a specific size for the phantom.
 
 */
-function FiberSource(control_points, tangents, scale) {
-  // Initialize properties. By default tangents = 'symmetric', scale = 1.
+function FiberSource(control_points, tangents, radius) {
+  // Initialize properties. By default tangents = 'symmetric', radius = 1.
   this.control_points = control_points;
   if (tangents === undefined) {
     tangents = 'symmetric';
   }
   this.tangents = tangents;
-  if (scale === undefined) {
-    scale = 1;
+  if (radius === undefined) {
+    radius = 1;
   }
-  this.scale = scale;
+  this.radius = radius;
 
   // Calculate coefficients
   this.polycalc();
@@ -178,11 +179,10 @@ FiberSource.prototype = {
           timesteps.
   */
   // interp implements equation used for coefficients [a,b,c,d], described above.
-    var scale = this.scale;
     function interp(coef, t, ti, ti1) {
       factor = (t-ti) / (ti1-ti);
       return (coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
-              coef[3]*Math.pow(factor,3)) * scale;
+              coef[3]*Math.pow(factor,3));
     }
     // Single value option
     if (ts.constructor !== Array) {

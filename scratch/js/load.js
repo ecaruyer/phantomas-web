@@ -19,12 +19,11 @@ function loadFibers( path ) {
                     fiber.control_points[i+1],
                     fiber.control_points[i+2]]);
       }
-      fibers.push(new FiberSource(newcp, fiber.tangents));
-      fibers[fibers.length-1].radius = fiber.radius;
+      fibers.push(new FiberSource(newcp, fiber.tangents, fiber.radius));
     }
   }
   // log an error in case fibers were not found.
-  if (fibers.length == 0) console.error('Any fiber found in file '+path);
+  if (fibers.length == 0) console.warn('Any fiber found in file '+path);
   return fibers;
 }
 
@@ -46,6 +45,6 @@ function loadRegions( path ) {
     }
   }
   // log an error in case regions were not found.
-  if (regions.length == 0) console.error('Any region found in file '+path);
+  if (regions.length == 0) console.warn('Any region found in file '+path);
   return regions;
 }

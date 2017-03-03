@@ -44,13 +44,12 @@ function FiberSkeleton(fiber) {
     { color:this.color, linewidth: 1 } );
   this.line = new THREE.Line(trajectory, thread);
 
-  var sphere = new THREE.SphereGeometry( .4 * fiber.scale, 32, 32 );
+  var sphere = new THREE.SphereGeometry(fiber.radius, 32, 32 );
   var sphereGeometry = new THREE.Geometry();
   var meshes = [];
   for (var i = 0; i < points.length; i++) {
     meshes[i] = new THREE.Mesh(sphere);
-    meshes[i].position.set(points[i][0] * fiber.scale,
-              points[i][1] * fiber.scale, points[i][2] * fiber.scale);
+    meshes[i].position.set(points[i][0], points[i][1], points[i][2]);
     meshes[i].updateMatrix();
     sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
@@ -59,13 +58,12 @@ function FiberSkeleton(fiber) {
 }
 
 FiberSkeleton.prototype.refresh = function() {
-  var sphere = new THREE.SphereGeometry( .4 * this.fiber.scale, 32, 32 );
+  var sphere = new THREE.SphereGeometry(this.fiber.radius, 32, 32 );
   var sphereGeometry = new THREE.Geometry();
   var meshes = [];
   for (var i = 0; i < points.length; i++) {
     meshes[i] = new THREE.Mesh(sphere);
-    meshes[i].position.set(points[i][0] * this.fiber.scale,
-              points[i][1] * this.fiber.scale, points[i][2] * this.fiber.scale);
+    meshes[i].position.set(points[i][0], points[i][1], points[i][2]);
     meshes[i].updateMatrix();
     sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
@@ -87,7 +85,6 @@ FiberSkeleton.prototype.refresh = function() {
 /* FiberTube creates a 3D representation of a given fiber in a tubular form
  of given radius.
  Inputs: fiber - FiberSource object.
-         radius - scalar. By default, .5 (recommended radius for scale=1)
 
  Main properties:
    .mesh - the mesh of the fiber Ready for scene.add.
@@ -101,8 +98,9 @@ FiberSkeleton.prototype.refresh = function() {
   Methods:
    .refresh - Updates mesh after fiber change. No input no output.
  */
-function FiberTube(fiber, radius) {
+function FiberTube(fiber) {
   this.fiber = fiber;
+  radius = fiber.radius;
   this.curve = Object.create(THREE.Curve.prototype);
   this.curve.getPoint = function(t) {
       var tx = fiber.interpolate(t)[0][0];
@@ -127,7 +125,7 @@ function FiberTube(fiber, radius) {
 }
 FiberTube.prototype.refresh = function() {
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
-                        this.axialSegments , this.radius, this.radialSegments);
+                this.axialSegments , this.fiber.radius, this.radialSegments);
 }
 
 function IsotropicRegion(source) {
