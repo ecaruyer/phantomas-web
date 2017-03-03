@@ -9,8 +9,8 @@ function Phantom() {
     source: [],
     sphere: [],
   }
-  this.highlightcolor = new THREE.Color(0xFFFF00);
   this.highlightopacity = .3;
+  this.highlightcolor = null;
 }
 
 Phantom.prototype = {
@@ -18,10 +18,12 @@ Phantom.prototype = {
     this.fibers.source.push(fiber);
     this.fibers.tube.push(new FiberTube(fiber));
     this.fibers.skeleton.push(new FiberSkeleton(fiber));
+    this.fibers.tube[this.fibers.tube.length-1].color =
+      this.fibers.skeleton[this.fibers.skeleton.length-1].color;
+    this.fibers.tube[this.fibers.tube.length-1].refresh();
 
-    var n = this.fibers.source.length;
-    fiber.AddObserver(this.fibers.tube[n]);
-    fiber.AddObserver(this.fibers.skeleton[n]);
+    fiber.AddObserver(this.fibers.tube[this.fibers.tube.length-1]);
+    fiber.AddObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
   },
   radius: function() {
     var length = 0;
@@ -47,7 +49,7 @@ Phantom.prototype = {
     render();
   },
   fadeAll: function(opacity) {
-    this.resetColors();
+    if (this.highlightcolor) this.resetColors();
     if ((opacity === undefined) || (opacity > 1) || (opacity < 0)) {
       opacity = this.highlightopacity;
     }
@@ -60,7 +62,7 @@ Phantom.prototype = {
     render();
   },
   unfadeAll: function() {
-    this.resetColors();
+    if (this.highlightcolor) this.resetColors();
     for (var i = 0; i < this.fibers.tube.length; i++) {
       this.fibers.tube[i].mesh.material.opacity = 1;
     }
@@ -70,9 +72,7 @@ Phantom.prototype = {
     render();
   },
   addToScene: function(scene) {
-    scene.children.forEach(function(object){
-      scene.remove(object);
-    });
+    scene.removephantom();
     this.fibers.tube.forEach(function(tube) {
       scene.add(tube.mesh)
     });
@@ -82,27 +82,33 @@ Phantom.prototype = {
     render();
   },
   addAsSkeleton: function(scene) {
-    scene.children.forEach(function(object){
-      scene.remove(object);
-    });
+    this.addToScene(scene);
+    this.fadeAll(this.highlightopacity*.75);
     this.fibers.skeleton.forEach(function(skeleton) {
       scene.add(skeleton.line, skeleton.spheres)
-    });
-    this.isotropicregions.sphere.forEach(function(sphere) {
-      scene.add(sphere.mesh)
     });
     render();
   },
   fiberhighlight: function(n) {
     this.fadeAll();
     this.fibers.tube[n].mesh.material.opacity = 1;
-    this.fibers.tube[n].mesh.material.color = this.highlightcolor;
+    if (this.highlightcolor) {
+      this.fibers.tube[n].mesh.material.color = this.highlightcolor;
+    }
     render();
   },
   regionhighlight: function(n) {
     this.fadeAll();
     this.isotropicregions.sphere[n].mesh.material.opacity = 1;
-    this.isotropicregions.sphere[n].mesh.material.color = this.highlightcolor;
+    if (this.highlightcolor) {
+      this.fibers.tube[n].mesh.material.color = this.highlightcolor;
+    }
+    render();
+  },
+  revealskeleton: function(scene, n) {
+    this.fadeAll();
+    this.fibers.tube[n].mesh.material.opacity = this.highlightopacity*2;
+    scene.add(this.fibers.skeleton[n].line, this.fibers.skeleton[n].spheres);
     render();
   }
 }

@@ -65,15 +65,31 @@ function init() {
 
   var presscount = 0;
   keypress = function() {
-    if (presscount < phantom.fibers.source.length) {
-      phantom.fiberhighlight(presscount);
-      presscount++;
+    if (presscount/2 < phantom.fibers.source.length) {
+      if (presscount % 2 == 0) {
+        phantom.addToScene(scene);
+        phantom.fiberhighlight(presscount/2);
+        presscount++;
+      }
+      else {
+        phantom.addToScene(scene);
+        phantom.revealskeleton(scene, (presscount-1)/2);
+        presscount++;
+      }
     }
-    else if (presscount-phantom.fibers.source.length < phantom.isotropicregions.source.length) {
-      phantom.regionhighlight(presscount-phantom.fibers.source.length);
+    else if (presscount/2-phantom.fibers.source.length < phantom.isotropicregions.source.length) {
+      phantom.addToScene(scene);
+      phantom.regionhighlight(presscount/2-phantom.fibers.source.length);
+      presscount+=2;
+    }
+    else if (presscount/2-phantom.fibers.source.length == phantom.isotropicregions.source.length) {
+      scene.removephantom();
+      phantom.addAsSkeleton(scene)
       presscount++;
     }
     else {
+      scene.removephantom();
+      phantom.addToScene(scene);
       phantom.unfadeAll();
       presscount = 0;
     }

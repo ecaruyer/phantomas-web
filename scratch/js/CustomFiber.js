@@ -44,7 +44,7 @@ function FiberSkeleton(fiber) {
     { color:this.color, linewidth: 1 } );
   this.line = new THREE.Line(trajectory, thread);
 
-  var sphere = new THREE.SphereGeometry(fiber.radius, 32, 32 );
+  var sphere = new THREE.SphereGeometry(fiber.radius/5, 32, 32 );
   var sphereGeometry = new THREE.Geometry();
   var meshes = [];
   for (var i = 0; i < points.length; i++) {
@@ -58,7 +58,7 @@ function FiberSkeleton(fiber) {
 }
 
 FiberSkeleton.prototype.refresh = function() {
-  var sphere = new THREE.SphereGeometry(this.fiber.radius, 32, 32 );
+  var sphere = new THREE.SphereGeometry(this.fiber.radius/5, 32, 32 );
   var sphereGeometry = new THREE.Geometry();
   var meshes = [];
   for (var i = 0; i < points.length; i++) {
@@ -143,4 +143,16 @@ function IsotropicRegion(source) {
 IsotropicRegion.prototype.refresh = function() {
     this.mesh.geometry = new THREE.SphereGeometry( this.source.radius, this.widthSegments, this.heightSegments );
     this.mesh.position.set(this.source.center[0], this.source.center[1], this.source.center[2]);
+}
+
+THREE.Scene.prototype.removephantom = function() {
+  var objects = [];
+  this.children.forEach( function(object){
+    if ((object.type == 'Mesh') || (object.type == "Line")) {
+      objects.push(object);
+    }
+  });
+  objects.forEach( function(object) {
+    scene.remove(object);
+  });
 }
