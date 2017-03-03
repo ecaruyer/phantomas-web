@@ -31,7 +31,7 @@ function loadPhantom( path ) {
   }
 
   // log an error in case fibers or regions were not found.
-  if (phantom.isotropicregions.length == 0) console.warn('Any region found in file '+path);
-  if (phantom.fibers.length == 0) console.warn('Any fiber found in file '+path);
+  if (phantom.isotropicregions.source.length == 0) console.warn('Any region found in file '+path);
+  if (phantom.fibers.source.length == 0) console.warn('Any fiber found in file '+path);
   return phantom;
 }

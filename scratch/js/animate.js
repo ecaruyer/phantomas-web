@@ -11,18 +11,6 @@ function animate() {
   controls.update();
 }
 
-
-// Generate N random points for constructing fiber. Points between [-1,10]
-function randomPoints(N) {
-  array = [];
-  for (var i = 0; i < N; i++) {
-    array[i] = [Math.floor(Math.random()*20-10),
-                Math.floor(Math.random()*20-10),
-                Math.floor(Math.random()*20-10)]
-  }
-  return array;
-}
-
 function init() {
 
   // The rendering engine is initialized
@@ -56,6 +44,8 @@ function init() {
       }
     }
   }
+
+  // Load phantom and add it in the scene
   phantom = loadPhantom("examples/isbi_challenge_2013.txt");
   phantom.highlightopacity = .2;
   phantom.addToScene(scene);
@@ -63,6 +53,7 @@ function init() {
 
   renderer.render(scene, camera);
 
+  // KeyPress consecution loop for features show.
   var presscount = 0;
   keypress = function() {
     if (presscount/2 < phantom.fibers.source.length) {
