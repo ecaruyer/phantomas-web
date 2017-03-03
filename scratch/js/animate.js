@@ -56,7 +56,7 @@ function init() {
       }
     }
   }
-  var path = "examples/isbi_challenge_2013.txt";
+  var path = "examples/60crossing_3bundles.txt";
   var fibers = loadFibers(path);
   for (var i = 0; i < fibers.length; i++) {
     var tube = new FiberTube(fibers[i], fibers[i].radius);
