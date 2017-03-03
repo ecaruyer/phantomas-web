@@ -21,7 +21,7 @@ Phantom.prototype = {
     fiber.AddObserver(this.fibers.tube[n]);
     fiber.AddObserver(this.fibers.skeleton[n]);
   },
-  length: function() {
+  radius: function() {
     var length = 0;
     for (var i = 0; i < this.fibers.source.length; i++) {
       if (this.fibers.source[i].length > length) length = this.fibers.source[i].length;
@@ -38,21 +38,21 @@ Phantom.prototype = {
   fadeAll: function(opacity) {
     if ((opacity === undefined) || (opacity > 1) || (opacity < 0)) {
       opacity = .4;
-    }
+    } console.log(this);
     for (var i = 0; i < this.fibers.tube.length; i++) {
-      this.fibers.tube.mesh.material.opacity = opacity;
+      this.fibers.tube[i].mesh.material.opacity = opacity;
     }
     for (var i = 0; i < this.isotropicregions.sphere.length; i++) {
-      this.fisotropicregions.sphere.mesh.material.opacity = opacity;
+      this.fisotropicregions.sphere[i].mesh.material.opacity = opacity;
     }
     render();
   },
   unfadeAll: function() {
     for (var i = 0; i < this.fibers.tube.length; i++) {
-      this.fibers.tube.mesh.material.opacity = 1;
+      this.fibers.tube[i].mesh.material.opacity = 1;
     }
     for (var i = 0; i < this.isotropicregions.sphere.length; i++) {
-      this.fisotropicregions.sphere.mesh.material.opacity = 1;
+      this.fisotropicregions.sphere[i].mesh.material.opacity = 1;
     }
     render();
   },

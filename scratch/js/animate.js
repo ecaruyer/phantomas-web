@@ -58,9 +58,15 @@ function init() {
   }
   phantom = loadPhantom("examples/60crossing_3bundles.txt");
   phantom.addToScene(scene);
-  camera.position.z = phantom.length()*1.5;
+  camera.position.z = phantom.radius()*1.5;
 
   renderer.render(scene, camera);
+
+  keypress = function() {
+    if (phantom.fibers.tube[1].mesh.material.opacity == .4) phantom.unfadeAll();
+    else phantom.fadeAll();
+  }
+  window.addEventListener('keypress', keypress);
 
   // Add mouse control to the camera
   controls = new THREE.TrackballControls( camera );
