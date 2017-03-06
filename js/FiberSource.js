@@ -224,9 +224,9 @@ FiberSource.prototype = {
       this.observers[i].refresh();
     }
   },
-  // SetControlPoint changes a control point for this Fiber.
+  // setControlPoint changes a control point for this Fiber.
   // inputs: n (position in controlPoints array) and x, y, z coordinates.
-  SetControlPoint: function(n, x, y, z) {
+  setControlPoint: function(n, x, y, z) {
     this.controlPoints[n] = [x, y, z];
     this.polyCalc();
     this.notify();
