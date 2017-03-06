@@ -66,9 +66,8 @@ Phantom.prototype = {
     this.fibers.tube.push(new FiberTube(fiber));
     this.fibers.skeleton.push(new FiberSkeleton(fiber));
     // Skeleton's thread and fiber's tube will adopt the same color
-    this.fibers.tube[this.fibers.tube.length-1].color =
+    this.fibers.tube[this.fibers.tube.length-1].mesh.material.color =
       this.fibers.skeleton[this.fibers.skeleton.length-1].color;
-    this.fibers.tube[this.fibers.tube.length-1].refresh();
 
     // Skeleton and Tube added as observers.
     fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);

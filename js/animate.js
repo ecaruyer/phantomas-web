@@ -1,6 +1,6 @@
 // An example of how to use Three.js to display a tubular shape.
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/fibers.txt";
+var path = "examples/60crossing_3bundles.txt";
 
 init();
 
