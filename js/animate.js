@@ -1,19 +1,31 @@
 // An example of how to use Three.js to display a tubular shape.
-var mesh, renderer, scene, camera, directionalLight, controls, phantom;
+var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
+var path = "examples/fibers.txt";
+
 init();
-animate();
 
 function render() {
   renderer.render(scene, camera);
 }
+
 function animate() {
   requestAnimationFrame( animate );
   controls.update();
 }
 
 function init() {
+  request = new XMLHttpRequest();
+  request.overrideMimeType("text/plain");
+  request.open("get", path, true);
+  request.onreadystatechange = function() {
+    if ( (request.readyState === 4) && (request.status === 200) ) {
+      show();
+    }
+  }
+  request.send(null);
+}
 
-  // The rendering engine is initialized
+function show() { // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -46,7 +58,7 @@ function init() {
   }
 
   // Load phantom and add it in the scene
-  phantom = loadPhantom("examples/fibers.txt");
+  phantom = loadPhantom( request );
   phantom.highlightOpacity = .2;
   phantom.addToScene(scene);
   camera.position.z = phantom.radius()*1.5;
@@ -54,6 +66,15 @@ function init() {
   renderer.render(scene, camera);
 
   // KeyPress consecution loop for features show.
+
+  // Add mouse control to the camera
+  controls = new THREE.TrackballControls( camera );
+  controls.enableZoom = true;
+  controls.rotateSpeed = 2.5;
+  controls.zoomSpeed = 1;
+  controls.noPan=true;
+  controls.addEventListener('change', render);
+
   var presscount = 0;
   keypress = function() {
     if (presscount/2 < phantom.fibers.source.length) {
@@ -87,11 +108,5 @@ function init() {
   }
   window.addEventListener('keypress', keypress);
 
-  // Add mouse control to the camera
-  controls = new THREE.TrackballControls( camera );
-  controls.enableZoom = true;
-  controls.rotateSpeed = 2.5;
-  controls.zoomSpeed = 1;
-  controls.noPan=true;
-  controls.addEventListener('change', render);
+  animate();
 }

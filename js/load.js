@@ -1,9 +1,5 @@
 // loadFibers returns a FiberSource array of fibers contained in a JSON file.
-function loadPhantom( path ) {
-  var request = new XMLHttpRequest();
-  request.overrideMimeType("text/plain");
-  request.open("get", path, false);
-  request.send(null);
+function loadPhantom( request ) {
 
   var phantom = new Phantom();
   var loadedFibers = JSON.parse(request.response).fiber_geometries;
