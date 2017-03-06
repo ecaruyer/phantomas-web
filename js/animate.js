@@ -47,7 +47,7 @@ function init() {
 
   // Load phantom and add it in the scene
   phantom = loadPhantom("examples/fibers.txt");
-  phantom.highlightopacity = .2;
+  phantom.highlightOpacity = .2;
   phantom.addToScene(scene);
   camera.position.z = phantom.radius()*1.5;
 
@@ -68,18 +68,18 @@ function init() {
         presscount++;
       }
     }
-    else if (presscount/2-phantom.fibers.source.length < phantom.isotropicregions.source.length) {
+    else if (presscount/2-phantom.fibers.source.length < phantom.isotropicRegions.source.length) {
       phantom.addToScene(scene);
       phantom.regionHighlight(presscount/2-phantom.fibers.source.length);
       presscount+=2;
     }
-    else if (presscount/2-phantom.fibers.source.length == phantom.isotropicregions.source.length) {
-      scene.removephantom();
+    else if (presscount/2-phantom.fibers.source.length == phantom.isotropicRegions.source.length) {
+      scene.removePhantom();
       phantom.addAsSkeleton(scene)
       presscount++;
     }
     else {
-      scene.removephantom();
+      scene.removePhantom();
       phantom.addToScene(scene);
       phantom.unfadeAll();
       presscount = 0;
