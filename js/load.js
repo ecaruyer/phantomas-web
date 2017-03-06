@@ -20,13 +20,13 @@ function loadPhantom( path ) {
                     fiber.controlPoints[i+1],
                     fiber.controlPoints[i+2]]);
       }
-      phantom.AddFiber(new FiberSource(newcp, fiber.tangents, fiber.radius));
+      phantom.addFiber(new FiberSource(newcp, fiber.tangents, fiber.radius));
     }
   }
   for (var property in loadedregions) {
     if (loadedregions.hasOwnProperty(property)) {
       var region = loadedregions[property.toString()];
-      phantom.AddIsotropicRegion(new IsotropicRegionSource(region.center, region.radius));
+      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, region.radius));
     }
   }
 

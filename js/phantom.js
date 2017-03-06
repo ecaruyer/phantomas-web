@@ -34,17 +34,17 @@ THREE.Scene.prototype.removephantom = function() {
       highlighted. If null, meshes are adopting their own color.
 
   METHODS:
-    AddFiber: Adds a FiberSource (input) to the phantom. Automatically builds skeleton and tube.
-    AddIsotropicRegion: Adds IsotropicRegionSource (input). Builds sphere.
+    addFiber: Adds a FiberSource (input) to the phantom. Automatically builds skeleton and tube.
+    addIsotropicRegion: Adds IsotropicRegionSource (input). Builds sphere.
     radius: Returns an approximate radius of the phantom. Usually used for positioning camera.
     resetColors: Brings original color back to meshes
     fadeAll: Fades all the meshes. Optional input: wanted opacity.
     unfadeAll: Unfades all the meshes
     addToScene: Adds the Phantom to a given scene (input)
     addAsSkeleton: Adds the Phantom to a given scene in Skeleton form (input)
-    fiberhighlight: Highlights fiber. Input is the position of the fiber in its array.
-    regionhighlight: Highlights region. Input is the position of the region in its array.
-    revealskeleton: Reveals skeleton structure for a fiber. Inputs: (scene, fiberposition)
+    fiberHighlight: Highlights fiber. Input is the position of the fiber in its array.
+    regionHighlight: Highlights region. Input is the position of the region in its array.
+    revealSkeleton: Reveals skeleton structure for a fiber. Inputs: (scene, fiberposition)
 */
 function Phantom() {
   this.fibers = {
@@ -61,7 +61,7 @@ function Phantom() {
 }
 
 Phantom.prototype = {
-  AddFiber: function(fiber) {
+  addFiber: function(fiber) {
     this.fibers.source.push(fiber);
     this.fibers.tube.push(new FiberTube(fiber));
     this.fibers.skeleton.push(new FiberSkeleton(fiber));
@@ -74,7 +74,7 @@ Phantom.prototype = {
     fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);
     fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
   },
-  AddIsotropicRegion: function(region) {
+  addIsotropicRegion: function(region) {
     this.isotropicregions.source.push(region);
     this.isotropicregions.sphere.push(new IsotropicRegion(region));
 
@@ -151,7 +151,7 @@ Phantom.prototype = {
     // Render so changes are made visible
     render();
   },
-  fiberhighlight: function(n) {
+  fiberHighlight: function(n) {
     // Fade all but wanted fiber
     this.fadeAll();
     this.fibers.tube[n].mesh.material.opacity = 1;
@@ -162,7 +162,7 @@ Phantom.prototype = {
     // Render so changes are made visible
     render();
   },
-  regionhighlight: function(n) {
+  regionHighlight: function(n) {
     // Fade all but wanted region
     this.fadeAll();
     this.isotropicregions.sphere[n].mesh.material.opacity = 1;
@@ -173,7 +173,7 @@ Phantom.prototype = {
     // Render so changes are made visible
     render();
   },
-  revealskeleton: function(scene, n) {
+  revealSkeleton: function(scene, n) {
     this.fadeAll();
     // Focus fiber is faded more so that thread can be seen with any problem
     this.fibers.tube[n].mesh.material.opacity = this.highlightopacity*2;

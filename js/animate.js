@@ -59,18 +59,18 @@ function init() {
     if (presscount/2 < phantom.fibers.source.length) {
       if (presscount % 2 == 0) {
         phantom.addToScene(scene);
-        phantom.fiberhighlight(presscount/2);
+        phantom.fiberHighlight(presscount/2);
         presscount++;
       }
       else {
         phantom.addToScene(scene);
-        phantom.revealskeleton(scene, (presscount-1)/2);
+        phantom.revealSkeleton(scene, (presscount-1)/2);
         presscount++;
       }
     }
     else if (presscount/2-phantom.fibers.source.length < phantom.isotropicregions.source.length) {
       phantom.addToScene(scene);
-      phantom.regionhighlight(presscount/2-phantom.fibers.source.length);
+      phantom.regionHighlight(presscount/2-phantom.fibers.source.length);
       presscount+=2;
     }
     else if (presscount/2-phantom.fibers.source.length == phantom.isotropicregions.source.length) {
