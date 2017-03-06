@@ -215,7 +215,7 @@ FiberSource.prototype = {
       return trajectory;
   },
   // Pushes an object to the observer list. Once added, will be notified.
-  AddObserver: function(object) {
+  addObserver: function(object) {
     this.observers.push(object)
   },
   // Refreshes objects in the observer list
@@ -254,7 +254,7 @@ IsotropicRegionSource.prototype = {
     this.radius = radius;
     this.notify();
   },
-  AddObserver: function(object) {
+  addObserver: function(object) {
     this.observers.push(object)
   }
 }

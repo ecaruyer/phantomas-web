@@ -71,14 +71,14 @@ Phantom.prototype = {
     this.fibers.tube[this.fibers.tube.length-1].refresh();
 
     // Skeleton and Tube added as observers.
-    fiber.AddObserver(this.fibers.tube[this.fibers.tube.length-1]);
-    fiber.AddObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
+    fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);
+    fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
   },
   AddIsotropicRegion: function(region) {
     this.isotropicregions.source.push(region);
     this.isotropicregions.sphere.push(new IsotropicRegion(region));
 
-    region.AddObserver(this.isotropicregions.sphere[this.isotropicregions.sphere.length]);
+    region.addObserver(this.isotropicregions.sphere[this.isotropicregions.sphere.length]);
   },
   radius: function() {
     var length = 0;
