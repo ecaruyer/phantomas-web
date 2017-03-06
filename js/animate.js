@@ -46,7 +46,7 @@ function init() {
   }
 
   // Load phantom and add it in the scene
-  phantom = loadPhantom("examples/3Dfanning_13bundles.txt");
+  phantom = loadPhantom("examples/fibers.txt");
   phantom.highlightopacity = .2;
   phantom.addToScene(scene);
   camera.position.z = phantom.radius()*1.5;
