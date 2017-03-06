@@ -37,15 +37,15 @@ function FiberSkeleton(fiber) {
 
   // Create line thread
   // Interpolate points for THREE.BufferAttribute needs
-  discrete_points = new Float32Array(3*this.segments+3);
+  discretePoints = new Float32Array(3*this.segments+3);
   for (var i = 0; i <= this.segments; i++) {
-    discrete_points.set([fiber.interpolate(i/this.segments)[0][0],
+    discretePoints.set([fiber.interpolate(i/this.segments)[0][0],
                          fiber.interpolate(i/this.segments)[0][1],
                          fiber.interpolate(i/this.segments)[0][2]], 3*i);
   }
   // Create trajectory
   var trajectory = new THREE.BufferGeometry();
-  trajectory.addAttribute('position', new THREE.BufferAttribute(discrete_points, 3));
+  trajectory.addAttribute('position', new THREE.BufferAttribute(discretePoints, 3));
   // Create thread material
   var thread = new THREE.LineBasicMaterial({ color:this.color, linewidth: 1 });
   // / Build line
@@ -82,14 +82,14 @@ FiberSkeleton.prototype.refresh = function() {
   this.spheres.geometry = sphereGeometry;
 
   // Thread trajectory must be built again as well
-  var discrete_points = new Float32Array(3*this.segments+3);
+  var discretePoints = new Float32Array(3*this.segments+3);
   for (var i = 0; i <= this.segments; i++) {
-    discrete_points.set([this.fiber.interpolate(i/this.segments)[0][0],
+    discretePoints.set([this.fiber.interpolate(i/this.segments)[0][0],
                          this.fiber.interpolate(i/this.segments)[0][1],
                          this.fiber.interpolate(i/this.segments)[0][2]], 3*i);
   }
   var trajectory = new THREE.BufferGeometry();
-  trajectory.addAttribute('position', new THREE.BufferAttribute(discrete_points, 3));
+  trajectory.addAttribute('position', new THREE.BufferAttribute(discretePoints, 3));
   this.line.geometry = trajectory;
   // Line color is to be kept
   this.line.material.color = this.color;
