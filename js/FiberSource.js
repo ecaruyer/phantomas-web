@@ -246,11 +246,11 @@ IsotropicRegionSource.prototype = {
       this.observers[i].refresh();
     }
   },
-  SetCenter: function(x, y, z) {
+  setCenter: function(x, y, z) {
     this.center = [x, y, z];
     this.notify();
   },
-  SetRadius: function(radius) {
+  setRadius: function(radius) {
     this.radius = radius;
     this.notify();
   },
