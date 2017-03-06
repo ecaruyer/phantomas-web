@@ -1,0 +1,9 @@
+hml, body, div {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  /* fix necessary to remove space at bottom of canvas */
+    display: block;
+}

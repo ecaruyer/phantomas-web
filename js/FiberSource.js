@@ -5,38 +5,42 @@ cortical areas.
 
 Parameters
 ----------
-control_points : array-of-arrays shape (N, 3)
+controlPoints : array-of-arrays shape (N, 3)
 tangents : 'incoming', 'outgoing', 'symmetric'
-scale : multiplication factor.
+radius : fiber radius; same dimensions as controlPoints.
+[ deprecated ] scale : multiplication factor.
     This is useful when the coodinates are given dimensionless, and we
     want a specific size for the phantom.
 
 */
-function FiberSource(control_points, tangents, scale) {
-  // Initialize properties. By default tangents = 'symmetric', scale = 1.
-  this.control_points = control_points;
+function FiberSource(controlPoints, tangents, radius) {
+  // Initialize properties. By default tangents = 'symmetric', radius = 1.
+  this.controlPoints = controlPoints;
   if (tangents === undefined) {
     tangents = 'symmetric';
   }
   this.tangents = tangents;
-  if (scale === undefined) {
-    scale = 1;
+  if (radius === undefined) {
+    radius = 1;
   }
-  this.scale = scale;
+  this.radius = radius;
 
   // Calculate coefficients
-  this.polycalc();
+  this.polyCalc();
+
+  // FiberSource objects will act as subjects to FiberTube or FiberSkeleton
+  this.observers = [];
 }
 
 /* FiberSource methods definition
-  'polycalc' calculates coefficients for each polynomial. Needed in constructor
+  'polyCalc' calculates coefficients for each polynomial. Needed in constructor
     and once any of the three FiberSource input change.
   'interpolate' goes from the continuous representation of FiberSource to a
   discretization to given timesteps (ts) between 0 and 1.
   Return is an array which lists [x y z] for each timestep.
 */
 FiberSource.prototype = {
-  polycalc: function() {
+  polyCalc: function() {
     /*
      When called, coefficients are calculated.
      This takes the FiberSource instance from control points, and a specified
@@ -47,23 +51,23 @@ FiberSource.prototype = {
      Timestamps normalized in [0,1] are also calculated in this.ts
    */
    // Take distance of each pair of given control points
-    nb_points = this.control_points.length;
+    nbPoints = this.controlPoints.length;
     var distances = [];
-    for (var i = 0; i < nb_points-1; i++) {
-      var squared_distance = 0;
+    for (var i = 0; i < nbPoints-1; i++) {
+      var squareDistance = 0;
       for (var j = 0; j < 3; j++) {
-        squared_distance +=
-          Math.pow(this.control_points[i+1][j] - this.control_points[i][j], 2);
+        squareDistance +=
+          Math.pow(this.controlPoints[i+1][j] - this.controlPoints[i][j], 2);
       }
-      distances[i] = Math.sqrt(squared_distance);
+      distances[i] = Math.sqrt(squareDistance);
     }
     // Make time interval proportional to distance between control points
     var ts = [0, distances[0]];
-    for (var i = 2; i < nb_points; i++) {
+    for (var i = 2; i < nbPoints; i++) {
       ts[i] = ts[i-1]+distances[i-1];
     }
     length = ts[ts.length - 1];
-    for (var i = 0; i < nb_points; i++) {
+    for (var i = 0; i < nbPoints; i++) {
       ts[i] /= length;
     }
 
@@ -72,37 +76,37 @@ FiberSource.prototype = {
     var derivatives = [];
     // For start and ending points; normal to the surface
     derivatives[0]=[];
-    derivatives[nb_points-1] = [];
+    derivatives[nbPoints-1] = [];
     for (var i = 0; i < 3; i++) {
-      derivatives[0][i] = -this.control_points[0][i];
-      derivatives[nb_points-1][i] = this.control_points[nb_points-1][i];
+      derivatives[0][i] = -this.controlPoints[0][i];
+      derivatives[nbPoints-1][i] = this.controlPoints[nbPoints-1][i];
     }
     // As for other derivatives, we use discrete approx
     switch (this.tangents) {
       case "incoming":
-        for (var i = 1; i < nb_points-1; i++) {
+        for (var i = 1; i < nbPoints-1; i++) {
           derivatives[i] = [];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
-              this.control_points[i][j] - this.control_points[i-1][j];
+              this.controlPoints[i][j] - this.controlPoints[i-1][j];
           }
         }
         break;
       case "outgoing":
-        for (var i = 1; i < nb_points-1; i++) {
+        for (var i = 1; i < nbPoints-1; i++) {
           derivatives[i]=[];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
-              this.control_points[i+1][j] - this.control_points[i][j];
+              this.controlPoints[i+1][j] - this.controlPoints[i][j];
           }
         }
         break;
       case "symmetric":
-        for (var i = 1; i < nb_points-1; i++) {
+        for (var i = 1; i < nbPoints-1; i++) {
           derivatives[i] = [];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
-              this.control_points[i+1][j] - this.control_points[i-1][j];
+              this.controlPoints[i+1][j] - this.controlPoints[i-1][j];
           }
         }
         break;
@@ -111,16 +115,16 @@ FiberSource.prototype = {
           'incoming', 'outgoing', 'symmetric'");
     }
     for (var i = 0; i < derivatives.length; i++) {
-      var squared_derivative_norm = 0;
+      var squaredDerivativeNorm = 0;
       for (var j = 0; j < 3; j++) {
-          squared_derivative_norm += Math.pow(derivatives[i][j], 2);
+          squaredDerivativeNorm += Math.pow(derivatives[i][j], 2);
       }
-      var derivative_vector = [];
+      var derivativeVector = [];
       for (var j = 0; j < 3; j++) {
-          derivative_vector[j] = (derivatives[i][j]
-            /Math.sqrt(squared_derivative_norm))*length;
+          derivativeVector[j] = (derivatives[i][j]
+            /Math.sqrt(squaredDerivativeNorm))*length;
       }
-      derivatives[i] = derivative_vector;
+      derivatives[i] = derivativeVector;
     }
 
     // RETURN POLYNOMIALS
@@ -149,9 +153,9 @@ FiberSource.prototype = {
       }
       return array;
     }
-    this.xpoly = poly(ts, col(this.control_points, 0), col(derivatives, 0));
-    this.ypoly = poly(ts, col(this.control_points, 1), col(derivatives, 1));
-    this.zpoly = poly(ts, col(this.control_points, 2), col(derivatives, 2));
+    this.xpoly = poly(ts, col(this.controlPoints, 0), col(derivatives, 0));
+    this.ypoly = poly(ts, col(this.controlPoints, 1), col(derivatives, 1));
+    this.zpoly = poly(ts, col(this.controlPoints, 2), col(derivatives, 2));
     this.ts = ts;
     this.length = length;
   },
@@ -175,11 +179,10 @@ FiberSource.prototype = {
           timesteps.
   */
   // interp implements equation used for coefficients [a,b,c,d], described above.
-    var scale = this.scale;
     function interp(coef, t, ti, ti1) {
       factor = (t-ti) / (ti1-ti);
       return (coef[0] + coef[1]*factor + coef[2]*Math.pow(factor,2) +
-              coef[3]*Math.pow(factor,3)) * scale;
+              coef[3]*Math.pow(factor,3));
     }
     // Single value option
     if (ts.constructor !== Array) {
@@ -210,34 +213,48 @@ FiberSource.prototype = {
       }
     }
       return trajectory;
+  },
+  // Pushes an object to the observer list. Once added, will be notified.
+  addObserver: function(object) {
+    this.observers.push(object)
+  },
+  // Refreshes objects in the observer list
+  notify: function() {
+    for(var i = 0; i < this.observers.length; i++) {
+      this.observers[i].refresh();
+    }
+  },
+  // setControlPoint changes a control point for this Fiber.
+  // inputs: n (position in controlPoints array) and x, y, z coordinates.
+  setControlPoint: function(n, x, y, z) {
+    this.controlPoints[n] = [x, y, z];
+    this.polyCalc();
+    this.notify();
   }
+}
 
-  // recalc: function(control_point) {
-  //   function poly(t, p, pd) {
-  //     coef = [];
-  //     for (var i = 0; i < t.length-1; i++) {
-  //       coef[i] = [p[i],
-  //               (t[i+1]-t[i]) * pd[i],
-  //               3*p[i+1] - (t[i+1]-t[i])*pd[i+1] - 2*(t[i+1]-t[i])*pd[i] - 3*p[i],
-  //               (t[i+1]-t[i])*pd[i+1] - 2*p[i+1] + (t[i+1]-t[i])*pd[i] + 2*p[i]
-  //       ];
-  //     }
-  //     return coef;
-  //   }
-  //   // Col extracts columns for matrices as array-of-arrays.
-  //   function col(matrix, column) {
-  //     var array = [];
-  //     for (var i = 0; i < matrix.length; i++) {
-  //       array[i] = matrix[i][column];
-  //     }
-  //     return array;
-  //   }
-  //   for (var i = control_point-2; i < control_point+3; i++) {
-  //     this.xpoly[i] = poly([this.ts[i],this.ts[i+1]],
-  //                          [this.control_points[i][0],this.control_points[i+1][0],
-  //                          col(derivatives, 0));
-  //     this.ypoly[i] = poly(ts, col(control_points, 1), col(derivatives, 1));
-  //     this.zpoly[i] = poly(ts, col(control_points, 2), col(derivatives, 2));
-  //   }
-  // }
+// An isotropic region has a spherical shape
+function IsotropicRegionSource(center, radius) {
+  this.center = center;
+  this.radius = radius;
+  this.observers = [];
+}
+IsotropicRegionSource.prototype = {
+  // Refreshes objects in the observer list
+  notify: function() {
+    for(var i = 0; i < this.observers.length; i++) {
+      this.observers[i].refresh();
+    }
+  },
+  setCenter: function(x, y, z) {
+    this.center = [x, y, z];
+    this.notify();
+  },
+  setRadius: function(radius) {
+    this.radius = radius;
+    this.notify();
+  },
+  addObserver: function(object) {
+    this.observers.push(object)
+  }
 }
