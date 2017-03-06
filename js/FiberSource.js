@@ -26,21 +26,21 @@ function FiberSource(controlPoints, tangents, radius) {
   this.radius = radius;
 
   // Calculate coefficients
-  this.polycalc();
+  this.polyCalc();
 
   // FiberSource objects will act as subjects to FiberTube or FiberSkeleton
   this.observers = [];
 }
 
 /* FiberSource methods definition
-  'polycalc' calculates coefficients for each polynomial. Needed in constructor
+  'polyCalc' calculates coefficients for each polynomial. Needed in constructor
     and once any of the three FiberSource input change.
   'interpolate' goes from the continuous representation of FiberSource to a
   discretization to given timesteps (ts) between 0 and 1.
   Return is an array which lists [x y z] for each timestep.
 */
 FiberSource.prototype = {
-  polycalc: function() {
+  polyCalc: function() {
     /*
      When called, coefficients are calculated.
      This takes the FiberSource instance from control points, and a specified
@@ -51,9 +51,9 @@ FiberSource.prototype = {
      Timestamps normalized in [0,1] are also calculated in this.ts
    */
    // Take distance of each pair of given control points
-    nb_points = this.controlPoints.length;
+    nbPoints = this.controlPoints.length;
     var distances = [];
-    for (var i = 0; i < nb_points-1; i++) {
+    for (var i = 0; i < nbPoints-1; i++) {
       var squared_distance = 0;
       for (var j = 0; j < 3; j++) {
         squared_distance +=
@@ -63,11 +63,11 @@ FiberSource.prototype = {
     }
     // Make time interval proportional to distance between control points
     var ts = [0, distances[0]];
-    for (var i = 2; i < nb_points; i++) {
+    for (var i = 2; i < nbPoints; i++) {
       ts[i] = ts[i-1]+distances[i-1];
     }
     length = ts[ts.length - 1];
-    for (var i = 0; i < nb_points; i++) {
+    for (var i = 0; i < nbPoints; i++) {
       ts[i] /= length;
     }
 
@@ -76,15 +76,15 @@ FiberSource.prototype = {
     var derivatives = [];
     // For start and ending points; normal to the surface
     derivatives[0]=[];
-    derivatives[nb_points-1] = [];
+    derivatives[nbPoints-1] = [];
     for (var i = 0; i < 3; i++) {
       derivatives[0][i] = -this.controlPoints[0][i];
-      derivatives[nb_points-1][i] = this.controlPoints[nb_points-1][i];
+      derivatives[nbPoints-1][i] = this.controlPoints[nbPoints-1][i];
     }
     // As for other derivatives, we use discrete approx
     switch (this.tangents) {
       case "incoming":
-        for (var i = 1; i < nb_points-1; i++) {
+        for (var i = 1; i < nbPoints-1; i++) {
           derivatives[i] = [];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
@@ -93,7 +93,7 @@ FiberSource.prototype = {
         }
         break;
       case "outgoing":
-        for (var i = 1; i < nb_points-1; i++) {
+        for (var i = 1; i < nbPoints-1; i++) {
           derivatives[i]=[];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
@@ -102,7 +102,7 @@ FiberSource.prototype = {
         }
         break;
       case "symmetric":
-        for (var i = 1; i < nb_points-1; i++) {
+        for (var i = 1; i < nbPoints-1; i++) {
           derivatives[i] = [];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
@@ -228,7 +228,7 @@ FiberSource.prototype = {
   // inputs: n (position in controlPoints array) and x, y, z coordinates.
   SetControlPoint: function(n, x, y, z) {
     this.controlPoints[n] = [x, y, z];
-    this.polycalc();
+    this.polyCalc();
     this.notify();
   }
 }
