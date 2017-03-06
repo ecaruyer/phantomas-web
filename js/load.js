@@ -15,10 +15,10 @@ function loadPhantom( path ) {
       var fiber = loadedfibers[property.toString()];
       // Control points need to be transleted to array-of-arrays form
       var newcp = [];
-      for (var i = 0; i < fiber.controlPoints.length; i = i + 3) {
-        newcp.push([fiber.controlPoints[i],
-                    fiber.controlPoints[i+1],
-                    fiber.controlPoints[i+2]]);
+      for (var i = 0; i < fiber.control_points.length; i = i + 3) {
+        newcp.push([fiber.control_points[i],
+                    fiber.control_points[i+1],
+                    fiber.control_points[i+2]]);
       }
       phantom.addFiber(new FiberSource(newcp, fiber.tangents, fiber.radius));
     }
