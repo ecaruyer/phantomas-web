@@ -54,12 +54,12 @@ FiberSource.prototype = {
     nbPoints = this.controlPoints.length;
     var distances = [];
     for (var i = 0; i < nbPoints-1; i++) {
-      var squared_distance = 0;
+      var squareDistance = 0;
       for (var j = 0; j < 3; j++) {
-        squared_distance +=
+        squareDistance +=
           Math.pow(this.controlPoints[i+1][j] - this.controlPoints[i][j], 2);
       }
-      distances[i] = Math.sqrt(squared_distance);
+      distances[i] = Math.sqrt(squareDistance);
     }
     // Make time interval proportional to distance between control points
     var ts = [0, distances[0]];
@@ -115,16 +115,16 @@ FiberSource.prototype = {
           'incoming', 'outgoing', 'symmetric'");
     }
     for (var i = 0; i < derivatives.length; i++) {
-      var squared_derivative_norm = 0;
+      var squaredDerivativeNorm = 0;
       for (var j = 0; j < 3; j++) {
-          squared_derivative_norm += Math.pow(derivatives[i][j], 2);
+          squaredDerivativeNorm += Math.pow(derivatives[i][j], 2);
       }
-      var derivative_vector = [];
+      var derivativeVector = [];
       for (var j = 0; j < 3; j++) {
-          derivative_vector[j] = (derivatives[i][j]
-            /Math.sqrt(squared_derivative_norm))*length;
+          derivativeVector[j] = (derivatives[i][j]
+            /Math.sqrt(squaredDerivativeNorm))*length;
       }
-      derivatives[i] = derivative_vector;
+      derivatives[i] = derivativeVector;
     }
 
     // RETURN POLYNOMIALS
