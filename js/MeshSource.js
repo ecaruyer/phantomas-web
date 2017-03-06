@@ -30,7 +30,7 @@ colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
 */
 function FiberSkeleton(fiber) {
   this.fiber = fiber;
-  points = fiber.control_points;
+  points = fiber.controlPoints;
   this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
   // Segments by default
   this.segments = 256;
@@ -51,7 +51,7 @@ function FiberSkeleton(fiber) {
   // / Build line
   this.line = new THREE.Line(trajectory, thread);
 
-  // Create sphere mesh for control_points
+  // Create sphere mesh for controlPoints
   // sphere is the prototype sphere
   var sphere = new THREE.SphereGeometry(fiber.radius/5, 32, 32 );
   var sphereGeometry = new THREE.Geometry();

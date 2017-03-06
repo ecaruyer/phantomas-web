@@ -5,17 +5,17 @@ cortical areas.
 
 Parameters
 ----------
-control_points : array-of-arrays shape (N, 3)
+controlPoints : array-of-arrays shape (N, 3)
 tangents : 'incoming', 'outgoing', 'symmetric'
-radius : fiber radius; same dimensions as control_points.
+radius : fiber radius; same dimensions as controlPoints.
 [ deprecated ] scale : multiplication factor.
     This is useful when the coodinates are given dimensionless, and we
     want a specific size for the phantom.
 
 */
-function FiberSource(control_points, tangents, radius) {
+function FiberSource(controlPoints, tangents, radius) {
   // Initialize properties. By default tangents = 'symmetric', radius = 1.
-  this.control_points = control_points;
+  this.controlPoints = controlPoints;
   if (tangents === undefined) {
     tangents = 'symmetric';
   }
@@ -51,13 +51,13 @@ FiberSource.prototype = {
      Timestamps normalized in [0,1] are also calculated in this.ts
    */
    // Take distance of each pair of given control points
-    nb_points = this.control_points.length;
+    nb_points = this.controlPoints.length;
     var distances = [];
     for (var i = 0; i < nb_points-1; i++) {
       var squared_distance = 0;
       for (var j = 0; j < 3; j++) {
         squared_distance +=
-          Math.pow(this.control_points[i+1][j] - this.control_points[i][j], 2);
+          Math.pow(this.controlPoints[i+1][j] - this.controlPoints[i][j], 2);
       }
       distances[i] = Math.sqrt(squared_distance);
     }
@@ -78,8 +78,8 @@ FiberSource.prototype = {
     derivatives[0]=[];
     derivatives[nb_points-1] = [];
     for (var i = 0; i < 3; i++) {
-      derivatives[0][i] = -this.control_points[0][i];
-      derivatives[nb_points-1][i] = this.control_points[nb_points-1][i];
+      derivatives[0][i] = -this.controlPoints[0][i];
+      derivatives[nb_points-1][i] = this.controlPoints[nb_points-1][i];
     }
     // As for other derivatives, we use discrete approx
     switch (this.tangents) {
@@ -88,7 +88,7 @@ FiberSource.prototype = {
           derivatives[i] = [];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
-              this.control_points[i][j] - this.control_points[i-1][j];
+              this.controlPoints[i][j] - this.controlPoints[i-1][j];
           }
         }
         break;
@@ -97,7 +97,7 @@ FiberSource.prototype = {
           derivatives[i]=[];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
-              this.control_points[i+1][j] - this.control_points[i][j];
+              this.controlPoints[i+1][j] - this.controlPoints[i][j];
           }
         }
         break;
@@ -106,7 +106,7 @@ FiberSource.prototype = {
           derivatives[i] = [];
           for (var j = 0; j < 3; j++) {
             derivatives[i][j] =
-              this.control_points[i+1][j] - this.control_points[i-1][j];
+              this.controlPoints[i+1][j] - this.controlPoints[i-1][j];
           }
         }
         break;
@@ -153,9 +153,9 @@ FiberSource.prototype = {
       }
       return array;
     }
-    this.xpoly = poly(ts, col(this.control_points, 0), col(derivatives, 0));
-    this.ypoly = poly(ts, col(this.control_points, 1), col(derivatives, 1));
-    this.zpoly = poly(ts, col(this.control_points, 2), col(derivatives, 2));
+    this.xpoly = poly(ts, col(this.controlPoints, 0), col(derivatives, 0));
+    this.ypoly = poly(ts, col(this.controlPoints, 1), col(derivatives, 1));
+    this.zpoly = poly(ts, col(this.controlPoints, 2), col(derivatives, 2));
     this.ts = ts;
     this.length = length;
   },
@@ -225,9 +225,9 @@ FiberSource.prototype = {
     }
   },
   // SetControlPoint changes a control point for this Fiber.
-  // inputs: n (position in control_points array) and x, y, z coordinates.
+  // inputs: n (position in controlPoints array) and x, y, z coordinates.
   SetControlPoint: function(n, x, y, z) {
-    this.control_points[n] = [x, y, z];
+    this.controlPoints[n] = [x, y, z];
     this.polycalc();
     this.notify();
   }
