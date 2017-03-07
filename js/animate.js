@@ -1,6 +1,6 @@
 // An example of how to use Three.js to display a tubular shape.
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/isbi_challenge_2013.txt";
+var path = "examples/60crossing_3bundles.txt";
 
 init();
 
@@ -107,6 +107,14 @@ function show() { // The rendering engine is initialized
     }
   }
   window.addEventListener('keypress', keypress);
+  window.addEventListener( 'resize', onWindowResize, false );
+  function onWindowResize(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    render();
+  }
 
   animate();
 }
