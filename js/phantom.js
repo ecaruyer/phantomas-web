@@ -50,11 +50,11 @@ function Phantom() {
   this.fibers = {
     source: [],
     tube: [],
-    skeleton: [],
+    skeleton: []
   }
   this.isotropicRegions = {
     source: [],
-    sphere: [],
+    sphere: []
   }
   this.highlightOpacity = .3;
   this.highlightColor = null;

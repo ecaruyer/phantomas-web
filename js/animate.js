@@ -1,4 +1,3 @@
-// An example of how to use Three.js to display a tubular shape.
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 var path = "examples/60crossing_3bundles.txt";
 
@@ -20,6 +19,7 @@ function init() {
   request.onreadystatechange = function() {
     if ( (request.readyState === 4) && (request.status === 200) ) {
       show();
+      setupGUI();
     };
   };
   request.send(null);
@@ -75,38 +75,6 @@ function show() { // The rendering engine is initialized
   controls.noPan = true;
   controls.addEventListener('change', render);
 
-  var presscount = 0;
-  keypress = function() {
-    if (presscount/2 < phantom.fibers.source.length) {
-      if (presscount % 2 == 0) {
-        phantom.addToScene(scene);
-        phantom.fiberHighlight(presscount/2);
-        presscount++;
-      }
-      else {
-        phantom.addToScene(scene);
-        phantom.revealSkeleton(scene, (presscount-1)/2);
-        presscount++;
-      }
-    }
-    else if (presscount/2-phantom.fibers.source.length < phantom.isotropicRegions.source.length) {
-      phantom.addToScene(scene);
-      phantom.regionHighlight(presscount/2-phantom.fibers.source.length);
-      presscount+=2;
-    }
-    else if (presscount/2-phantom.fibers.source.length == phantom.isotropicRegions.source.length) {
-      scene.removePhantom();
-      phantom.addAsSkeleton(scene)
-      presscount++;
-    }
-    else {
-      scene.removePhantom();
-      phantom.addToScene(scene);
-      phantom.unfadeAll();
-      presscount = 0;
-    }
-  }
-  window.addEventListener('keypress', keypress);
   window.addEventListener( 'resize', onWindowResize, false );
   function onWindowResize(){
     camera.aspect = window.innerWidth / window.innerHeight;

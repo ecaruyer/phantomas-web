@@ -26,17 +26,12 @@
     <input type='button' value='yz' onclick='moveCameraYZ();'>
   </div>
   <div id="leftGUI">
-    PHANTOM
-    <br>
-    <input type="submit" onclick="phantom.addAsSkeleton(scene);" value="Geometry"/>
-    <br>
-    <input type="submit" onclick="phantom.addToScene(scene);" value="Fibers"/>
+    PHANTOM&nbsp;&nbsp;
+    <input type="submit" onclick="switchFiberViewMode();" value="Switch View"/>
     <br><br>
-    <select id="fibers" size="3" onmouseout="phantom.unfadeAll();">
-      <option value="1" onmouseover="phantom.fiberHighlight(0);">Primera fibra</option>
-      <option value="2" onmouseover="phantom.fiberHighlight(1);">Segona</option>
-      <option value="3" onmouseover="phantom.fiberHighlight(2);">Citron</option>
+    <select id="fiberSelector" size="7" onmouseout="fiberSelectOnMouseOut();">
     </select>
   </div>
+  <script type="text/javascript" src="gui/setup.js"></script>
 </body>
 </html>
