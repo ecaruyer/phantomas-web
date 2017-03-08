@@ -15,7 +15,23 @@
     <script type="text/javascript" src="js/load.js"></script>
     <script type="text/javascript" src="js/animate.js"></script>
     <script type="text/javascript" src="gui/functions.js"></script>
-    <script type="text/javascript" src="gui/setup.js"></script>
+    <!-- <script type="text/javascript" src="gui/setup.js"></script> -->
+  </div>
+  <div id="rightGUI">
+    NAVIGATION
+    <br>
+    <input type='button' value='xy' onclick='moveCameraXY();'>
+    <br>
+    <input type='button' value='xz' onclick='moveCameraXZ();'>
+    <br>
+    <input type='button' value='yz' onclick='moveCameraYZ();'>
+  </div>
+  <div id="leftGUI">
+    PHANTOM
+    <br>
+    <input type="submit" onclick="phantom.addAsSkeleton(scene);" value="Geometry"/>
+    <br>
+    <input type="submit" onclick="phantom.addToScene(scene);" value="Fibers"/>
   </div>
 </body>
 </html>

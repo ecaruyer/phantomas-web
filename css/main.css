@@ -9,23 +9,41 @@ canvas {
     display: block;
 }
 
-#toolbox {
-	margin-left: 1%;
-  width: 19%;
-	margin-bottom: 0;
-	padding: 0;
+#container {
+  position: absolute;
+}
+#leftGUI {
+  position: absolute;
+  text-align: left;
+
+	padding-left: 10px;
+  width: 20%;
+	padding-bottom: 10px;
+  padding-top: 10px;
 }
 
-#canvas {
-	margin-left: 20%;
-  width: 70%;
-	margin-bottom: 0;
-	padding: 0;
+#rightGUI {
+  position: absolute;
+  text-align: right;
+  width:99%;
+
+  padding-right: 10px;
+	padding-bottom: 10px;
+  padding-top: 10px;
 }
 
-#navbox {
+/*#navbox {
 	margin-left: 90%;
   width: 10%;
 	margin-bottom: 0;
 	padding: 0;
-}
+}*/
+/*leftDIV.style.position = 'absolute';
+leftDIV.style.left = '10px';
+leftDIV.style.width = '20%';
+leftDIV.style.textAlign = 'left';
+
+rightDIV.style.position = 'absolute';
+rightDIV.style.right = '10px';
+rightDIV.style.width = '20%';
+rightDIV.style.textAlign = 'right';*/
