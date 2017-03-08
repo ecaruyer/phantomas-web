@@ -130,6 +130,7 @@ Phantom.prototype = {
   addToScene: function(scene) {
     // Scene is cleared so that present meshes do not disturb
     scene.removePhantom();
+    this.unfadeAll();
     this.fibers.tube.forEach(function(tube) {
       scene.add(tube.mesh)
     });

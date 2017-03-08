@@ -115,6 +115,5 @@ function show() { // The rendering engine is initialized
     renderer.setSize( window.innerWidth, window.innerHeight );
     render();
   }
-
   animate();
 }
