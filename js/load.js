@@ -1,11 +1,13 @@
 // loadFibers returns a FiberSource array of fibers contained in a JSON file.
 function loadPhantom( request ) {
-
   var phantom = new Phantom();
   var loadedFibers = JSON.parse(request.response).fiber_geometries;
   var loadedRegions = JSON.parse(request.response).isotropic_regions;
+  nbLoads = 0;
+  if (loadedFibers) nbLoads += Object.keys(loadedFibers).length;
+  if (loadedRegions) nbLoads += Object.keys(loadedRegions).length;
   var parameters = {
-    nbElements: Object.keys(loadedFibers).length + Object.keys(loadedRegions).length 
+    nbElements: nbLoads
   };
 
   // Objects will be added in Phantom
