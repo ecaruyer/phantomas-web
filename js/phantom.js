@@ -35,7 +35,12 @@ THREE.Scene.prototype.removePhantom = function() {
 
   METHODS:
     addFiber: Adds a FiberSource (input) to the phantom. Automatically builds skeleton and tube.
+      Parameters are the ones set for SkeletonTube and TubeSource classes.
+      If not specified and nbFibers as number of Fibers, addFiber decides parameters for best reliability.
     addIsotropicRegion: Adds IsotropicRegionSource (input). Builds sphere.
+     Parameters are the ones set for IsotropicRegion class.
+     Parameters are the ones set for SkeletonTube and TubeSource classes.
+     If not specified and nbFibers as number of Fibers, addIsotropicRegion decides parameters for best reliability.
     radius: Returns an approximate radius of the phantom. Usually used for positioning camera.
     resetColors: Brings original color back to meshes
     fadeAll: Fades all the meshes. Optional input: wanted opacity.
@@ -61,23 +66,26 @@ function Phantom() {
 }
 
 Phantom.prototype = {
-  addFiber: function(fiber) {
+  addFiber: function(fiber, parameters) {
+    if (!parameters) var parameters = [];
+
+
     this.fibers.source.push(fiber);
-    this.fibers.tube.push(new FiberTube(fiber));
     this.fibers.skeleton.push(new FiberSkeleton(fiber));
     // Skeleton's thread and fiber's tube will adopt the same color
-    this.fibers.tube[this.fibers.tube.length-1].color =
-      this.fibers.skeleton[this.fibers.skeleton.length-1].color;
-    this.fibers.tube[this.fibers.tube.length-1].mesh.material.color =
-      this.fibers.skeleton[this.fibers.skeleton.length-1].color;
+    var color = this.fibers.skeleton[this.fibers.skeleton.length-1].color;
+    this.fibers.tube.push(new FiberTube(fiber,{color: color}));
 
     // Skeleton and Tube added as observers.
     fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);
     fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
   },
-  addIsotropicRegion: function(region) {
+  addIsotropicRegion: function(region, parameters) {
+    if (!parameters) var parameters = [];
+
+
     this.isotropicRegions.source.push(region);
-    this.isotropicRegions.sphere.push(new IsotropicRegion(region));
+    this.isotropicRegions.sphere.push(new IsotropicRegion(region, parameters));
 
     region.addObserver(this.isotropicRegions.sphere[this.isotropicRegions.sphere.length]);
   },
