@@ -3,6 +3,7 @@ var path = "examples/60crossing_3bundles.txt";
 
 init();
 
+
 function render() {
   renderer.render(scene, camera);
 }
@@ -20,6 +21,7 @@ function init() {
     if ( (request.readyState === 4) && (request.status === 200) ) {
       show();
       setupGUI();
+      }
     };
   };
   request.send(null);

@@ -3,13 +3,12 @@ function setupGUI() {
   phantom.fibers.source.forEach( function(fiber, index) {
     // var color = phantom.fibers.tube[index].color.getHex().toString(16);
     // color = '0'.repeat(6-color.length) + color;
-    // var string = '<option style="background-color:#';
-    // string += phantom.fibers.tube[index].color.getHex().toString(16);
-    // console.log(phantom.fibers.tube[index].color.getHex().toString(16));
-    // console.log(phantom.fibers.tube[index].color.getHex());
+    var string = '<option style="background-color:';
+    string += phantom.fibers.tube[index].color.getStyle();
+    console.log(phantom.fibers.tube[index]);
     // console.log(color);
-    // string += '" onmouseover="phantom.fiberHighlight(';
-    var string = '<option onmouseover="phantom.fiberHighlight(';
+    string += '" onmouseover="phantom.fiberHighlight(';
+    // var string = '<option onmouseover="phantom.fiberHighlight(';
     string += index.toString();
     string += ');">';
     string += index.toString();
