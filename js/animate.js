@@ -1,5 +1,5 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/60crossing_3bundles.txt";
+var path = "examples/3Dfanning_13bundles.txt";
 
 init();
 
