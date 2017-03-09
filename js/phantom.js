@@ -36,11 +36,11 @@ THREE.Scene.prototype.removePhantom = function() {
   METHODS:
     addFiber: Adds a FiberSource (input) to the phantom. Automatically builds skeleton and tube.
       Parameters are the ones set for SkeletonTube and TubeSource classes.
-      If not specified and nbFibers as number of Fibers, addFiber decides parameters for best reliability.
+      If not specified and nbElements as number of Fibers, addFiber decides parameters for best reliability.
     addIsotropicRegion: Adds IsotropicRegionSource (input). Builds sphere.
      Parameters are the ones set for IsotropicRegion class.
      Parameters are the ones set for SkeletonTube and TubeSource classes.
-     If not specified and nbFibers as number of Fibers, addIsotropicRegion decides parameters for best reliability.
+     If not specified and nbElements as number of Fibers, addIsotropicRegion decides parameters for best reliability.
     radius: Returns an approximate radius of the phantom. Usually used for positioning camera.
     resetColors: Brings original color back to meshes
     fadeAll: Fades all the meshes. Optional input: wanted opacity.
@@ -61,20 +61,28 @@ function Phantom() {
     source: [],
     sphere: []
   }
-  this.highlightOpacity = .3;
+  this.highlightOpacity = 0.1;
   this.highlightColor = null;
 }
 
 Phantom.prototype = {
   addFiber: function(fiber, parameters) {
     if (!parameters) var parameters = [];
-
+    if ((parameters.nbElements) && (!parameters.axialSegments) && (!parameters.radialSegments)) {
+      parameters.axialSegments = Math.min(Math.floor(1440 / parameters.nbElements), 256);
+      parameters.radialSegments = Math.min(Math.floor(480 / parameters.nbElements), 64);
+    }
+    if ((parameters.nbElements) && (!parameters.lineSegments) && (!parameters.sphereSegments)) {
+      parameters.axialSegments = Math.min(Math.floor(1920 / parameters.nbElements), 256);
+      parameters.sphereSegments = Math.min(Math.floor(1920 / parameters.nbElements), 256);
+    }
 
     this.fibers.source.push(fiber);
-    this.fibers.skeleton.push(new FiberSkeleton(fiber));
+    this.fibers.skeleton.push(new FiberSkeleton(fiber, parameters));
     // Skeleton's thread and fiber's tube will adopt the same color
-    var color = this.fibers.skeleton[this.fibers.skeleton.length-1].color;
-    this.fibers.tube.push(new FiberTube(fiber,{color: color}));
+    parameters.color = this.fibers.skeleton[this.fibers.skeleton.length-1].color;
+    this.fibers.tube.push(new FiberTube(fiber, parameters));
+    parameters.color = undefined;
 
     // Skeleton and Tube added as observers.
     fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);
@@ -82,7 +90,10 @@ Phantom.prototype = {
   },
   addIsotropicRegion: function(region, parameters) {
     if (!parameters) var parameters = [];
-
+    if ((parameters.nbElements) && (!parameters.heightSegments) && (!parameters.widthSegments)) {
+      parameters.heightSegments = Math.min(Math.floor(1024 / parameters.nbElements), 128);
+      parameters.widthSegments = Math.min(Math.floor(2048 / parameters.nbElements), 32);
+    }
 
     this.isotropicRegions.source.push(region);
     this.isotropicRegions.sphere.push(new IsotropicRegion(region, parameters));

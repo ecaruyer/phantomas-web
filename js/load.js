@@ -4,10 +4,9 @@ function loadPhantom( request ) {
   var phantom = new Phantom();
   var loadedFibers = JSON.parse(request.response).fiber_geometries;
   var loadedRegions = JSON.parse(request.response).isotropic_regions;
-  parameters = {
-    nbFibers: Object.keys(loadedFibers).length,
-    nbRegions: Object.keys(loadedRegions).length
-  }
+  var parameters = {
+    nbElements: Object.keys(loadedFibers).length + Object.keys(loadedRegions).length 
+  };
 
   // Objects will be added in Phantom
   for (var property in loadedFibers) {
@@ -20,13 +19,13 @@ function loadPhantom( request ) {
                     fiber.control_points[i+1],
                     fiber.control_points[i+2]]);
       }
-      phantom.addFiber(new FiberSource(newcp, fiber.tangents, fiber.radius));
+      phantom.addFiber(new FiberSource(newcp, fiber.tangents, fiber.radius), parameters);
     }
   }
   for (var property in loadedRegions) {
     if (loadedRegions.hasOwnProperty(property)) {
       var region = loadedRegions[property.toString()];
-      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, region.radius));
+      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, region.radius), parameters);
     }
   }
 
