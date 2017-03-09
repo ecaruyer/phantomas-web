@@ -1,5 +1,5 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/3Dfanning_13bundles.txt";
+var path = "examples/60crossing_3bundles.txt";
 
 init();
 
@@ -32,7 +32,6 @@ function show() { // The rendering engine is initialized
 
   // It is appended to the div container in the HTML5 tree
   document.getElementById('container').appendChild(renderer.domElement);
-  var k=0;
 
   // We create a scene and a camera. Position is to be corrected further in the code.
   camera = new THREE.PerspectiveCamera(50,
@@ -83,6 +82,8 @@ function show() { // The rendering engine is initialized
 
     renderer.setSize( window.innerWidth, window.innerHeight );
     render();
+
+    resizeGUI();
   }
   animate();
 }
