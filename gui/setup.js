@@ -1,24 +1,18 @@
 function setupGUI() {
   var fiberSelector = document.getElementById("fiberSelector");
   phantom.fibers.source.forEach( function(fiber, index) {
-    // var color = phantom.fibers.tube[index].color.getHex().toString(16);
-    // color = '0'.repeat(6-color.length) + color;
-    var string = '<option style="background-color:';
+    var string = '\n<option style="background-color:';
     string += phantom.fibers.tube[index].color.getStyle();
-    console.log(phantom.fibers.tube[index]);
-    // console.log(color);
-    string += '" onmouseover="phantom.fiberHighlight(';
-    // var string = '<option onmouseover="phantom.fiberHighlight(';
+    string +='" onmouseover="phantom.fiberHighlight(';
     string += index.toString();
     string += ');">';
     string += index.toString();
     string += ': ';
-    string += Math.floor(fiber.controlPoints.length);
-    string += ' CP';
-    string += '</option>\
-    ';
+    string += fiber.controlPoints.length.toString();
+    string += ' Points</option>\n';
     fiberSelector.innerHTML += string;
   });
+  // console.log(fiberSelector.innerHTML);
 }
 
 // fiberSelector.innerHTML='<option style="background-color:#FF0000" value="1" onmouseover="phantom.fiberHighlight(0);">Primera fibra</option>'

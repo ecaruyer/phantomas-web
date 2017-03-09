@@ -23,7 +23,6 @@ function init() {
       setupGUI();
       }
     };
-  };
   request.send(null);
 }
 
