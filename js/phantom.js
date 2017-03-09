@@ -73,8 +73,8 @@ Phantom.prototype = {
       parameters.radialSegments = Math.min(Math.floor(480 / parameters.nbElements), 64);
     }
     if ((parameters.nbElements) && (!parameters.lineSegments) && (!parameters.sphereSegments)) {
-      parameters.axialSegments = Math.min(Math.floor(1920 / parameters.nbElements), 256);
-      parameters.sphereSegments = Math.min(Math.floor(1920 / parameters.nbElements), 256);
+      parameters.axialSegments = Math.min(Math.floor(960 / parameters.nbElements), 256);
+      parameters.sphereSegments = Math.min(Math.floor(240 / parameters.nbElements), 256);
     }
 
     this.fibers.source.push(fiber);
