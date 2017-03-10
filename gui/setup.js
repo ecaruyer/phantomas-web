@@ -20,10 +20,12 @@ function setupGUI() {
     var fiberSelector = document.getElementById("fiberSelector");
     phantom.fibers.source.forEach( function(fiber, index) {
       var backgroundColor = phantom.fibers.tube[index].color;
-      var textColor = backgroundColor.clone();
-      var hsl = textColor.getHSL();
-      textColor.setHSL(((hsl.h*360 + 90) % 360)/360, hsl.s, .2);
-
+      if (backgroundColor.getHSL().l > 0.4) {
+        var textColor = new THREE.Color(0x000000);
+      } else {
+        var textColor = new THREE.Color(0xFFFFFF);
+      }
+      
       var string = '\n<option style="background-color:';
       string += backgroundColor.getStyle();
       string +='; color:'
@@ -45,9 +47,11 @@ function setupGUI() {
   if (phantom.isotropicRegions.source.length > 0) {
     phantom.isotropicRegions.source.forEach( function(region, index) {
       var backgroundColor = phantom.isotropicRegions.sphere[index].color;
-      var textColor = backgroundColor.clone();
-      var hsl = textColor.getHSL();
-      textColor.setHSL(((hsl.h*360 + 90) % 360)/360, hsl.s, .2);
+      if (backgroundColor.getHSL().l > 0.4) {
+        var textColor = new THREE.Color(0x000000);
+      } else {
+        var textColor = new THREE.Color(0xFFFFFF);
+      }
 
       var string = '\n<option style="background-color:';
       string += backgroundColor.getStyle();
@@ -70,7 +74,7 @@ function setupGUI() {
 // Resizes selector objects so those just take specified height percentage
 function resizeGUI() {
   // Space is the height amount in screen heights that selector objects will take.
-  var space = .6;
+  var height = .6;
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
@@ -78,7 +82,7 @@ function resizeGUI() {
   var fiberNumber = phantom.fibers.source.length;
   var regionNumber = phantom.isotropicRegions.source.length;
 
-  var maxsize = Math.floor( countDocumentLines() * space/2 );
+  var maxsize = Math.floor( countDocumentLines() * height/2 );
   var minsize = 2;
 
   fiberSelector.size = Math.min(maxsize, Math.max(fiberNumber, minsize));
