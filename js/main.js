@@ -1,5 +1,5 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/3Dfanning_13bundles.txt";
+var path = "examples/isbi_challenge_2013.txt";
 var container = document.getElementById('container');
 
 init();
@@ -72,7 +72,7 @@ function show() { // The rendering engine is initialized
   controls.enableZoom = true;
   controls.rotateSpeed = 2.5;
   controls.zoomSpeed = 1;
-  controls.noPan = true;
+  controls.noPan = false;
   controls.addEventListener('change', render);
 
   window.addEventListener( 'resize', onWindowResize, false );

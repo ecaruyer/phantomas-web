@@ -21,14 +21,30 @@ function switchFiberViewMode() {
 
 
 // FIBER OPTION SELECTOR
-function fiberSelectOnMouseOut() {
-  if (checkSkeleton()) {
-    phantom.fadeAll();
-  }
-  else {
-    phantom.unfadeAll();
+function selectOnMouseOut() {
+  if (document.getElementById("fiberSelector").selectedIndex > 0) {
+    fiberSelectClick(document.getElementById("fiberSelector").selectedIndex - 1, true);
+  } else if (document.getElementById("regionSelector").selectedIndex > 0) {
+      regionSelectClick(document.getElementById("regionSelector").selectedIndex - 1, true);
+  } else {
+    if (checkSkeleton()) {
+      phantom.fadeAll();
+    } else {
+      phantom.unfadeAll();
+    }
   }
 }
+
+function fiberSelectClick(index, disableRegionSelect) {
+  if (!disableRegionSelect) {document.getElementById("regionSelector").selectedIndex = 0;}
+  phantom.revealSkeleton(scene, index);
+}
+function regionSelectClick(index, disableFiberSelect) {
+  if (!disableFiberSelect) {document.getElementById("fiberSelector").selectedIndex = 0;}
+  phantom.addToScene(scene);
+  phantom.regionHighlight(index, .05);
+}
+
 
 // PLANE SELECTORS
 function moveCameraXY() {
