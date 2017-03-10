@@ -25,19 +25,13 @@ function setupGUI() {
       } else {
         var textColor = new THREE.Color(0xFFFFFF);
       }
-      
-      var string = '\n<option style="background-color:';
-      string += backgroundColor.getStyle();
-      string +='; color:'
-      string += textColor.getStyle();
-      string +='" onmouseover="phantom.fiberHighlight(';
-      string += index.toString();
-      string += ');">';
-      string += index.toString();
-      string += ': ';
-      string += fiber.controlPoints.length.toString();
-      string += ' Points</option>\n';
-      fiberSelector.innerHTML += string;
+
+      var option = document.createElement("option");
+      option.style.backgroundColor = backgroundColor.getStyle();
+      option.style.color = textColor.getStyle();
+      option.onmouseover = function() {phantom.fiberHighlight(index);};
+      option.text = index.toString() + " - " + fiber.controlPoints.length.toString() + " points";
+      fiberSelector.options.add(option);
     });
   } else {
     fiberSelector.innerHTML = '<option>(any)</option>';
@@ -53,18 +47,12 @@ function setupGUI() {
         var textColor = new THREE.Color(0xFFFFFF);
       }
 
-      var string = '\n<option style="background-color:';
-      string += backgroundColor.getStyle();
-      string +='; color:'
-      string += textColor.getStyle();
-      string += '" onmouseover="phantom.regionHighlight(';
-      string += index.toString();
-      string += ');">';
-      string += index.toString();
-      string += ': ';
-      string += region.center.toString();
-      string += '</option>\n';
-      regionSelector.innerHTML += string;
+      var option = document.createElement("option");
+      option.style.backgroundColor = backgroundColor.getStyle();
+      option.style.color = textColor.getStyle();
+      option.onmouseover = function() {phantom.regionHighlight(index);};
+      option.text = index.toString() + " - radius " + region.radius.toString();
+      regionSelector.options.add(option);
     });
   } else {
     regionSelector.innerHTML = '<option>(any)</option>';
@@ -74,7 +62,7 @@ function setupGUI() {
 // Resizes selector objects so those just take specified height percentage
 function resizeGUI() {
   // Space is the height amount in screen heights that selector objects will take.
-  var height = .6;
+  var height = .4;
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
