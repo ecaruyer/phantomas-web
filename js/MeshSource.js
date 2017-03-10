@@ -37,6 +37,7 @@ function FiberSkeleton(fiber, parameters) {
   this.fiber = fiber;
   points = fiber.controlPoints;
 
+  // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
     this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
@@ -143,7 +144,7 @@ function FiberTube(fiber, parameters) {
   // Check if radius was specified. If not, set default.
   if (fiber.radius === undefined) fiber.radius = 1;
   this.radius = fiber.radius;
-  // Other parameters. If not specified, default.
+  // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
     this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
@@ -208,7 +209,8 @@ FiberTube.prototype.refresh = function() {
 */
 function IsotropicRegion(source, parameters) {
   this.source = source;
-
+  
+  // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
     this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);

@@ -67,14 +67,18 @@ function setupGUI() {
   }
 }
 
+// Resizes selector objects so those just take specified height percentage
 function resizeGUI() {
+  // Space is the height amount in screen heights that selector objects will take.
+  var space = .6;
+
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
 
   var fiberNumber = phantom.fibers.source.length;
   var regionNumber = phantom.isotropicRegions.source.length;
 
-  var maxsize = Math.floor( countDocumentLines() * .3 );
+  var maxsize = Math.floor( countDocumentLines() * space/2 );
   var minsize = 2;
 
   fiberSelector.size = Math.min(maxsize, Math.max(fiberNumber, minsize));

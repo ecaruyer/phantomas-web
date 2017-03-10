@@ -3,6 +3,7 @@ function loadPhantom( request ) {
   var phantom = new Phantom();
   var loadedFibers = JSON.parse(request.response).fiber_geometries;
   var loadedRegions = JSON.parse(request.response).isotropic_regions;
+  // Send number of elements as parameters to addFiber and addIsotropicRegion
   nbLoads = 0;
   if (loadedFibers) nbLoads += Object.keys(loadedFibers).length;
   if (loadedRegions) nbLoads += Object.keys(loadedRegions).length;

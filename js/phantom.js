@@ -67,6 +67,7 @@ function Phantom() {
 
 Phantom.prototype = {
   addFiber: function(fiber, parameters) {
+    // If not specified, set segments constrainct so renderer is stable in browser
     if (!parameters) var parameters = [];
     if ((parameters.nbElements) && (!parameters.axialSegments) && (!parameters.radialSegments)) {
       parameters.axialSegments = Math.min(Math.floor(1440 / parameters.nbElements), 256);
@@ -89,6 +90,7 @@ Phantom.prototype = {
     fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
   },
   addIsotropicRegion: function(region, parameters) {
+    // If not specified, set segments constrainct so renderer is stable in browser
     if (!parameters) var parameters = [];
     if ((parameters.nbElements) && (!parameters.heightSegments) && (!parameters.widthSegments)) {
       parameters.heightSegments = Math.min(Math.floor(1024 / parameters.nbElements), 128);
