@@ -1,5 +1,6 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/fibers.txt";
+var path = "examples/3Dfanning_13bundles.txt";
+var container = document.getElementById('container');
 
 init();
 
@@ -28,14 +29,13 @@ function init() {
 
 function show() { // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
+  renderer.setSize(container.offsetWidth, window.innerHeight*.98);
   // It is appended to the div container in the HTML5 tree
-  document.getElementById('container').appendChild(renderer.domElement);
+  container.appendChild(renderer.domElement);
 
   // We create a scene and a camera. Position is to be corrected further in the code.
   camera = new THREE.PerspectiveCamera(50,
-                                       window.innerWidth / window.innerHeight,
+                                       container.offsetWidth / (window.innerHeight*.98),
                                        1,
                                        10000);
   camera.position.set(0, 0, 0);
@@ -68,7 +68,7 @@ function show() { // The rendering engine is initialized
   // KeyPress consecution loop for features show.
 
   // Add mouse control to the camera
-  controls = new THREE.TrackballControls( camera );
+  controls = new THREE.TrackballControls( camera , renderer.domElement );
   controls.enableZoom = true;
   controls.rotateSpeed = 2.5;
   controls.zoomSpeed = 1;
@@ -77,10 +77,10 @@ function show() { // The rendering engine is initialized
 
   window.addEventListener( 'resize', onWindowResize, false );
   function onWindowResize(){
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = container.offsetWidth / (window.innerHeight*.98);
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( container.offsetWidth, window.innerHeight*.98);
     render();
 
     resizeGUI();

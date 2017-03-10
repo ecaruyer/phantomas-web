@@ -2,6 +2,8 @@ hml, body, div {
   margin: 0;
   padding: 0;
   color: white;
+  background-color: black;
+  height:98%;
 }
 
 canvas {
@@ -9,25 +11,38 @@ canvas {
     display: block;
 }
 
-#container {
-  position: absolute;
-}
-
 #leftGUI {
-  position: absolute;
+  float:left;
   text-align: left;
+  display: block;
 
 	padding-left: 1%;
-  width: 20%;
-	padding-bottom: 10px;
-  padding-top: 10px;
+  padding-right: 0;
+  width: 14%;
+	margin-bottom: 1%;
+  margin-top: 1%;
 }
-#rightGUI {
-  position: absolute;
-  text-align: right;
-  width:99%;
 
-  padding-right: 10px;
-	padding-bottom: 10px;
-  padding-top: 10px;
+#container {
+  display:inline-block;
+  /*position: absolute;*/
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+
+  width: 70%;
+}
+
+#rightGUI {
+  float:right;
+  /*position: absolute;*/
+  text-align: right;
+  width: 14%;
+  display: block;
+
+  margin-right: 1%;
+  padding-right: 0;
+	margin-bottom: 1%;
+  margin-top: 1%;
 }
