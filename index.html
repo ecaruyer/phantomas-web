@@ -6,13 +6,35 @@
     <link  href="css/main.css" rel="stylesheet"/>
   </head>
 <body>
-  <div id="container"></div>
-  <script type="text/javascript" src="js/three.min.js"></script>
-  <script type="text/javascript" src="js/TrackballControls.js"></script>
-  <script type="text/javascript" src="js/FiberSource.js"></script>
-  <script type="text/javascript" src="js/MeshSource.js"></script>
-  <script type="text/javascript" src="js/phantom.js"></script>
-  <script type="text/javascript" src="js/load.js"></script>
-  <script type="text/javascript" src="js/animate.js"></script>
+  <div id="container">
+    <script type="text/javascript" src="js/three.min.js"></script>
+    <script type="text/javascript" src="js/TrackballControls.js"></script>
+    <script type="text/javascript" src="js/FiberSource.js"></script>
+    <script type="text/javascript" src="js/MeshSource.js"></script>
+    <script type="text/javascript" src="js/phantom.js"></script>
+    <script type="text/javascript" src="js/load.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="gui/functions.js"></script>
+  </div>
+  <div id="rightGUI">
+    NAVIGATION
+    <br>
+    <input type='button' value='xy' onclick='moveCameraXY();'>
+    <br>
+    <input type='button' value='xz' onclick='moveCameraXZ();'>
+    <br>
+    <input type='button' value='yz' onclick='moveCameraYZ();'>
+  </div>
+  <div id="leftGUI">
+    PHANTOM&nbsp;&nbsp;
+    <input type="submit" onclick="switchFiberViewMode();" value="Switch View"/>
+    <br><br>
+    <select id="fiberSelector" style="width:120px" size="10" onmouseout="fiberSelectOnMouseOut();">
+    </select>
+    <br>
+    <select id="regionSelector" style="width:120px" size="10" onmouseout="fiberSelectOnMouseOut();">
+    </select>
+  </div>
+  <script type="text/javascript" src="gui/setup.js"></script>
 </body>
 </html>

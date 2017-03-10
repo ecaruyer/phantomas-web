@@ -1,25 +1,37 @@
-// An example of how to use Three.js to display a tubular shape.
-var mesh, renderer, scene, camera, directionalLight, controls, phantom;
+var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
+var path = "examples/isbi_challenge_2013.txt";
+
 init();
-animate();
+
 
 function render() {
   renderer.render(scene, camera);
 }
+
 function animate() {
   requestAnimationFrame( animate );
   controls.update();
 }
 
 function init() {
+  request = new XMLHttpRequest();
+  request.overrideMimeType("text/plain");
+  request.open("get", path, true);
+  request.onreadystatechange = function() {
+    if ( (request.readyState === 4) && (request.status === 200) ) {
+      show();
+      setupGUI();
+      }
+    };
+  request.send(null);
+}
 
-  // The rendering engine is initialized
+function show() { // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   // It is appended to the div container in the HTML5 tree
   document.getElementById('container').appendChild(renderer.domElement);
-  var k=0;
 
   // We create a scene and a camera. Position is to be corrected further in the code.
   camera = new THREE.PerspectiveCamera(50,
@@ -46,7 +58,7 @@ function init() {
   }
 
   // Load phantom and add it in the scene
-  phantom = loadPhantom("examples/fibers.txt");
+  phantom = loadPhantom( request );
   phantom.highlightOpacity = .2;
   phantom.addToScene(scene);
   camera.position.z = phantom.radius()*1.5;
@@ -54,44 +66,24 @@ function init() {
   renderer.render(scene, camera);
 
   // KeyPress consecution loop for features show.
-  var presscount = 0;
-  keypress = function() {
-    if (presscount/2 < phantom.fibers.source.length) {
-      if (presscount % 2 == 0) {
-        phantom.addToScene(scene);
-        phantom.fiberHighlight(presscount/2);
-        presscount++;
-      }
-      else {
-        phantom.addToScene(scene);
-        phantom.revealSkeleton(scene, (presscount-1)/2);
-        presscount++;
-      }
-    }
-    else if (presscount/2-phantom.fibers.source.length < phantom.isotropicRegions.source.length) {
-      phantom.addToScene(scene);
-      phantom.regionHighlight(presscount/2-phantom.fibers.source.length);
-      presscount+=2;
-    }
-    else if (presscount/2-phantom.fibers.source.length == phantom.isotropicRegions.source.length) {
-      scene.removePhantom();
-      phantom.addAsSkeleton(scene)
-      presscount++;
-    }
-    else {
-      scene.removePhantom();
-      phantom.addToScene(scene);
-      phantom.unfadeAll();
-      presscount = 0;
-    }
-  }
-  window.addEventListener('keypress', keypress);
 
   // Add mouse control to the camera
   controls = new THREE.TrackballControls( camera );
   controls.enableZoom = true;
   controls.rotateSpeed = 2.5;
   controls.zoomSpeed = 1;
-  controls.noPan=true;
+  controls.noPan = true;
   controls.addEventListener('change', render);
+
+  window.addEventListener( 'resize', onWindowResize, false );
+  function onWindowResize(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    render();
+
+    resizeGUI();
+  }
+  animate();
 }
