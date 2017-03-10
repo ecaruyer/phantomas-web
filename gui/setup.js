@@ -20,17 +20,19 @@ function setupGUI() {
     var fiberSelector = document.getElementById("fiberSelector");
     phantom.fibers.source.forEach( function(fiber, index) {
       var backgroundColor = phantom.fibers.tube[index].color;
-      if (backgroundColor.getHSL().l > 0.4) {
-        var textColor = new THREE.Color(0x000000);
-      } else {
-        var textColor = new THREE.Color(0xFFFFFF);
-      }
 
       var option = document.createElement("option");
-      option.style.backgroundColor = backgroundColor.getStyle();
-      option.style.color = textColor.getStyle();
+      var selectColorSpan = document.createElement("span");
+      var selectTextSpan = document.createElement("span");
+      selectColorSpan.style.color = backgroundColor.getStyle();
+      selectColorSpan.innerHTML = '&#9632;&nbsp;';
+
+      selectTextSpan.innerHTML = fiber.controlPoints.length.toString() + " points";
+
+      option.appendChild(selectColorSpan);
+      option.appendChild(selectTextSpan);
+
       option.onmouseover = function() {phantom.fiberHighlight(index);};
-      option.text = index.toString() + " - " + fiber.controlPoints.length.toString() + " points";
       fiberSelector.options.add(option);
     });
   } else {
@@ -41,17 +43,19 @@ function setupGUI() {
   if (phantom.isotropicRegions.source.length > 0) {
     phantom.isotropicRegions.source.forEach( function(region, index) {
       var backgroundColor = phantom.isotropicRegions.sphere[index].color;
-      if (backgroundColor.getHSL().l > 0.4) {
-        var textColor = new THREE.Color(0x000000);
-      } else {
-        var textColor = new THREE.Color(0xFFFFFF);
-      }
 
       var option = document.createElement("option");
-      option.style.backgroundColor = backgroundColor.getStyle();
-      option.style.color = textColor.getStyle();
+      var selectColorSpan = document.createElement("span");
+      var selectTextSpan = document.createElement("span");
+      selectColorSpan.style.color = backgroundColor.getStyle();
+      selectColorSpan.innerHTML = '&#9632;&nbsp;';
+
+      selectTextSpan.innerHTML = "radius " + region.radius.toString();
+
+      option.appendChild(selectColorSpan);
+      option.appendChild(selectTextSpan);
+
       option.onmouseover = function() {phantom.regionHighlight(index);};
-      option.text = index.toString() + " - radius " + region.radius.toString();
       regionSelector.options.add(option);
     });
   } else {
