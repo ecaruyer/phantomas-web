@@ -92,8 +92,8 @@ function resizeGUI() {
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
 
-  var fiberNumber = phantom.fibers.source.length;
-  var regionNumber = phantom.isotropicRegions.source.length;
+  var fiberNumber = phantom.fibers.source.length + 1;
+  var regionNumber = phantom.isotropicRegions.source.length + 1;
 
   var maxsize = Math.floor( countDocumentLines() * height/2 );
   var minsize = 2;
