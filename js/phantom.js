@@ -7,6 +7,8 @@ THREE.Scene.prototype.removePhantom = function() {
       objects.push(object);
     }
   });
+
+  var scene = this;
   // If removed inside scene's forEach, length is changed and so algorithm may skip some objects removal.
   objects.forEach( function(object) {
     scene.remove(object);
