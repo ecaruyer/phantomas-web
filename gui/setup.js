@@ -1,3 +1,46 @@
+var status;
+function Status() {
+  // Using two properties:
+    // editingFiber -> fiber currently being edited
+    // editingCP -> CP of the fiber in current edition
+    // editingRegion -> region currently being edited.
+  // editingFiber and editingRegion must never be defined at the same time.
+
+  // Featuring two methods:
+    // editing, which recieves as input:
+      // element, with 'fiber', 'CP' or 'region' as string value.
+      // index, which specifies its index
+    // viewing, which removes any editing state. Constructor leaves status this way.
+
+    this.editing = function(element, index) {
+      switch (element) {
+        case 'fiber':
+          this.viewing();
+          this.editingFiber = index;
+          break;
+        case 'CP':
+          if (!this.editingFiber) {
+            console.error('Tried to edit CP with any fiber in edit!');
+            break;
+          }
+          this.editingCP = index;
+          break;
+        case 'region':
+          this.viewing();
+          this.editingRegion = index;
+          break;
+        default: console.error('Element string in status was not correct');
+      }
+    }
+    this.viewing = function() {
+      this.editingFiber = undefined;
+      this.editingCP = undefined;
+      this.editingRegion = undefined;
+    }
+
+    this.viewing();
+}
+
 function countDocumentLines() {
   function getLineHeight(element){
     var temp = document.createElement(element.nodeName);
@@ -16,6 +59,8 @@ function countDocumentLines() {
 
 function setupGUI() {
   resizeGUI();
+  status = new Status;
+
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
 
