@@ -29,13 +29,13 @@ function init() {
 
 function show() { // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
-  renderer.setSize(container.offsetWidth, window.innerHeight*.98);
+  renderer.setSize(container.offsetWidth, window.innerHeight - 2);
   // It is appended to the div container in the HTML5 tree
   container.appendChild(renderer.domElement);
 
   // We create a scene and a camera. Position is to be corrected further in the code.
   camera = new THREE.PerspectiveCamera(50,
-                                       container.offsetWidth / (window.innerHeight*.98),
+                                       container.offsetWidth / (window.innerHeight - 2),
                                        1,
                                        10000);
   camera.position.set(0, 0, 0);
@@ -77,10 +77,10 @@ function show() { // The rendering engine is initialized
 
   window.addEventListener( 'resize', onWindowResize, false );
   function onWindowResize(){
-    camera.aspect = container.offsetWidth / (window.innerHeight*.98);
+    camera.aspect = container.offsetWidth / (window.innerHeight - 2);
     camera.updateProjectionMatrix();
 
-    renderer.setSize( container.offsetWidth, window.innerHeight*.98);
+    renderer.setSize( container.offsetWidth, window.innerHeight - 2);
     render();
 
     resizeGUI();
