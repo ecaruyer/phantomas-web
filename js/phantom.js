@@ -185,9 +185,9 @@ Phantom.prototype = {
     // Render so changes are made visible
     render();
   },
-  regionHighlight: function(n) {
+  regionHighlight: function(n, fadeLevel) {
     // Fade all but wanted region
-    this.fadeAll();
+    this.fadeAll(fadeLevel);
     this.isotropicRegions.sphere[n].mesh.material.opacity = 1;
     // If custom highlight color, apply.
     if (this.highlightColor) {
@@ -197,7 +197,8 @@ Phantom.prototype = {
     render();
   },
   revealSkeleton: function(scene, n) {
-    this.fadeAll();
+    this.addToScene(scene);
+    this.fadeAll(0.05);
     // Focus fiber is faded more so that thread can be seen with any problem
     this.fibers.tube[n].mesh.material.opacity = this.highlightOpacity*2;
     scene.add(this.fibers.skeleton[n].line, this.fibers.skeleton[n].spheres);
