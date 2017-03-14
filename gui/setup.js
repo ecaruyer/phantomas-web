@@ -171,6 +171,10 @@ function resizeGUI() {
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
+  var leftGUI = document.getElementById("leftGUI");
+
+  fiberSelector.style.width = leftGUI.offsetWidth.toString() + 'px';
+  regionSelector.style.width = leftGUI.offsetWidth.toString() + 'px';
 
   var fiberNumber = phantom.fibers.source.length + 1;
   var regionNumber = phantom.isotropicRegions.source.length + 1;
