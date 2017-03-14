@@ -1,3 +1,6 @@
+function editExit() {
+  document.getElementById('editGUI').innerHTML = "";
+}
 function fiberEdit( index ) {
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
@@ -27,7 +30,6 @@ function fiberEdit( index ) {
   var radius = document.createElement("LI");
   var radiuslabel = document.createElement("LABEL");
   radiuslabel.innerHTML = "Radius ";
-  // index ++;
   var geometry = phantom.fibers.tube[index].mesh.geometry;
 
   var radiusvalue = document.createElement("INPUT");
@@ -46,5 +48,7 @@ function fiberEdit( index ) {
   radius.appendChild(radiusvalue);
   fiberprops.appendChild(radius);
 
+  // TANGENTS
+  
   editGUI.appendChild(fiberprops);
 }

@@ -49,6 +49,7 @@ GuiStatus.prototype = {
       regionSelectClick(this.editingRegion, true)
     } else {
       phantom.addToScene(scene);
+      editExit();
     }
   },
   apply: function(element, index) {
