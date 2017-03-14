@@ -1,5 +1,6 @@
-var status;
-function Status() {
+var guiStatus;
+
+function GuiStatus() {
   /* Using two properties:
     editingFiber -> fiber currently being edited
     editingCP -> CP of the fiber in current edition
@@ -13,49 +14,52 @@ function Status() {
     viewing, which removes any editing state. Constructor leaves status this way.
     retrieve, which brings back the state in which it the editor was
 */
-    this.editing = function(element, index) {
-      switch (element) {
-        case 'fiber':
-          this.viewing();
-          this.editingFiber = index;
+    this.editingFiber = undefined;
+    this.editingCP = undefined;
+    this.editingRegion = undefined;
+}
+GuiStatus.prototype = {
+  editing: function(element, index) {
+    switch (element) {
+      case 'fiber':
+        this.viewing();
+        this.editingFiber = index;
+        break;
+      case 'CP':
+        if (this.editingFiber === undefined) {
+          console.error('Tried to edit CP with any fiber in edit!');
           break;
-        case 'CP':
-          if (!this.editingFiber) {
-            console.error('Tried to edit CP with any fiber in edit!');
-            break;
-          }
-          this.editingCP = index;
-          break;
-        case 'region':
-          this.viewing();
-          this.editingRegion = index;
-          break;
-        default: console.error('Element string in status was not correct');
-      }
-    }
-    this.retrieve = function() {
-      if (this.editingFiber) {
-        fiberSelectClick(this.editingFiber);
-        if (this.editingCP) {
-          cpSelectClick(this.editingCP)
         }
-      } else if (this.editingRegion) {
-        regionSelectClick(this.editingRegion)
-      } else {
-        phantom.addToScene(scene);
+        this.editingCP = index;
+        break;
+      case 'region':
+        this.viewing();
+        this.editingRegion = index;
+        break;
+      default: console.error('Element string in status was not correct');
+    }
+  },
+  retrieve: function() {
+    if (this.editingFiber !== undefined) {
+      fiberSelectClick(this.editingFiber, true);
+      if (this.editingCP !== undefined) {
+        cpSelectClick(this.editingCP)
       }
+    } else if (this.editingRegion !== undefined) {
+      regionSelectClick(this.editingRegion, true)
+    } else {
+      phantom.addToScene(scene);
     }
-    this.apply = function(element, index) {
-      this.editing(element, index);
-      this.retrieve();
-    }
-    this.viewing = function() {
-      this.editingFiber = undefined;
-      this.editingCP = undefined;
-      this.editingRegion = undefined;
-    }
-
-    this.viewing();
+  },
+  apply: function(element, index) {
+    this.editing(element, index);
+    this.retrieve();
+  },
+  viewing: function() {
+    this.editingFiber = undefined;
+    this.editingCP = undefined;
+    this.editingRegion = undefined;
+  }
 }
 
 function countDocumentLines() {
@@ -76,7 +80,7 @@ function countDocumentLines() {
 
 function setupGUI() {
   resizeGUI();
-  status = new Status;
+  guiStatus =  new GuiStatus();
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
@@ -85,7 +89,14 @@ function setupGUI() {
     // Add *none* option
     var option = document.createElement("option");
     option.text = '*none*'
-    option.onclick = function() {phantom.addToScene(scene);};
+    option.selected = true;
+    // If any fiber is being edited, move to non-edit mode
+    option.onclick = function() {
+      if (guiStatus.editingRegion === undefined) {
+        guiStatus.viewing();
+        guiStatus.retrieve();
+      };
+    };
     fiberSelector.options.add(option);
     fiberSelector.disabled = false;
 
@@ -118,7 +129,14 @@ function setupGUI() {
     regionSelector.selectedIndex = 0;
     var option = document.createElement("option");
     option.text = '*none*'
-    option.onclick = function() {phantom.addToScene(scene);};
+    option.selected = true;
+    // If any fiber is being edited, move to non-edit mode
+    option.onclick = function() {
+      if (guiStatus.editingFiber === undefined) {
+        guiStatus.viewing();
+        guiStatus.retrieve();
+      };
+    };
     regionSelector.options.add(option);
     regionSelector.disabled = false;
 
