@@ -88,6 +88,7 @@ function show() { // The rendering engine is initialized
 
 
   function keyPress() {
+    console.log(camera.position);
   }
 
   window.addEventListener('keypress', keyPress, false);
