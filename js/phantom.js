@@ -69,7 +69,10 @@ function Phantom() {
 
 Phantom.prototype = {
   addFiber: function(fiber, parameters) {
-    // If not specified, set segments constrainct so renderer is stable in browser
+    /* If not specified, set segments constrainct so renderer is stable in browser
+    This grabs nbElements thrown by load function and sets the number of segments
+    each mesh will feature, choosing between a maximum of total segments in a
+    scene (first number given) and maximum of segments per mesh (segond number given) */
     if (!parameters) var parameters = [];
     if ((parameters.nbElements) && (!parameters.axialSegments) && (!parameters.radialSegments)) {
       parameters.axialSegments = Math.min(Math.floor(1440 / parameters.nbElements), 256);
@@ -92,7 +95,10 @@ Phantom.prototype = {
     fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
   },
   addIsotropicRegion: function(region, parameters) {
-    // If not specified, set segments constrainct so renderer is stable in browser
+    /* If not specified, set segments constrainct so renderer is stable in browser
+    This grabs nbElements thrown by load function and sets the number of segments
+    each mesh will feature, choosing between a maximum of total segments in a
+    scene (first number given) and maximum of segments per mesh (segond number given) */
     if (!parameters) var parameters = [];
     if ((parameters.nbElements) && (!parameters.heightSegments) && (!parameters.widthSegments)) {
       parameters.heightSegments = Math.min(Math.floor(1024 / parameters.nbElements), 128);
