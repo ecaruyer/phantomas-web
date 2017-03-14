@@ -223,6 +223,7 @@ FiberSource.prototype = {
     for(var i = 0; i < this.observers.length; i++) {
       this.observers[i].refresh();
     }
+    render();
   },
   // setControlPoint changes a control point for this Fiber.
   // inputs: n (position in controlPoints array) and x, y, z coordinates.

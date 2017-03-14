@@ -85,5 +85,11 @@ function show() { // The rendering engine is initialized
 
     resizeGUI();
   }
+
+
+  function keyPress() {
+  }
+
+  window.addEventListener('keypress', keyPress, false);
   animate();
 }

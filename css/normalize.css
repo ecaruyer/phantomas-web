@@ -5,6 +5,11 @@ hml, html, body {
   background-color: black;
 }
 
+ul {
+    list-style: none;
+    padding-left:0;
+}
+
 #leftGUI {
   float: left;
   text-align: left;
