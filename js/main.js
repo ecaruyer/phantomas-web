@@ -1,5 +1,5 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/isbi_challenge_2013.txt";
+var path = "examples/90kissing_3bundles.txt";
 var container = document.getElementById('container');
 
 init();
@@ -85,5 +85,11 @@ function show() { // The rendering engine is initialized
 
     resizeGUI();
   }
+
+
+  function keyPress() {
+  }
+
+  window.addEventListener('keypress', keyPress, false);
   animate();
 }

@@ -35,7 +35,7 @@ colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
 */
 function FiberSkeleton(fiber, parameters) {
   this.fiber = fiber;
-  points = fiber.controlPoints;
+  this.points = fiber.controlPoints;
 
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
@@ -77,9 +77,9 @@ function FiberSkeleton(fiber, parameters) {
   var sphereGeometry = new THREE.Geometry();
   // All spheres to be added are meshed in one single geometry
   var meshes = [];
-  for (var i = 0; i < points.length; i++) {
+  for (var i = 0; i < this.points.length; i++) {
     meshes[i] = new THREE.Mesh(sphere);
-    meshes[i].position.set(points[i][0], points[i][1], points[i][2]);
+    meshes[i].position.set(this.points[i][0], this.points[i][1], this.points[i][2]);
     meshes[i].updateMatrix();
     sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
@@ -93,9 +93,9 @@ FiberSkeleton.prototype.refresh = function() {
   var sphere = new THREE.SphereGeometry(this.fiber.radius/5, this.sphereSegments, this.sphereSegments);
   var sphereGeometry = new THREE.Geometry();
   var meshes = [];
-  for (var i = 0; i < points.length; i++) {
+  for (var i = 0; i < this.points.length; i++) {
     meshes[i] = new THREE.Mesh(sphere);
-    meshes[i].position.set(points[i][0], points[i][1], points[i][2]);
+    meshes[i].position.set(this.points[i][0], this.points[i][1], this.points[i][2]);
     meshes[i].updateMatrix();
     sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
@@ -142,8 +142,8 @@ FiberSkeleton.prototype.refresh = function() {
 function FiberTube(fiber, parameters) {
   this.fiber = fiber;
   // Check if radius was specified. If not, set default.
-  if (fiber.radius === undefined) fiber.radius = 1;
-  this.radius = fiber.radius;
+  if (this.fiber.radius === undefined) this.fiber.radius = 1;
+  var radius = this.fiber.radius;
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
@@ -173,7 +173,7 @@ function FiberTube(fiber, parameters) {
   }
   // Geometry and materials are created
   var geometry = new THREE.TubeGeometry(this.curve,
-                        this.axialSegments , this.radius, this.radialSegments);
+                        this.axialSegments , radius, this.radialSegments);
   var material = new THREE.MeshPhongMaterial( { color:this.color, shading: THREE.FlatShading } );
   // Transparency must be enabled so to be able to fade the tube
   material.transparent = true;
@@ -183,7 +183,7 @@ function FiberTube(fiber, parameters) {
 }
 FiberTube.prototype.refresh = function() {
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
-                this.axialSegments, this.radius, this.radialSegments);
+                this.axialSegments, this.fiber.radius, this.radialSegments);
 }
 
 /* IsotropicRegion creates a mesh from an IsotropicRegionSource.
@@ -209,7 +209,7 @@ FiberTube.prototype.refresh = function() {
 */
 function IsotropicRegion(source, parameters) {
   this.source = source;
-  
+
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {

@@ -20,8 +20,11 @@ function switchFiberViewMode() {
 }
 
 // disable booleans must be true when the user does not click directly the option
-function fiberSelectClick(index, disableRegionSelect) {
-  if (!disableRegionSelect) {document.getElementById("regionSelector").selectedIndex = 0;}
+function fiberSelectClick(index, notclicked) {
+  if (!notclicked) {
+    document.getElementById("regionSelector").selectedIndex = 0;
+    fiberEdit(index);
+  }
   phantom.revealSkeleton(scene, index);
   guiStatus.editing('fiber', index);
 }

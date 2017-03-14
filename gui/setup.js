@@ -119,7 +119,6 @@ function setupGUI() {
       option.onclick = function() {fiberSelectClick(index);};
       fiberSelector.options.add(option);
     });
-    fiberSelector.selectedIndex = 0;
   } else {
     fiberSelector.disabled = true;
   }
