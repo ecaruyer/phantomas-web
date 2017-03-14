@@ -1,17 +1,18 @@
 var status;
 function Status() {
-  // Using two properties:
-    // editingFiber -> fiber currently being edited
-    // editingCP -> CP of the fiber in current edition
-    // editingRegion -> region currently being edited.
-  // editingFiber and editingRegion must never be defined at the same time.
+  /* Using two properties:
+    editingFiber -> fiber currently being edited
+    editingCP -> CP of the fiber in current edition
+    editingRegion -> region currently being edited.
+  editingFiber and editingRegion must never be defined at the same time.
 
-  // Featuring two methods:
-    // editing, which recieves as input:
-      // element, with 'fiber', 'CP' or 'region' as string value.
-      // index, which specifies its index
-    // viewing, which removes any editing state. Constructor leaves status this way.
-
+  Featuring three methods:
+    editing, which recieves as input:
+      element, with 'fiber', 'CP' or 'region' as string value.
+      index, which specifies its index
+    viewing, which removes any editing state. Constructor leaves status this way.
+    retrieve, which brings back the state in which it the editor was
+*/
     this.editing = function(element, index) {
       switch (element) {
         case 'fiber':
@@ -31,6 +32,22 @@ function Status() {
           break;
         default: console.error('Element string in status was not correct');
       }
+    }
+    this.retrieve = function() {
+      if (this.editingFiber) {
+        fiberSelectClick(this.editingFiber);
+        if (this.editingCP) {
+          cpSelectClick(this.editingCP)
+        }
+      } else if (this.editingRegion) {
+        regionSelectClick(this.editingRegion)
+      } else {
+        phantom.addToScene(scene);
+      }
+    }
+    this.apply = function(element, index) {
+      this.editing(element, index);
+      this.retrieve();
     }
     this.viewing = function() {
       this.editingFiber = undefined;
