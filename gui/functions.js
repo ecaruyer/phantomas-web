@@ -28,10 +28,13 @@ function fiberSelectClick(index, notclicked) {
   phantom.revealSkeleton(scene, index);
   guiStatus.editing('fiber', index);
 }
-function regionSelectClick(index, disableFiberSelect) {
-  if (!disableFiberSelect) {document.getElementById("fiberSelector").selectedIndex = 0;}
+function regionSelectClick(index, notclicked) {
+  if (!notclicked) {
+    document.getElementById("fiberSelector").selectedIndex = 0;
+    regionEdit(index);
+  }
   phantom.addToScene(scene);
-  phantom.regionHighlight(index, .05);
+  phantom.regionHighlight(index);
   guiStatus.editing('region', index);
 }
 
@@ -39,6 +42,7 @@ function regionSelectClick(index, disableFiberSelect) {
 // PLANE SELECTORS
 function moveCameraXY() {
   camera.up = new THREE.Vector3(0, 1, 0);
+  controls.target = new THREE.Vector3(0, 0, 0);
   if (camera.position.z == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
     camera.position.z = phantom.radius()*-1.5;
@@ -50,6 +54,7 @@ function moveCameraXY() {
 }
 function moveCameraXZ() {
   camera.up = new THREE.Vector3(0, 0, 1);
+  controls.target = new THREE.Vector3(0, 0, 0);
   if (camera.position.y == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
     camera.position.y = phantom.radius()*-1.5;
@@ -61,6 +66,7 @@ function moveCameraXZ() {
 }
 function moveCameraYZ() {
   camera.up = new THREE.Vector3(0, 1, 0);
+  controls.target = new THREE.Vector3(0, 0, 0);
   if (camera.position.x == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
     camera.position.x = phantom.radius()*-1.5;
