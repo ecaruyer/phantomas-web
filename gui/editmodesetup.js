@@ -5,10 +5,12 @@ function fiberEdit( index ) {
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";
+  var field = document.createElement("FIELDSET");
+  editGUI.appendChild(field);
   var fiberprops = document.createElement("UL");
 
   // NUMBER OF CONTROL POINTS AND COLOR
-  var controlPointsAndColor = document.createElement("LI");
+  var controlPointsAndColor = document.createElement("LEGEND");
   var colorSpan = document.createElement("span");
   colorSpan.style.color = phantom.fibers.tube[index].color.getStyle();
   colorSpan.style.fontSize = 'x-large';
@@ -20,7 +22,7 @@ function fiberEdit( index ) {
   controlPointsAndColor.appendChild(controlPointsSpan);
   controlPointsAndColor.appendChild(colorSpan);
 
-  fiberprops.appendChild(controlPointsAndColor);
+  field.appendChild(controlPointsAndColor);
 
   // LENGTH
   var length = document.createElement("LI");
@@ -75,16 +77,18 @@ function fiberEdit( index ) {
   fiberprops.appendChild(tangentslabel);
   fiberprops.appendChild(tangents);
 
-  editGUI.appendChild(fiberprops);
+  field.appendChild(fiberprops);
 }
 function regionEdit(index) {
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";
+  var field = document.createElement("FIELDSET");
+  editGUI.appendChild(field);
   var regionprops = document.createElement("UL");
 
   // TITLE AND COLOR
-  var titleAndColor = document.createElement("LI");
+  var titleAndColor = document.createElement("LEGEND");
   var colorSpan = document.createElement("span");
   colorSpan.style.color = phantom.isotropicRegions.sphere[index].color.getStyle();
   colorSpan.style.fontSize = 'x-large';
@@ -96,7 +100,7 @@ function regionEdit(index) {
   titleAndColor.appendChild(titleSpan);
   titleAndColor.appendChild(colorSpan);
 
-  regionprops.appendChild(titleAndColor);
+  field.appendChild(titleAndColor);
 
   // RADIUS
   var radius = document.createElement("LI");
@@ -178,5 +182,5 @@ function regionEdit(index) {
   positionli.appendChild(positionul);
   regionprops.appendChild(positionli);
 
-  editGUI.appendChild(regionprops);
+  field.appendChild(regionprops);
 }
