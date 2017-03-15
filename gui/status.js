@@ -15,12 +15,17 @@ function GuiStatus() {
     retrieve, which brings back the state in which it the editor was
 */
     this.previewing = false;
+    document.getElementById("switchViewButton").disabled = true;
+
     this.editingFiber = undefined;
     this.editingCP = undefined;
     this.editingRegion = undefined;
 }
+
 GuiStatus.prototype = {
   editing: function(element, index) {
+    this.previewing = false;
+
     switch (element) {
       case 'fiber':
         this.unediting();
@@ -39,6 +44,9 @@ GuiStatus.prototype = {
         break;
       default: console.error('Element string in status was not correct');
     }
+
+    document.getElementById("switchViewButton").disabled = false;
+
   },
   retrieve: function() {
     if (this.previewing) {
@@ -64,6 +72,8 @@ GuiStatus.prototype = {
   unediting: function() {
     this.previewing = false;
     document.getElementById("switchViewButton").value = "Preview";
+    document.getElementById("switchViewButton").disabled = true;
+
     this.editingFiber = undefined;
     this.editingCP = undefined;
     this.editingRegion = undefined;

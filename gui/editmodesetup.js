@@ -1,6 +1,7 @@
 function editExit() {
   document.getElementById('editGUI').innerHTML = "";
 }
+
 function fiberEdit( index ) {
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
@@ -126,10 +127,8 @@ function regionEdit(index) {
   // POSITION
   var position = document.createElement("FIELDSET");
   position.innerHTML = "<legend>Position</legend>";
-  var positionli = document.createElement("LI");
-  position.appendChild(positionli);
-
   var positionul = document.createElement("UL");
+  position.appendChild(positionul);
 
   var xpos = document.createElement("LI");
   var xposlabel = document.createElement("LABEL");
@@ -179,8 +178,6 @@ function regionEdit(index) {
   zpos.appendChild(zvalue);
   positionul.appendChild(zpos);
 
-  // positionli.appendChild(positionlabel);
-  positionli.appendChild(positionul);
   regionprops.appendChild(position);
 
   field.appendChild(regionprops);
