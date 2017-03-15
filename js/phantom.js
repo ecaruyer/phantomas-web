@@ -151,9 +151,11 @@ Phantom.prototype = {
     // Opacity 1 is given back
     for (var i = 0; i < this.fibers.tube.length; i++) {
       this.fibers.tube[i].mesh.material.opacity = 1;
+      this.fibers.tube[i].mesh.renderOrder = 0;
     }
     for (var i = 0; i < this.isotropicRegions.sphere.length; i++) {
       this.isotropicRegions.sphere[i].mesh.material.opacity = 1;
+      this.isotropicRegions.sphere[i].mesh.renderOrder = 0;
     }
     // Render so changes are made visible
     render();
@@ -186,6 +188,7 @@ Phantom.prototype = {
     // Fade all but wanted fiber
     this.fadeAll();
     this.fibers.tube[n].mesh.material.opacity = 1;
+    this.fibers.tube[n].mesh.renderOrder = -1;
     // If custom highlight color, apply.
     if (this.highlightColor) {
       this.fibers.tube[n].mesh.material.color = this.highlightColor;
@@ -197,6 +200,7 @@ Phantom.prototype = {
     // Fade all but wanted region
     this.fadeAll(fadeLevel);
     this.isotropicRegions.sphere[n].mesh.material.opacity = 1;
+    this.isotropicRegions.sphere[n].mesh.renderOrder = -1;
     // If custom highlight color, apply.
     if (this.highlightColor) {
       this.fibers.tube[n].mesh.material.color = this.highlightColor;
@@ -208,7 +212,8 @@ Phantom.prototype = {
     this.addToScene(scene);
     this.fadeAll();
     // Focus fiber is faded more so that thread can be seen with any problem
-    this.fibers.tube[n].mesh.material.opacity = this.highlightOpacity*2;
+    this.fibers.tube[n].mesh.material.opacity = this.highlightOpacity*4;
+    this.fibers.tube[n].mesh.renderOrder = -1;
     scene.add(this.fibers.skeleton[n].line, this.fibers.skeleton[n].spheres);
     // Render so changes are made visible
     render();
