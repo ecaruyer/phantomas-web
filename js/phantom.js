@@ -245,7 +245,7 @@ Phantom.prototype = {
     render();
   },
   cpHighlight: function(fiberindex, controlpointindex, mode) {
-    scene.removeHighlight();
+    scene.removeCPHighlight();
     fiber = phantom.fibers.source[fiberindex];
     cp = fiber.controlPoints[controlpointindex];
 
