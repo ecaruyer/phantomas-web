@@ -124,9 +124,10 @@ function regionEdit(index) {
   regionprops.appendChild(radius);
 
   // POSITION
+  var position = document.createElement("FIELDSET");
+  position.innerHTML = "<legend>Position</legend>";
   var positionli = document.createElement("LI");
-  var positionlabel = document.createElement("LABEL");
-  positionlabel.innerHTML = "Position";
+  position.appendChild(positionli);
 
   var positionul = document.createElement("UL");
 
@@ -178,9 +179,9 @@ function regionEdit(index) {
   zpos.appendChild(zvalue);
   positionul.appendChild(zpos);
 
-  positionli.appendChild(positionlabel);
+  // positionli.appendChild(positionlabel);
   positionli.appendChild(positionul);
-  regionprops.appendChild(positionli);
+  regionprops.appendChild(position);
 
   field.appendChild(regionprops);
 }
