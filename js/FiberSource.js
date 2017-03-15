@@ -246,9 +246,21 @@ IsotropicRegionSource.prototype = {
     for(var i = 0; i < this.observers.length; i++) {
       this.observers[i].refresh();
     }
+    render();
   },
-  setCenter: function(x, y, z) {
-    this.center = [x, y, z];
+  setCenter: function(axis, value) {
+    switch (axis) {
+      case 'x':
+        this.center[0] = value;
+        break;
+      case 'y':
+        this.center[1] = value;
+        break;
+      case 'z':
+        this.center[2] = value;
+        break;
+      default: console.error('Incorrect axis label for IsotropicRegion.setCenter(label, value)');
+    }
     this.notify();
   },
   setRadius: function(radius) {

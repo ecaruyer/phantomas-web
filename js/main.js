@@ -59,13 +59,11 @@ function show() { // The rendering engine is initialized
 
   // Load phantom and add it in the scene
   phantom = loadPhantom( request );
-  phantom.highlightOpacity = .2;
+  // phantom.highlightOpacity = .2;
   phantom.addToScene(scene);
   camera.position.z = phantom.radius()*1.5;
 
   renderer.render(scene, camera);
-
-  // KeyPress consecution loop for features show.
 
   // Add mouse control to the camera
   controls = new THREE.TrackballControls( camera , renderer.domElement );
@@ -88,7 +86,6 @@ function show() { // The rendering engine is initialized
 
 
   function keyPress() {
-    console.log(camera.position);
   }
 
   window.addEventListener('keypress', keyPress, false);

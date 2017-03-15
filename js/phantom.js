@@ -108,7 +108,7 @@ Phantom.prototype = {
     this.isotropicRegions.source.push(region);
     this.isotropicRegions.sphere.push(new IsotropicRegion(region, parameters));
 
-    region.addObserver(this.isotropicRegions.sphere[this.isotropicRegions.sphere.length]);
+    region.addObserver(this.isotropicRegions.sphere[this.isotropicRegions.sphere.length-1]);
   },
   radius: function() {
     var length = 0;
@@ -206,7 +206,7 @@ Phantom.prototype = {
   },
   revealSkeleton: function(scene, n) {
     this.addToScene(scene);
-    this.fadeAll(0.05);
+    this.fadeAll();
     // Focus fiber is faded more so that thread can be seen with any problem
     this.fibers.tube[n].mesh.material.opacity = this.highlightOpacity*2;
     scene.add(this.fibers.skeleton[n].line, this.fibers.skeleton[n].spheres);

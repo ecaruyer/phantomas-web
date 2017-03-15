@@ -28,10 +28,13 @@ function fiberSelectClick(index, notclicked) {
   phantom.revealSkeleton(scene, index);
   guiStatus.editing('fiber', index);
 }
-function regionSelectClick(index, disableFiberSelect) {
-  if (!disableFiberSelect) {document.getElementById("fiberSelector").selectedIndex = 0;}
+function regionSelectClick(index, notclicked) {
+  if (!notclicked) {
+    document.getElementById("fiberSelector").selectedIndex = 0;
+    regionEdit(index);
+  }
   phantom.addToScene(scene);
-  phantom.regionHighlight(index, .05);
+  phantom.regionHighlight(index);
   guiStatus.editing('region', index);
 }
 
