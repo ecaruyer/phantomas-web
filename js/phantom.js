@@ -111,12 +111,29 @@ Phantom.prototype = {
     region.addObserver(this.isotropicRegions.sphere[this.isotropicRegions.sphere.length-1]);
   },
   radius: function() {
-    var length = 0;
-    // Return is essentially the longest fiber
+    var maxdist = 0;
+    // Return is twice the farthest point from the center
     for (var i = 0; i < this.fibers.source.length; i++) {
-      if (this.fibers.source[i].length > length) length = this.fibers.source[i].length;
+      var cp = this.fibers.source[i].controlPoints;
+      for (var j = 0; j < cp.length; j++) {
+        var dist = Math.sqrt(
+          Math.pow(cp[j][0],2) +
+          Math.pow(cp[j][1],2) +
+          Math.pow(cp[j][2],2)
+        );
+        if (dist > maxdist) {maxdist = dist}
+      }
     }
-    return length;
+    for (var i = 0; i < this.isotropicRegions.source.length; i++) {
+      var region = this.isotropicRegions.source[i];
+      var dist = Math.sqrt(
+        Math.pow(region.center[0],2) +
+        Math.pow(region.center[1],2) +
+        Math.pow(region.center[2],2)
+      ) + region.radius;
+      if (dist > maxdist) {maxdist = dist}
+    }
+    return (maxdist * 2);
   },
   resetColors: function(){
     // Color contained in their objects is given back to material's meshes.

@@ -1,3 +1,5 @@
+var guiStatus;
+
 function setupGUI() {
   resizeGUI();
   guiStatus =  new GuiStatus();
