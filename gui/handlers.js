@@ -10,12 +10,16 @@ function checkSkeleton() {
 }
 
 // SWITCH VIEW BUTTON
-function switchFiberViewMode() {
-  if (checkSkeleton()) {
+function switchViewButton() {
+  var button = document.getElementById('switchViewButton');
+  if (!guiStatus.previewing) {
     phantom.addToScene(scene);
-  }
-  else {
-    phantom.addAsSkeleton(scene);
+    button.value = "Back";
+    guiStatus.previewing = true;
+  } else {
+    guiStatus.previewing = false;
+    guiStatus.retrieve();
+    button.value = "Preview";
   }
 }
 

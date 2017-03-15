@@ -9,7 +9,7 @@
 
 <body>
   <div id="leftGUI">PHANTOM&nbsp;&nbsp;
-    <input type="submit" onclick="switchFiberViewMode();" value="Switch View"/><br><br>
+    <input type="submit" id='switchViewButton' onclick="switchViewButton();" value="Preview"/><br><br>
 
     <select id="fiberSelector" style="width:120px" size="10" onmouseout="guiStatus.retrieve();">
     </select><br>
@@ -17,6 +17,7 @@
     <select id="regionSelector" style="width:120px" size="10" onmouseout="guiStatus.retrieve();">
     </select>
 
+    <br>
     <div id="editGUI">
     </div>
 
@@ -32,7 +33,9 @@
     <script type="text/javascript" src="js/load.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
-    <script type="text/javascript" src="gui/functions.js"></script>
+    <script type="text/javascript" src="gui/handlers.js"></script>
+    <script type="text/javascript" src="gui/resize.js"></script>
+    <script type="text/javascript" src="gui/status.js"></script>
     <script type="text/javascript" src="gui/setup.js"></script>
     <script type="text/javascript" src="gui/editmodesetup.js"></script>
   </div>
