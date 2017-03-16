@@ -1,3 +1,4 @@
+// Returns amout of window height in text lines 
 function countDocumentLines() {
   function getLineHeight(element){
     var temp = document.createElement(element.nodeName);
@@ -15,11 +16,13 @@ function countDocumentLines() {
 }
 
 
-// Resizes selector objects so those just take specified height percentage
+// Resizes selector objects so those fit in the screen
 function resizeGUI() {
-  // Space is the height amount in screen heights that selector objects will take.
+  // Lines is the height amount in lines left for the gui elements.
   var lines = countDocumentLines() - 5;
 
+  // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
+  // added 1 to editing properties so that when 0 those do not return false
   if (guiStatus.editingFiber + 1) {
     lines -= 10;
   } else if (guiStatus.editingRegion + 1) {
@@ -30,9 +33,11 @@ function resizeGUI() {
   var regionSelector = document.getElementById("regionSelector");
   var leftGUI = document.getElementById("leftGUI");
 
+  // Width is subtracted 10 pixels for allowing space to scrollbar.
   fiberSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
   regionSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
 
+  // +1 is due to *none* option
   var fiberNumber = phantom.fibers.source.length + 1;
   var regionNumber = phantom.isotropicRegions.source.length + 1;
 
