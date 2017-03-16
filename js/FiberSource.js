@@ -227,8 +227,19 @@ FiberSource.prototype = {
   },
   // setControlPoint changes a control point for this Fiber.
   // inputs: n (position in controlPoints array) and x, y, z coordinates.
-  setControlPoint: function(n, x, y, z) {
-    this.controlPoints[n] = [x, y, z];
+  setControlPoint: function(n, axis, value) {
+    switch (axis) {
+      case 'x':
+        this.controlPoints[n][0] = value;
+        break;
+      case 'y':
+        this.controlPoints[n][1] = value;
+        break;
+      case 'z':
+        this.controlPoints[n][2] = value;
+        break;
+      default: console.error('Wrong axis set in fiber.setControlPoint. Called for ' + axis);
+    }
     this.polyCalc();
     this.notify();
   }

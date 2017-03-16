@@ -20,18 +20,20 @@ function countDocumentLines() {
 function resizeGUI() {
   // Lines is the height amount in lines left for the gui elements.
   var lines = countDocumentLines() - 5;
+  var leftGUI = document.getElementById("leftGUI");
+  var fiberSelector = document.getElementById("fiberSelector");
+  var regionSelector = document.getElementById("regionSelector");
 
   // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
   // added 1 to editing properties so that when 0 those do not return false
   if (guiStatus.editingFiber + 1) {
     lines -= 12 + phantom.fibers.source[guiStatus.editingFiber].controlPoints.length;
+    // cpSelector must be resized as well. If it is to be created, it will not be available and will resize by itself.
+    if (document.getElementById('cpSelector')) document.getElementById('cpSelector').style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
   } else if (guiStatus.editingRegion + 1) {
     lines -= 14;
   }
 
-  var fiberSelector = document.getElementById("fiberSelector");
-  var regionSelector = document.getElementById("regionSelector");
-  var leftGUI = document.getElementById("leftGUI");
 
   // Width is subtracted 10 pixels for allowing space to scrollbar.
   fiberSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';

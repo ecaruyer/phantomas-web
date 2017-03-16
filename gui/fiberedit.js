@@ -85,6 +85,8 @@ function fiberEdit( index ) {
   var cplist = document.createElement("SELECT");
   var fiberindex = guiStatus.editingFiber;
   cplist.size = phantom.fibers.source[fiberindex].controlPoints.length + 1;
+  cplist.id = 'cpSelector';
+  cplist.style.width = (document.getElementById("leftGUI").offsetWidth - 10).toString() + 'px';
   cplist.onmouseout = function () {
     if (cplist.selectedIndex) {
       scene.removeCPHighlight();
@@ -111,12 +113,11 @@ function fiberEdit( index ) {
       };
       option.onclick = function() {
         phantom.cpHighlight(fiberindex, index, 'red');
+        cpEdit(index);
       };
 
       cplist.options.add(option);
     }
   );
-
   editGUI.appendChild(cplist);
-
 }
