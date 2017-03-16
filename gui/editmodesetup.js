@@ -1,8 +1,12 @@
+// Actually just empties editGUI.
 function editExit() {
   document.getElementById('editGUI').innerHTML = "";
 }
 
 function fiberEdit( index ) {
+  resizeGUI();
+
+  // editGUI is emptied
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";
@@ -81,6 +85,9 @@ function fiberEdit( index ) {
   field.appendChild(fiberprops);
 }
 function regionEdit(index) {
+  resizeGUI();
+
+  // editGUI is emptied
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";

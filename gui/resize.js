@@ -1,3 +1,4 @@
+// Returns amout of window height in text lines 
 function countDocumentLines() {
   function getLineHeight(element){
     var temp = document.createElement(element.nodeName);
@@ -10,38 +11,39 @@ function countDocumentLines() {
   }
   var divHeight = document.getElementById('container').offsetHeight;
   var lineHeight = getLineHeight(document.getElementById('container'));
-  var lines = divHeight / lineHeight;
+  var lines = Math.floor(divHeight / lineHeight);
   return lines;
 }
 
 
-// Resizes selector objects so those just take specified height percentage
+// Resizes selector objects so those fit in the screen
 function resizeGUI() {
-  // Space is the height amount in screen heights that selector objects will take.
-  var height = .6;
+  // Lines is the height amount in lines left for the gui elements.
+  var lines = countDocumentLines() - 5;
+
+  // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
+  // added 1 to editing properties so that when 0 those do not return false
+  if (guiStatus.editingFiber + 1) {
+    lines -= 10;
+  } else if (guiStatus.editingRegion + 1) {
+    lines -= 14;
+  }
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
   var leftGUI = document.getElementById("leftGUI");
 
+  // Width is subtracted 10 pixels for allowing space to scrollbar.
   fiberSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
   regionSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
 
+  // +1 is due to *none* option
   var fiberNumber = phantom.fibers.source.length + 1;
   var regionNumber = phantom.isotropicRegions.source.length + 1;
 
-  var maxsize = Math.floor( countDocumentLines() * height/2 );
-  var minsize = 2;
+  var minsize = 3;
 
-  fiberSelector.size = Math.min(maxsize, Math.max(fiberNumber, minsize));
-  regionSelector.size = Math.min(maxsize, Math.max(regionNumber, minsize));
+  fiberSelector.size = Math.min( Math.max(lines - regionNumber, minsize), fiberNumber);
+  regionSelector.size = Math.min( Math.max(lines - fiberNumber, minsize), regionNumber);
 
-  if ((fiberSelector.size + regionSelector.size) < maxsize * 2) {
-    if (fiberNumber > fiberSelector.size) {
-      fiberSelector.size = maxsize * 2 - regionSelector.size;
-    }
-    if (regionNumber > regionSelector.size) {
-      regionSelector.size = maxsize * 2 - fiberSelector.size;
-    }
-  }
 }
