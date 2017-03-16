@@ -1,4 +1,4 @@
-// Returns amout of window height in text lines 
+// Returns amout of window height in text lines
 function countDocumentLines() {
   function getLineHeight(element){
     var temp = document.createElement(element.nodeName);
@@ -24,7 +24,7 @@ function resizeGUI() {
   // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
   // added 1 to editing properties so that when 0 those do not return false
   if (guiStatus.editingFiber + 1) {
-    lines -= 10;
+    lines -= 12 + phantom.fibers.source[guiStatus.editingFiber].controlPoints.length;
   } else if (guiStatus.editingRegion + 1) {
     lines -= 14;
   }

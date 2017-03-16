@@ -86,3 +86,8 @@ function setupGUI() {
     regionSelector.disabled = true;
   }
 }
+
+// Actually just empties editGUI.
+function editExit() {
+  document.getElementById('editGUI').innerHTML = "";
+}

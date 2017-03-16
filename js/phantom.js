@@ -262,6 +262,7 @@ Phantom.prototype = {
         mesh.isBlueHighlight = true;
         break;
       case 'red':
+        scene.removeCPHighlight(true);
         mesh.material.color = new THREE.Color(0xFF0000)
         break;
       default:
