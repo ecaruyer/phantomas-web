@@ -1,8 +1,8 @@
 var guiStatus;
 
 function setupGUI() {
-  resizeGUI();
   guiStatus =  new GuiStatus();
+  resizeGUI();
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
@@ -18,6 +18,7 @@ function setupGUI() {
         guiStatus.unediting();
         guiStatus.retrieve();
       };
+      resizeGUI();
     };
     fiberSelector.options.add(option);
     fiberSelector.disabled = false;
@@ -57,6 +58,7 @@ function setupGUI() {
         guiStatus.unediting();
         guiStatus.retrieve();
       };
+      resizeGUI();
     };
     regionSelector.options.add(option);
     regionSelector.disabled = false;

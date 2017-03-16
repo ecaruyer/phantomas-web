@@ -3,6 +3,8 @@ function editExit() {
 }
 
 function fiberEdit( index ) {
+  resizeGUI();
+
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";
@@ -81,6 +83,8 @@ function fiberEdit( index ) {
   field.appendChild(fiberprops);
 }
 function regionEdit(index) {
+  resizeGUI();
+  
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";

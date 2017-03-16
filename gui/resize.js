@@ -10,7 +10,7 @@ function countDocumentLines() {
   }
   var divHeight = document.getElementById('container').offsetHeight;
   var lineHeight = getLineHeight(document.getElementById('container'));
-  var lines = divHeight / lineHeight;
+  var lines = Math.floor(divHeight / lineHeight);
   return lines;
 }
 
@@ -18,7 +18,13 @@ function countDocumentLines() {
 // Resizes selector objects so those just take specified height percentage
 function resizeGUI() {
   // Space is the height amount in screen heights that selector objects will take.
-  var height = .6;
+  var lines = countDocumentLines() - 5;
+
+  if (guiStatus.editingFiber + 1) {
+    lines -= 10;
+  } else if (guiStatus.editingRegion + 1) {
+    lines -= 14;
+  }
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
@@ -30,18 +36,9 @@ function resizeGUI() {
   var fiberNumber = phantom.fibers.source.length + 1;
   var regionNumber = phantom.isotropicRegions.source.length + 1;
 
-  var maxsize = Math.floor( countDocumentLines() * height/2 );
-  var minsize = 2;
+  var minsize = 3;
 
-  fiberSelector.size = Math.min(maxsize, Math.max(fiberNumber, minsize));
-  regionSelector.size = Math.min(maxsize, Math.max(regionNumber, minsize));
+  fiberSelector.size = Math.min( Math.max(lines - regionNumber, minsize), fiberNumber);
+  regionSelector.size = Math.min( Math.max(lines - fiberNumber, minsize), regionNumber);
 
-  if ((fiberSelector.size + regionSelector.size) < maxsize * 2) {
-    if (fiberNumber > fiberSelector.size) {
-      fiberSelector.size = maxsize * 2 - regionSelector.size;
-    }
-    if (regionNumber > regionSelector.size) {
-      regionSelector.size = maxsize * 2 - fiberSelector.size;
-    }
-  }
 }

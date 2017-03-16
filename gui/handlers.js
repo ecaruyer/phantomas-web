@@ -25,21 +25,21 @@ function switchViewButton() {
 
 // disable booleans must be true when the user does not click directly the option
 function fiberSelectClick(index, notclicked) {
+  guiStatus.editing('fiber', index);
   if (!notclicked) {
     document.getElementById("regionSelector").selectedIndex = 0;
     fiberEdit(index);
   }
   phantom.revealSkeleton(scene, index);
-  guiStatus.editing('fiber', index);
 }
 function regionSelectClick(index, notclicked) {
+  guiStatus.editing('region', index);
   if (!notclicked) {
     document.getElementById("fiberSelector").selectedIndex = 0;
     regionEdit(index);
   }
   phantom.addToScene(scene);
   phantom.regionHighlight(index);
-  guiStatus.editing('region', index);
 }
 
 
