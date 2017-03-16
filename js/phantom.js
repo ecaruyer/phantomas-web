@@ -14,6 +14,25 @@ THREE.Scene.prototype.removePhantom = function() {
     scene.remove(object);
   });
 }
+THREE.Scene.prototype.removeCPHighlight = function(all) {
+  var objects = [];
+  this.children.forEach( function(object){
+    if (object.isHighlight) {
+      if (object.isBlueHighlight) {
+        objects.push(object);
+      } else if (all) {
+        objects.push(object);
+      }
+    }
+  });
+
+  var scene = this;
+  // If removed inside scene's forEach, length is changed and so algorithm may skip some objects removal.
+  objects.forEach( function(object) {
+    scene.remove(object);
+  });
+
+}
 
 /* Phantom class includes all the data related to the Phantom.
   CONTENTS:
@@ -223,6 +242,34 @@ Phantom.prototype = {
       this.fibers.tube[n].mesh.material.color = this.highlightColor;
     }
     // Render so changes are made visible
+    render();
+  },
+  cpHighlight: function(fiberindex, controlpointindex, mode) {
+    scene.removeCPHighlight();
+    fiber = phantom.fibers.source[fiberindex];
+    cp = fiber.controlPoints[controlpointindex];
+
+    var surface = new THREE.MeshBasicMaterial();
+    var geometry = new THREE.SphereGeometry(fiber.radius/4, 16, 16);
+
+    var mesh = new THREE.Mesh(geometry, surface);
+    mesh.isHighlight = true;
+    mesh.position.set(cp[0], cp[1], cp[2]);
+
+    switch (mode) {
+      case 'blue':
+        mesh.material.color = new THREE.Color(0x0000FF)
+        mesh.isBlueHighlight = true;
+        break;
+      case 'red':
+        mesh.material.color = new THREE.Color(0xFF0000)
+        break;
+      default:
+        console.error('Incorrect cpHighlight mode');
+        mesh.material.color = new THREE.Color(0x00FF00)
+    }
+
+    scene.add(mesh);
     render();
   },
   revealSkeleton: function(scene, n) {
