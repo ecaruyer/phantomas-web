@@ -10,6 +10,7 @@ function checkSkeleton() {
 }
 
 // SWITCH VIEW BUTTON
+// Swithes 'preview mode' which will allow the user to display the phantom in unfaded mode while editing
 function switchViewButton() {
   var button = document.getElementById('switchViewButton');
   if (!guiStatus.previewing) {
@@ -23,7 +24,8 @@ function switchViewButton() {
   }
 }
 
-// disable booleans must be true when the user does not click directly the option
+// disable booleans must be true when the user does not click directly the option.
+// This saves resources by not rebuilding editingGUI and does not reclick selectors, which would be annoying.
 function fiberSelectClick(index, notclicked) {
   guiStatus.editing('fiber', index);
   if (!notclicked) {
@@ -47,36 +49,36 @@ function regionSelectClick(index, notclicked) {
 function moveCameraXY() {
   camera.up = new THREE.Vector3(0, 1, 0);
   controls.target = new THREE.Vector3(0, 0, 0);
-  if (camera.position.z == phantom.radius()*1.5) {
-    camera.position.set(0, 0, 0);
-    camera.position.z = phantom.radius()*-1.5;
-  }
-  else {
+  // if (camera.position.z == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
     camera.position.z = phantom.radius()*1.5;
-  }
+  // }
+  // else {
+  //   camera.position.set(0, 0, 0);
+  //   camera.position.z = phantom.radius()*1.5;
+  // }
 }
 function moveCameraXZ() {
   camera.up = new THREE.Vector3(0, 0, 1);
   controls.target = new THREE.Vector3(0, 0, 0);
-  if (camera.position.y == phantom.radius()*1.5) {
+  // if (camera.position.y == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
     camera.position.y = phantom.radius()*-1.5;
-  }
-  else {
-    camera.position.set(0, 0, 0);
-    camera.position.y = phantom.radius()*1.5;
-  }
+  // }
+  // else {
+  //   camera.position.set(0, 0, 0);
+  //   camera.position.y = phantom.radius()*-1.5;
+  // }
 }
-function moveCameraYZ() {
+function moveCameraZY() {
   camera.up = new THREE.Vector3(0, 1, 0);
   controls.target = new THREE.Vector3(0, 0, 0);
-  if (camera.position.x == phantom.radius()*1.5) {
+  // if (camera.position.x == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
     camera.position.x = phantom.radius()*-1.5;
-  }
-  else {
-    camera.position.set(0, 0, 0);
-    camera.position.x = phantom.radius()*1.5;
-  }
+  // }
+  // else {
+  //   camera.position.set(0, 0, 0);
+  //   camera.position.x = phantom.radius()*-1.5;
+  // }
 }
