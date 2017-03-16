@@ -76,12 +76,16 @@ function fiberEdit( index ) {
   tangents.value = phantom.fibers.source[index].tangents;
   fiberprops.appendChild(tangentslabel);
   fiberprops.appendChild(tangents);
+  editGUI.appendChild(document.createElement("BR"));
 
   field.appendChild(fiberprops);
 
+  addCPselect();
+}
 
+function addCPselect() {
+  var editGUI = document.getElementById('editGUI');
   // CONTROL POINTS SELECTION LIST
-  editGUI.appendChild(document.createElement("BR"));
   var cplist = document.createElement("SELECT");
   var fiberindex = guiStatus.editingFiber;
   cplist.size = phantom.fibers.source[fiberindex].controlPoints.length + 1;
@@ -101,6 +105,7 @@ function fiberEdit( index ) {
   option.onclick = function () {
     scene.removeCPHighlight(true);
     guiStatus.editingCP = undefined;
+    exitCPedit();
   };
   cplist.options.add(option);
 
@@ -120,4 +125,5 @@ function fiberEdit( index ) {
     }
   );
   editGUI.appendChild(cplist);
+
 }

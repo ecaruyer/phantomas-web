@@ -6,7 +6,7 @@ function setupGUI() {
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
-
+  
   if (phantom.fibers.source.length > 0) {
     // Add *none* option
     var option = document.createElement("option");

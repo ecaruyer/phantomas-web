@@ -84,3 +84,12 @@ function cpEdit(index) {
   zpos.appendChild(zvalue);
   position.appendChild(zpos);
 }
+
+function exitCPedit() {
+  var editGUI = document.getElementById('editGUI');
+
+  editGUI.removeChild(document.getElementById('cpEditor'));
+
+  addCPselect();
+  resizeGUI();
+}
