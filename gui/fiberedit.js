@@ -85,10 +85,21 @@ function fiberEdit( index ) {
   var cplist = document.createElement("SELECT");
   var fiberindex = guiStatus.editingFiber;
   cplist.size = phantom.fibers.source[fiberindex].controlPoints.length + 1;
+  cplist.onmouseout = function () {
+    if (cplist.selectedIndex) {
+      scene.removeCPHighlight();
+    } else {
+      scene.removeCPHighlight(true);
+    }
+  };
 
   var option = document.createElement("option");
-  option.text = '*'
+  option.text = '*n*'
   option.selected = true;
+  option.onclick = function () {
+    scene.removeCPHighlight(true);
+    guiStatus.editingCP = undefined;
+  };
   cplist.options.add(option);
 
   phantom.fibers.source[fiberindex].controlPoints.forEach(

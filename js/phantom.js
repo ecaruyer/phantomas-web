@@ -31,7 +31,7 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
   objects.forEach( function(object) {
     scene.remove(object);
   });
-
+  render();
 }
 
 /* Phantom class includes all the data related to the Phantom.
