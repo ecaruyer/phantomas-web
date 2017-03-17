@@ -48,6 +48,10 @@ function regionSelectClick(index, notclicked) {
   phantom.regionHighlight(index);
 }
 function cpSelectClick(fiberindex, cpindex, notclicked) {
+  // Made changes are updated in guiStatus undo history store
+  if (!notclicked) {
+    guiStatus.formerCP = phantom.fibers.source[fiberindex].controlPoints[cpindex].slice(0);
+  }
   cpEdit(cpindex);
   guiStatus.editing('CP', cpindex);
   phantom.cpHighlight(fiberindex, cpindex, 'red');

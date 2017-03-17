@@ -54,7 +54,7 @@ GuiStatus.prototype = {
       if (this.editingFiber !== undefined) {
         if (this.editingCP !== undefined) {
           cpSelectClick(this.editingFiber, this.editingCP, true);
-        }
+        } else
         fiberSelectClick(this.editingFiber, true);
       } else if (this.editingRegion !== undefined) {
         regionSelectClick(this.editingRegion, true)

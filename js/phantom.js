@@ -266,6 +266,7 @@ Phantom.prototype = {
       case 'red':
         scene.removeCPHighlight(true);
         mesh.material.color = new THREE.Color(0xFF0000)
+        mesh.position.set(guiStatus.formerCP[0], guiStatus.formerCP[1], guiStatus.formerCP[2]);
         break;
       default:
         console.error('Incorrect cpHighlight mode');

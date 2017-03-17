@@ -92,6 +92,21 @@ function fiberEdit( index ) {
 
 function addCPselect() {
   var editGUI = document.getElementById('editGUI');
+
+  // Control Points edition table creation.
+  var table = document.createElement("TABLE");
+  table.id = 'cpTable';
+  // This creates a of the former CP to be used for the Undo Button.
+  phantom.fibers.source[guiStatus.editingFiber].controlPoints.slice(0);
+  editGUI.appendChild(table);
+  var tr = document.createElement("TR");
+  table.appendChild(tr);
+  var td1 = document.createElement("TD");
+  tr.appendChild(td1);
+  var td2 = document.createElement("TD");
+  tr.appendChild(td2);
+  td2.id = "cpEditor";
+
   // CONTROL POINTS SELECTION LIST
   var cplist = document.createElement("SELECT");
   var fiberindex = guiStatus.editingFiber;
@@ -110,7 +125,6 @@ function addCPselect() {
   option.text = '*n*'
   option.selected = true;
   option.onclick = function () {
-
     exitCPedit();
   };
   cplist.options.add(option);
@@ -129,6 +143,6 @@ function addCPselect() {
       cplist.options.add(option);
     }
   );
-  editGUI.appendChild(cplist);
+  td1.appendChild(cplist);
 
 }

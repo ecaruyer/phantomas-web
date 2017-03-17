@@ -1,30 +1,12 @@
 function cpEdit(index) {
   var fiber = phantom.fibers.source[guiStatus.editingFiber];
   var cp = fiber.controlPoints[index];
-  var cpSelect = document.getElementById('cpSelector');
-  var editGUI = document.getElementById('editGUI');
-  if (guiStatus.editingCP === undefined) {
-    editGUI.removeChild(cpSelect);
-  } else {
-    editGUI.removeChild(document.getElementById('cpEditor'));
-  }
-  cpSelect.style.width = '65px'
-
-  var table = document.createElement("TABLE");
-  table.id = 'cpEditor';
-  // This creates a of the former CP to be used for the Undo Button.
-  table.former = cp.slice(0);
-  editGUI.appendChild(table);
-  var tr = document.createElement("TR");
-  table.appendChild(tr);
-  var td1 = document.createElement("TD");
-  td1.appendChild(cpSelect);
-  tr.appendChild(td1);
-  var td2 = document.createElement("TD");
-  tr.appendChild(td2);
+  var former = guiStatus.formerCP;
+  var cpEditor = document.getElementById("cpEditor");
 
   var field = document.createElement("FIELDSET");
-  td2.appendChild(field);
+  cpEditor.innerHTML = "";
+  cpEditor.appendChild(field);
 
   var title = document.createElement("LEGEND");
   title.innerHTML = ' ' + index.toString(); + ' ';
@@ -82,14 +64,20 @@ function cpEdit(index) {
 
   var undobutton = document.createElement("BUTTON");
   undobutton.innerHTML = "Undo";
-  undobutton.disabled = true;
+  if (
+    former[0] == Number(xvalue.value) &&
+    former[1] == Number(yvalue.value) &&
+    former[2] == Number(zvalue.value)
+  ) {
+    undobutton.disabled = true;
+  }
   undobutton.onclick = function() {
-    cpValueOnChange(index, 'x', table.former[0]);
-    xvalue.value = table.former[0];
-    cpValueOnChange(index, 'y', table.former[1]);
-    yvalue.value = table.former[1];
-    cpValueOnChange(index, 'z', table.former[2]);
-    zvalue.value = table.former[2];
+    cpValueOnChange(index, 'x', former[0]);
+    xvalue.value = former[0];
+    cpValueOnChange(index, 'y', former[1]);
+    yvalue.value = former[1];
+    cpValueOnChange(index, 'z', former[2]);
+    zvalue.value = former[2];
 
     scene.removeCPHighlight();
   }
