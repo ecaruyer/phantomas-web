@@ -85,8 +85,12 @@ function cpEdit(index) {
   undobutton.disabled = true;
   undobutton.onclick = function() {
     cpValueOnChange(index, 'x', table.former[0]);
+    xvalue.value = table.former[0];
     cpValueOnChange(index, 'y', table.former[1]);
+    yvalue.value = table.former[1];
     cpValueOnChange(index, 'z', table.former[2]);
+    zvalue.value = table.former[2];
+
     scene.removeCPHighlight();
   }
   buttons.appendChild(undobutton);
