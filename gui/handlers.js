@@ -27,10 +27,13 @@ function switchViewButton() {
 // disable booleans must be true when the user does not click directly the option.
 // This saves resources by not rebuilding editingGUI and does not reclick selectors, which would be annoying.
 function fiberSelectClick(index, notclicked) {
-  guiStatus.editing('fiber', index);
   if (!notclicked) {
     document.getElementById("regionSelector").selectedIndex = 0;
+    guiStatus.editing('fiber', index);
     fiberEdit(index);
+  } else {
+    // We onwly want CP edition to be undefined when actually clicked!
+    guiStatus.editingFiber = index;
   }
   phantom.revealSkeleton(scene, index);
 }
@@ -38,10 +41,16 @@ function regionSelectClick(index, notclicked) {
   guiStatus.editing('region', index);
   if (!notclicked) {
     document.getElementById("fiberSelector").selectedIndex = 0;
+    guiStatus.editing('region', index);
     regionEdit(index);
   }
   phantom.addToScene(scene);
   phantom.regionHighlight(index);
+}
+function cpSelectClick(fiberindex, cpindex, notclicked) {
+  cpEdit(cpindex);
+  guiStatus.editing('CP', cpindex);
+  phantom.cpHighlight(fiberindex, cpindex, 'red');
 }
 
 

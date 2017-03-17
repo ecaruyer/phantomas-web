@@ -46,17 +46,16 @@ GuiStatus.prototype = {
     }
 
     document.getElementById("switchViewButton").disabled = false;
-
   },
   retrieve: function() {
     if (this.previewing) {
       phantom.addToScene(scene);
     } else {
       if (this.editingFiber !== undefined) {
-        fiberSelectClick(this.editingFiber, true);
         if (this.editingCP !== undefined) {
-          cpSelectClick(this.editingCP)
+          cpSelectClick(this.editingFiber, this.editingCP, true);
         }
+        fiberSelectClick(this.editingFiber, true);
       } else if (this.editingRegion !== undefined) {
         regionSelectClick(this.editingRegion, true)
       } else {

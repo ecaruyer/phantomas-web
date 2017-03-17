@@ -3,8 +3,7 @@ function cpEdit(index) {
   var cp = fiber.controlPoints[index];
   var cpSelect = document.getElementById('cpSelector');
   var editGUI = document.getElementById('editGUI');
-  if (!(guiStatus.editingCP + 1)) {
-    guiStatus.editingCP = index;
+  if (guiStatus.editingCP === undefined) {
     editGUI.removeChild(cpSelect);
   } else {
     editGUI.removeChild(document.getElementById('cpEditor'));
@@ -89,6 +88,8 @@ function exitCPedit() {
   var editGUI = document.getElementById('editGUI');
 
   editGUI.removeChild(document.getElementById('cpEditor'));
+  scene.removeCPHighlight(true);
+  guiStatus.editing('CP', undefined);
 
   addCPselect();
   resizeGUI();

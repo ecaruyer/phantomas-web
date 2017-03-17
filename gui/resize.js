@@ -1,5 +1,6 @@
 // Returns amout of window height in text lines
 function countDocumentLines() {
+  // From http://stackoverflow.com/questions/4392868/javascript-find-divs-line-height-not-css-property-but-actual-line-height
   function getLineHeight(element){
     var temp = document.createElement(element.nodeName);
     temp.setAttribute("style","margin:0px;padding:0px;font-family:"+element.style.fontFamily+";font-size:"+element.style.fontSize);
@@ -25,13 +26,12 @@ function resizeGUI() {
   var regionSelector = document.getElementById("regionSelector");
 
   // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
-  // added 1 to editing properties so that when 0 those do not return false
-  if (guiStatus.editingFiber + 1) {
+  if (guiStatus.editingFiber !== undefined) {
     lines -= 12 + Math.max(phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + 1, 7);
     // cpSelector must be resized as well. If it is to be created, it will not be available and will resize by itself.
     if (document.getElementById('cpSelector')) document.getElementById('cpSelector').style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
-  } else if (guiStatus.editingRegion + 1) {
-    lines -= 14;
+  } else if (guiStatus.editingRegion !== undefined) {
+    lines -= 15;
   }
 
 

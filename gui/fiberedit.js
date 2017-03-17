@@ -1,5 +1,6 @@
 function fiberEdit( index ) {
   resizeGUI();
+  scene.removeCPHighlight(true);
 
   // editGUI is emptied
   var editGUI = document.getElementById('editGUI');
@@ -103,8 +104,7 @@ function addCPselect() {
   option.text = '*n*'
   option.selected = true;
   option.onclick = function () {
-    scene.removeCPHighlight(true);
-    guiStatus.editingCP = undefined;
+
     exitCPedit();
   };
   cplist.options.add(option);
@@ -117,8 +117,7 @@ function addCPselect() {
         phantom.cpHighlight(fiberindex, index, 'blue');
       };
       option.onclick = function() {
-        phantom.cpHighlight(fiberindex, index, 'red');
-        cpEdit(index);
+        cpSelectClick(fiberindex, index);
       };
 
       cplist.options.add(option);

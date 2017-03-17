@@ -3,7 +3,7 @@
 THREE.Scene.prototype.removePhantom = function() {
   var objects = [];
   this.children.forEach( function(object){
-    if ((object.type == 'Mesh') || (object.type == "Line")) {
+    if (((object.type == 'Mesh') || (object.type == "Line")) && (!object.isHighlight)) {
       objects.push(object);
     }
   });
@@ -13,6 +13,8 @@ THREE.Scene.prototype.removePhantom = function() {
   objects.forEach( function(object) {
     scene.remove(object);
   });
+
+  this.removeCPHighlight();
 }
 THREE.Scene.prototype.removeCPHighlight = function(all) {
   var objects = [];

@@ -1,5 +1,6 @@
 function regionEdit(index) {
   resizeGUI();
+  scene.removeCPHighlight(true);
 
   // editGUI is emptied
   var editGUI = document.getElementById('editGUI');
