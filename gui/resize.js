@@ -28,8 +28,6 @@ function resizeGUI() {
   // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
   if (guiStatus.editingFiber !== undefined) {
     lines -= 12 + Math.max(phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + 1, 7);
-    // cpSelector must be resized as well. If it is to be created, it will not be available and will resize by itself.
-    if (document.getElementById('cpSelector')) document.getElementById('cpSelector').style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
   } else if (guiStatus.editingRegion !== undefined) {
     lines -= 15;
   }

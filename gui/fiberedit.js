@@ -97,7 +97,7 @@ function addCPselect() {
   var fiberindex = guiStatus.editingFiber;
   cplist.size = phantom.fibers.source[fiberindex].controlPoints.length + 1;
   cplist.id = 'cpSelector';
-  cplist.style.width = (document.getElementById("leftGUI").offsetWidth - 10).toString() + 'px';
+  cplist.style.width = '65px'
   cplist.onmouseout = function () {
     if (cplist.selectedIndex) {
       scene.removeCPHighlight();
