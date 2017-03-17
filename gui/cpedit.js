@@ -8,10 +8,12 @@ function cpEdit(index) {
   } else {
     editGUI.removeChild(document.getElementById('cpEditor'));
   }
-  cpSelect.style.width = '50px'
+  cpSelect.style.width = '65px'
 
   var table = document.createElement("TABLE");
   table.id = 'cpEditor';
+  // This creates a of the former CP to be used for the Undo Button.
+  table.former = cp.slice(0);
   editGUI.appendChild(table);
   var tr = document.createElement("TR");
   table.appendChild(tr);
@@ -38,7 +40,7 @@ function cpEdit(index) {
   xpos.appendChild(xposlabel);
   var xvalue = document.createElement("INPUT");
   xvalue.id = 'xvalue';
-  xvalue.style.width = "55px";
+  xvalue.style.width = "65px";
   xvalue.type = "number";
   xvalue.step = .1;
   xvalue.value = cp[0];
@@ -52,7 +54,7 @@ function cpEdit(index) {
   ypos.appendChild(yposlabel);
   var yvalue = document.createElement("INPUT");
   yvalue.id = 'yvalue';
-  yvalue.style.width = "59px";
+  yvalue.style.width = "65px";
   yvalue.type = "number";
   yvalue.step = .1;
   yvalue.value = cp[1];
@@ -66,7 +68,7 @@ function cpEdit(index) {
   zpos.appendChild(zposlabel);
   var zvalue = document.createElement("INPUT");
   zvalue.id = 'zvalue';
-  zvalue.style.width = "55px";
+  zvalue.style.width = "65px";
   zvalue.type = "number";
   zvalue.step = .1;
   zvalue.value = cp[2];
@@ -74,10 +76,26 @@ function cpEdit(index) {
   zpos.appendChild(zvalue);
   position.appendChild(zpos);
 
+  var buttons = document.createElement("LI");
+  buttons.style.textAlign = 'right';
+  position.appendChild(buttons);
+
+  var undobutton = document.createElement("BUTTON");
+  undobutton.innerHTML = "Undo";
+  undobutton.disabled = true;
+  undobutton.onclick = function() {
+    cpValueOnChange(index, 'x', table.former[0]);
+    cpValueOnChange(index, 'y', table.former[1]);
+    cpValueOnChange(index, 'z', table.former[2]);
+    scene.removeCPHighlight();
+  }
+  buttons.appendChild(undobutton);
+
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
     phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
     document.getElementById('fiberLength').innerHTML = Math.floor(phantom.fibers.source[guiStatus.editingFiber].length * 10) / 10;
+    undobutton.disabled = false;
   }
 }
 
