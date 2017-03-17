@@ -42,10 +42,7 @@ function cpEdit(index) {
   xvalue.type = "number";
   xvalue.step = .1;
   xvalue.value = cp[0];
-  xvalue.onchange = function() {
-    fiber.setControlPoint(index, 'x', Number(this.value));
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
-  }
+  xvalue.onchange = function() {cpValueOnChange(index, 'x', this.value)};
   xpos.appendChild(xvalue);
   position.appendChild(xpos);
 
@@ -59,10 +56,7 @@ function cpEdit(index) {
   yvalue.type = "number";
   yvalue.step = .1;
   yvalue.value = cp[1];
-  yvalue.onchange = function() {
-    fiber.setControlPoint(index, 'y', Number(this.value));
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
-  }
+  yvalue.onchange = function() {cpValueOnChange(index, 'y', this.value)};
   ypos.appendChild(yvalue);
   position.appendChild(ypos);
 
@@ -76,12 +70,15 @@ function cpEdit(index) {
   zvalue.type = "number";
   zvalue.step = .1;
   zvalue.value = cp[2];
-  zvalue.onchange = function() {
-    fiber.setControlPoint(index, 'z', Number(this.value));
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
-  }
+  zvalue.onchange = function() {cpValueOnChange(index, 'z', this.value)};
   zpos.appendChild(zvalue);
   position.appendChild(zpos);
+
+  function cpValueOnChange(index, axis, value) {
+    fiber.setControlPoint(index, axis, Number(value));
+    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
+    document.getElementById('fiberLength').innerHTML = Math.floor(phantom.fibers.source[guiStatus.editingFiber].length * 10) / 10;
+  }
 }
 
 function exitCPedit() {

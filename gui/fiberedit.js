@@ -27,7 +27,13 @@ function fiberEdit( index ) {
 
   // LENGTH
   var length = document.createElement("LI");
-  length.innerHTML = Math.floor(phantom.fibers.source[index].length * 10) / 10 + " units long"
+  var lengthspan = document.createElement("SPAN");
+  length.appendChild(lengthspan);
+
+  lengthspan.id = "fiberLength";
+  lengthspan.innerHTML = Math.floor(phantom.fibers.source[index].length * 10) / 10;
+
+  length.innerHTML += " units long";
   fiberprops.appendChild(length);
 
   // RADIUS
