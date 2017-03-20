@@ -22,13 +22,13 @@ function loadPhantom( request ) {
                     fiber.control_points[i+1],
                     fiber.control_points[i+2]]);
       }
-      phantom.addFiber(new FiberSource(newcp, fiber.tangents, fiber.radius), parameters);
+      phantom.addFiber(new FiberSource(newcp, fiber.tangents, fiber.radius, fiber.color), parameters);
     }
   }
   for (var property in loadedRegions) {
     if (loadedRegions.hasOwnProperty(property)) {
       var region = loadedRegions[property.toString()];
-      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, region.radius), parameters);
+      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, region.radius, region.color), parameters);
     }
   }
 

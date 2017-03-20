@@ -1,13 +1,3 @@
-// colors is a color library for random color generation in representations
-colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
-          0xBF9430, 0x2C3D82, 0x248F40, 0xA61300, 0xA67400,
-          0x071C71, 0x007C21, 0xFF5640, 0xFFC640, 0x4965D6,
-          0x38DF64, 0xFF8373, 0xFFD573, 0x6F83D6, 0x64DF85,
-          0xFF5600, 0xFF7C00, 0x04859D, 0x00AA72, 0x60D4AE,
-          0xBF6030, 0xBF7630, 0x206876, 0x207F60, 0x5FBDCE,
-          0xA63800, 0xA65100, 0x015666, 0x006E4A, 0xFFB773,
-          0xFF8040, 0xFF9D40, 0x37B6CE, 0x35D4A0, 0xFFA273];
-
 /* FiberSkeleton creates 3D representation of control points and fiber path
   from a given fiber.
   Subject-Observer pattern must be enabled and fired from subject with .refresh();
@@ -40,7 +30,7 @@ function FiberSkeleton(fiber, parameters) {
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
-    this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+    this.color = fiber.color;
   } else {
     this.color = parameters.color;
   }
@@ -147,7 +137,7 @@ function FiberTube(fiber, parameters) {
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
-    this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+    this.color = fiber.color;
   } else {
     this.color = parameters.color;
   }
@@ -213,7 +203,7 @@ function IsotropicRegion(source, parameters) {
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
-    this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+    this.color = source.color;
   } else {
     this.color = parameters.color;
   }

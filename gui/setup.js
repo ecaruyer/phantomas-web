@@ -6,7 +6,7 @@ function setupGUI() {
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
-  
+
   if (phantom.fibers.source.length > 0) {
     // Add *none* option
     var option = document.createElement("option");
@@ -25,7 +25,7 @@ function setupGUI() {
 
     // Add the rest of the options
     phantom.fibers.source.forEach( function(fiber, index) {
-      var backgroundColor = phantom.fibers.tube[index].color;
+      var backgroundColor = fiber.color;
 
       var option = document.createElement("option");
       var selectColorSpan = document.createElement("span");
@@ -65,7 +65,7 @@ function setupGUI() {
 
     // Add the rest of the options
     phantom.isotropicRegions.source.forEach( function(region, index) {
-      var backgroundColor = phantom.isotropicRegions.sphere[index].color;
+      var backgroundColor = region.color;
 
       var option = document.createElement("option");
       var selectColorSpan = document.createElement("span");

@@ -1,3 +1,14 @@
+// colors is a color library for random color generation in representations
+var colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
+          0xBF9430, 0x2C3D82, 0x248F40, 0xA61300, 0xA67400,
+          0x071C71, 0x007C21, 0xFF5640, 0xFFC640, 0x4965D6,
+          0x38DF64, 0xFF8373, 0xFFD573, 0x6F83D6, 0x64DF85,
+          0xFF5600, 0xFF7C00, 0x04859D, 0x00AA72, 0x60D4AE,
+          0xBF6030, 0xBF7630, 0x206876, 0x207F60, 0x5FBDCE,
+          0xA63800, 0xA65100, 0x015666, 0x006E4A, 0xFFB773,
+          0xFF8040, 0xFF9D40, 0x37B6CE, 0x35D4A0, 0xFFA273];
+
+
 /*
 This module contains the definition of ``FiberSource``, which is a continuous
 representation of a fiber. All the fibers created are supposed to connect two
@@ -13,17 +24,24 @@ radius : fiber radius; same dimensions as controlPoints.
     want a specific size for the phantom.
 
 */
-function FiberSource(controlPoints, tangents, radius) {
+function FiberSource(controlPoints, tangents, radius, color) {
   // Initialize properties. By default tangents = 'symmetric', radius = 1.
   this.controlPoints = controlPoints;
+
   if (tangents === undefined) {
     tangents = 'symmetric';
   }
   this.tangents = tangents;
+
   if (radius === undefined) {
     radius = 1;
   }
   this.radius = radius;
+
+  if (color === undefined) {
+    color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+  }
+  this.color = new THREE.Color(color);
 
   // Calculate coefficients
   this.polyCalc();
@@ -246,9 +264,15 @@ FiberSource.prototype = {
 }
 
 // An isotropic region has a spherical shape
-function IsotropicRegionSource(center, radius) {
+function IsotropicRegionSource(center, radius, color) {
   this.center = center;
   this.radius = radius;
+
+  if (color === undefined) {
+    color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+  }
+  this.color = new THREE.Color(color);
+
   this.observers = [];
 }
 IsotropicRegionSource.prototype = {

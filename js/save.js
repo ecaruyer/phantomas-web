@@ -1,11 +1,13 @@
-ParsableFiber = function(control_points, tangents, radius) {
+ParsableFiber = function(control_points, tangents, radius, color) {
   this.control_points = control_points;
   this.tangents = tangents;
   this.radius = Number(radius);
+  this.color = Number(color.getHex());
 }
-ParsableRegion = function(center, radius) {
+ParsableRegion = function(center, radius, color) {
   this.center = center;
   this.radius = Number(radius);
+  this.color = Number(color.getHex());
 }
 
 
@@ -22,15 +24,12 @@ Phantom.prototype.export = function() {
       });
     });
 
-    var tangents = source.tangents;
-    var radius = source.radius;
-
-    var parsable_fiber = new ParsableFiber(control_points, tangents, radius);
+    var parsable_fiber = new ParsableFiber(control_points, source.tangents, source.radius, source.color);
     parsable_phantom.fiber_geometries[index.toString()] = parsable_fiber;
   });
 
   this.isotropicRegions.source.forEach( function(source, index) {
-    var parsable_region = new ParsableRegion(source.center, source.radius);
+    var parsable_region = new ParsableRegion(source.center, source.radius, source.color);
     parsable_phantom.isotropic_regions[index.toString()] = parsable_region;
   });
 

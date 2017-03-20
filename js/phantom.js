@@ -108,8 +108,6 @@ Phantom.prototype = {
 
     this.fibers.source.push(fiber);
     this.fibers.skeleton.push(new FiberSkeleton(fiber, parameters));
-    // Skeleton's thread and fiber's tube will adopt the same color
-    parameters.color = this.fibers.skeleton[this.fibers.skeleton.length-1].color;
     this.fibers.tube.push(new FiberTube(fiber, parameters));
     parameters.color = undefined;
 
