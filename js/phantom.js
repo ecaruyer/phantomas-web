@@ -16,6 +16,8 @@ THREE.Scene.prototype.removePhantom = function() {
 
   this.removeCPHighlight(true);
 }
+
+// All boolean makes red points to be removed if true.
 THREE.Scene.prototype.removeCPHighlight = function(all) {
   var objects = [];
   this.children.forEach( function(object){
@@ -261,6 +263,7 @@ Phantom.prototype = {
     switch (mode) {
       case 'blue':
         mesh.material.color = new THREE.Color(0x0000FF)
+        // this will be later used for filtering which points are to be removed.
         mesh.isBlueHighlight = true;
         break;
       case 'red':
@@ -268,7 +271,7 @@ Phantom.prototype = {
         mesh.material.color = new THREE.Color(0xFF0000)
         mesh.position.set(guiStatus.formerCP[0], guiStatus.formerCP[1], guiStatus.formerCP[2]);
         break;
-      default:
+      default: // Should not happen!
         console.error('Incorrect cpHighlight mode');
         mesh.material.color = new THREE.Color(0x00FF00)
     }

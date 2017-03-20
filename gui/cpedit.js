@@ -4,6 +4,7 @@ function cpEdit(index) {
   var former = guiStatus.formerCP;
   var cpEditor = document.getElementById("cpEditor");
 
+  // The edit field is appended to the second CPedit table
   var field = document.createElement("FIELDSET");
   field.id = "cpEditField";
   cpEditor.innerHTML = "";
@@ -59,12 +60,14 @@ function cpEdit(index) {
   zpos.appendChild(zvalue);
   position.appendChild(zpos);
 
+  // Buttons under position selectors
   var buttons = document.createElement("LI");
   buttons.style.textAlign = 'right';
   position.appendChild(buttons);
 
   var undobutton = document.createElement("BUTTON");
   undobutton.innerHTML = "Undo";
+  // If nothing to undo, button is disabled. If something to, bluepoint of editing is shown.
   if (
     former[0] == Number(xvalue.value) &&
     former[1] == Number(yvalue.value) &&
@@ -75,6 +78,7 @@ function cpEdit(index) {
     phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
   }
 
+  // guiStatus.former created earlier is recovered when undoing.
   undobutton.onclick = function() {
     cpValueOnChange(index, 'x', former[0]);
     xvalue.value = former[0];
@@ -88,6 +92,7 @@ function cpEdit(index) {
   }
   buttons.appendChild(undobutton);
 
+  // Called on each CP position selector
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
     phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
@@ -96,6 +101,7 @@ function cpEdit(index) {
   }
 }
 
+// Removes the whole CP edit field and creates a new one (except the CP edit field). Useful when attempting to refresh.
 function exitCPedit() {
   var editGUI = document.getElementById('editGUI');
   var cpTable = document.getElementById("cpTable");

@@ -59,6 +59,7 @@ function cpSelectClick(fiberindex, cpindex, notclicked) {
 
 
 // PLANE SELECTORS
+// Double click for inverted axis was commented for it to be disabled for the moment. Found it annoying when attempting to move points.
 function moveCameraXY() {
   camera.up = new THREE.Vector3(0, 1, 0);
   controls.target = new THREE.Vector3(0, 0, 0);

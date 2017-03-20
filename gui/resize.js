@@ -32,7 +32,6 @@ function resizeGUI() {
     lines -= 15;
   }
 
-
   // Width is subtracted 10 pixels for allowing space to scrollbar.
   fiberSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
   regionSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
@@ -43,6 +42,7 @@ function resizeGUI() {
 
   var minsize = 3;
 
+  // Final size to be between total number of elements (no select scroll) and minsize
   fiberSelector.size = Math.min( Math.max(lines - regionNumber, minsize), fiberNumber);
   regionSelector.size = Math.min( Math.max(lines - fiberNumber, minsize), regionNumber);
 

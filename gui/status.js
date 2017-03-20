@@ -13,6 +13,8 @@ function GuiStatus() {
       index, which specifies its index
     viewing, which removes any editing state. Constructor leaves status this way.
     retrieve, which brings back the state in which it the editor was
+
+    *TO BE CHECKED* apply method usability.
 */
     this.previewing = false;
     document.getElementById("switchViewButton").disabled = true;

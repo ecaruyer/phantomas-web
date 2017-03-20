@@ -90,6 +90,7 @@ function fiberEdit( index ) {
   addCPselect();
 }
 
+// This is a separate function so it may be refreshed independently
 function addCPselect() {
   var editGUI = document.getElementById('editGUI');
 
@@ -99,6 +100,7 @@ function addCPselect() {
   // This creates a of the former CP to be used for the Undo Button.
   phantom.fibers.source[guiStatus.editingFiber].controlPoints.slice(0);
   editGUI.appendChild(table);
+  // This table contains two cells: left for CP select list and right for edit field (when editing)
   var tr = document.createElement("TR");
   table.appendChild(tr);
   var td1 = document.createElement("TD");
@@ -122,6 +124,7 @@ function addCPselect() {
     }
   };
 
+  // *n* option
   var option = document.createElement("option");
   option.text = '*n*'
   option.selected = true;
@@ -130,6 +133,7 @@ function addCPselect() {
   };
   cplist.options.add(option);
 
+  // Each CP option
   phantom.fibers.source[fiberindex].controlPoints.forEach(
     function(point, index) {
       var option = document.createElement("option");
