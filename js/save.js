@@ -1,3 +1,4 @@
+// Parsable objects must contain only those parameters the loaders expect to find
 ParsableFiber = function(control_points, tangents, radius, color) {
   this.control_points = control_points;
   this.tangents = tangents;
@@ -10,14 +11,16 @@ ParsableRegion = function(center, radius, color) {
   this.color = Number(color.getHex());
 }
 
-
+// Returns a JSON string with the phantom in ParsableFiber and ParsableRegion classes
 Phantom.prototype.export = function() {
   var parsable_phantom = new Object;
   parsable_phantom.fiber_geometries = new Object;
   parsable_phantom.isotropic_regions = new Object;
 
+  // FIBERS
   this.fibers.source.forEach( function(source, index) {
     var control_points = [];
+    // Control Points are expected in a unique string.
     source.controlPoints.forEach( function(cp) {
       cp.forEach( function(element){
         control_points.push(element);
@@ -25,11 +28,14 @@ Phantom.prototype.export = function() {
     });
 
     var parsable_fiber = new ParsableFiber(control_points, source.tangents, source.radius, source.color);
+    // Fiber names featured in Phantomas are not featured here. Instead, numbers are applied.
     parsable_phantom.fiber_geometries[index.toString()] = parsable_fiber;
   });
 
+  // ISOTROPICREGIONS
   this.isotropicRegions.source.forEach( function(source, index) {
     var parsable_region = new ParsableRegion(source.center, source.radius, source.color);
+    // Fiber names featured in Phantomas are not featured here. Instead, numbers are applied.
     parsable_phantom.isotropic_regions[index.toString()] = parsable_region;
   });
 
