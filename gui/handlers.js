@@ -96,3 +96,7 @@ function moveCameraZY() {
   //   camera.position.x = phantom.radius()*-1.5;
   // }
 }
+
+function saveClick() {
+  phantom.export();
+}
