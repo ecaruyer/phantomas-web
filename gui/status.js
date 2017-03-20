@@ -26,8 +26,6 @@ function GuiStatus() {
 
 GuiStatus.prototype = {
   editing: function(element, index) {
-    this.previewing = false;
-
     switch (element) {
       case 'fiber':
         this.unediting();
