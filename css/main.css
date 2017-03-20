@@ -40,6 +40,15 @@ ul {
 	padding: .5%;
 }
 
+#bottomButtons {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  padding: .5%;
+  padding-left: 0;
+}
+
 
 
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
