@@ -98,5 +98,5 @@ function moveCameraZY() {
 }
 
 function saveClick() {
-  phantom.export();
+  pushDownload(phantom.export());  
 }

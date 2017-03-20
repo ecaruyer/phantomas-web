@@ -38,6 +38,13 @@ Phantom.prototype.export = function() {
   });
 
   var parsed_phantom = JSON.stringify(parsable_phantom);
-  console.log(parsed_phantom);
 
+  return parsed_phantom;
+}
+
+// From http://stackoverflow.com/questions/2897619/using-html5-javascript-to-generate-and-save-a-file
+pushDownload = function(content) {
+  console.log(content);
+  var uriContent = "data:application/octet-stream," + encodeURIComponent(content);
+  var newWindow = window.open(uriContent, 'phantom.txt');
 }
