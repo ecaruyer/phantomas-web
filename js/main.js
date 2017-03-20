@@ -1,5 +1,6 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/fibers.txt";
+// var path = "examples/isbi_challenge_2013.txt";
+path = 'phantom_save.json';
 var container = document.getElementById('container');
 
 init();

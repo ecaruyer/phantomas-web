@@ -26,25 +26,25 @@ Phantom.prototype.export = function() {
     var radius = source.radius;
 
     var parsable_fiber = new ParsableFiber(control_points, tangents, radius);
-    var parsed_fiber = JSON.stringify(parsable_fiber);
-    parsable_phantom.fiber_geometries[index.toString()] = parsed_fiber;
+    parsable_phantom.fiber_geometries[index.toString()] = parsable_fiber;
   });
 
   this.isotropicRegions.source.forEach( function(source, index) {
     var parsable_region = new ParsableRegion(source.center, source.radius);
-
-    var parsed_region = JSON.stringify(parsable_region);
-    parsable_phantom.isotropic_regions[index.toString()] = parsed_region;
+    parsable_phantom.isotropic_regions[index.toString()] = parsable_region;
   });
 
-  var parsed_phantom = JSON.stringify(parsable_phantom);
+  // null,2 automatically indents json file
+  var parsed_phantom = JSON.stringify(parsable_phantom, null, 2);
 
   return parsed_phantom;
 }
 
-// From http://stackoverflow.com/questions/2897619/using-html5-javascript-to-generate-and-save-a-file
+// From http://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
 pushDownload = function(content) {
-  console.log(content);
-  var uriContent = "data:application/octet-stream," + encodeURIComponent(content);
-  var newWindow = window.open(uriContent, 'phantom.txt');
+  var uriContent = "data:text/json;charset=utf-8," + encodeURIComponent(content);
+  var dlAnchorElem = document.getElementById('downloadAnchorElem');
+  dlAnchorElem.setAttribute("href", uriContent);
+  dlAnchorElem.setAttribute("download", "phantom_save.json");
+  dlAnchorElem.click();
 }
