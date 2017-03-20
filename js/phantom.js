@@ -14,7 +14,7 @@ THREE.Scene.prototype.removePhantom = function() {
     scene.remove(object);
   });
 
-  this.removeCPHighlight();
+  this.removeCPHighlight(true);
 }
 THREE.Scene.prototype.removeCPHighlight = function(all) {
   var objects = [];

@@ -52,9 +52,9 @@ function cpSelectClick(fiberindex, cpindex, notclicked) {
   if (!notclicked) {
     guiStatus.formerCP = phantom.fibers.source[fiberindex].controlPoints[cpindex].slice(0);
   }
+  phantom.cpHighlight(fiberindex, cpindex, 'red');
   cpEdit(cpindex);
   guiStatus.editing('CP', cpindex);
-  phantom.cpHighlight(fiberindex, cpindex, 'red');
 }
 
 

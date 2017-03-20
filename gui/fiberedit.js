@@ -116,6 +116,7 @@ function addCPselect() {
   cplist.onmouseout = function () {
     if (cplist.selectedIndex) {
       scene.removeCPHighlight();
+      cpEdit(guiStatus.editingCP);
     } else {
       scene.removeCPHighlight(true);
     }

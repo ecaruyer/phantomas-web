@@ -5,6 +5,7 @@ function cpEdit(index) {
   var cpEditor = document.getElementById("cpEditor");
 
   var field = document.createElement("FIELDSET");
+  field.id = "cpEditField";
   cpEditor.innerHTML = "";
   cpEditor.appendChild(field);
 
@@ -70,7 +71,10 @@ function cpEdit(index) {
     former[2] == Number(zvalue.value)
   ) {
     undobutton.disabled = true;
+  } else {
+    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
   }
+
   undobutton.onclick = function() {
     cpValueOnChange(index, 'x', former[0]);
     xvalue.value = former[0];
@@ -80,6 +84,7 @@ function cpEdit(index) {
     zvalue.value = former[2];
 
     scene.removeCPHighlight();
+    this.disabled = true;
   }
   buttons.appendChild(undobutton);
 
@@ -93,8 +98,9 @@ function cpEdit(index) {
 
 function exitCPedit() {
   var editGUI = document.getElementById('editGUI');
+  var cpTable = document.getElementById("cpTable");
 
-  editGUI.removeChild(document.getElementById('cpEditor'));
+  editGUI.removeChild(cpTable);
   scene.removeCPHighlight(true);
   guiStatus.editing('CP', undefined);
 

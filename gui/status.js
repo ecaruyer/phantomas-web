@@ -52,10 +52,10 @@ GuiStatus.prototype = {
       phantom.addToScene(scene);
     } else {
       if (this.editingFiber !== undefined) {
+        fiberSelectClick(this.editingFiber, true);
         if (this.editingCP !== undefined) {
           cpSelectClick(this.editingFiber, this.editingCP, true);
-        } else
-        fiberSelectClick(this.editingFiber, true);
+        }
       } else if (this.editingRegion !== undefined) {
         regionSelectClick(this.editingRegion, true)
       } else {
