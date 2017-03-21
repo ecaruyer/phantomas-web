@@ -76,6 +76,28 @@ function newIsotropicRegionClick() {
   regionSelectClick(phantom.isotropicRegions.source.length - 1);
 }
 
+// REMOVE MESH
+function removeFiberClick() {
+  if (window.confirm("Are you sure you want to remove this fiber? This cannot be undone.")) {
+    var index = guiStatus.editingFiber;
+    phantom.fibers.source.splice(index, 1);
+    phantom.fibers.tube.splice(index, 1);
+    phantom.fibers.skeleton.splice(index, 1);
+
+    phantom.addToScene(scene);
+    setupGUI();
+  }
+}
+function removeIsotropicRegionClick() {
+  if (window.confirm("Are you sure you want to remove this isotropic region? This cannot be undone.")) {
+    var index = guiStatus.editingRegion;
+    phantom.isotropicRegions.source.splice(index, 1);
+    phantom.isotropicRegions.sphere.splice(index, 1);
+
+    phantom.addToScene(scene);
+    setupGUI();
+  }
+}
 
 // PLANE SELECTORS
 // Double click for inverted axis was commented for it to be disabled for the moment. Found it annoying when attempting to move points.

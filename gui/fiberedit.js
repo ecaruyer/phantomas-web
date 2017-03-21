@@ -6,6 +6,17 @@ function fiberEdit( index ) {
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";
+
+  // REMOVE BUTTON
+  var removebutton = document.createElement("BUTTON");
+  removebutton.style.float = "right";
+  removebutton.style.marginBottom = "5px";
+  removebutton.innerHTML = "Remove Fiber";
+  removebutton.onclick = function() { removeFiberClick() };
+  editGUI.appendChild(removebutton);
+  editGUI.appendChild(document.createElement("BR"));
+
+  // PROPERTY FIELD
   var field = document.createElement("FIELDSET");
   editGUI.appendChild(field);
   var fiberprops = document.createElement("UL");

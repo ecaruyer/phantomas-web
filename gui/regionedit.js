@@ -6,6 +6,16 @@ function regionEdit(index) {
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = "";
   editGUI.style = "list-style-type: none";
+
+  // REMOVE BUTTON
+  var removebutton = document.createElement("BUTTON");
+  removebutton.style.float = "right";
+  removebutton.innerHTML = "Remove Isotropic Region";
+  removebutton.onclick = function() { removeIsotropicRegionClick() };
+  editGUI.appendChild(removebutton);
+  editGUI.appendChild(document.createElement("BR"));
+
+  // PROPERTY FIELD
   var field = document.createElement("FIELDSET");
   editGUI.appendChild(field);
   var regionprops = document.createElement("UL");
