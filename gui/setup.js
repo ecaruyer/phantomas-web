@@ -6,6 +6,9 @@ function setupGUI() {
 
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
+  // Empty them - this function might be called for GUIupdating
+  fiberSelector.innerHTML = "";
+  regionSelector.innerHTML = "";
 
   if (phantom.fibers.source.length > 0) {
     // Add *none* option
@@ -48,7 +51,6 @@ function setupGUI() {
 
   if (phantom.isotropicRegions.source.length > 0) {
     // Add *none* option
-    regionSelector.selectedIndex = 0;
     var option = document.createElement("option");
     option.text = '*none*'
     option.selected = true;
@@ -85,9 +87,24 @@ function setupGUI() {
   } else {
     regionSelector.disabled = true;
   }
+
+  editExit();
 }
 
-// Actually just empties editGUI.
+// Add element buttons are only available when no element is being edited
 function editExit() {
-  document.getElementById('editGUI').innerHTML = "";
+  var editGUI = document.getElementById('editGUI');
+  editGUI.innerHTML = ""
+
+  var newfiberbutton = document.createElement("BUTTON");
+  var newregionbutton = document.createElement("BUTTON");
+  editGUI.appendChild(newfiberbutton);
+  editGUI.appendChild(newregionbutton);
+
+
+  newfiberbutton.innerHTML = "New Fiber";
+  newfiberbutton.onclick = function() { newFiberClick() };
+
+  newregionbutton.innerHTML = "New Region";
+  newregionbutton.onclick = function() { newIsotropicRegionClick() };
 }

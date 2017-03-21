@@ -1,6 +1,5 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-// var path = "examples/isbi_challenge_2013.txt";
-path = 'phantom_save.json';
+var path = "examples/3Dfanning_13bundles.txt";
 var container = document.getElementById('container');
 
 init();
@@ -61,7 +60,7 @@ function show() { // The rendering engine is initialized
   // Load phantom and add it in the scene
   phantom = loadPhantom( request );
   phantom.addToScene(scene);
-  camera.position.z = phantom.radius()*1.5;
+  camera.position.z = phantom.radius() * 2 * 1.5;
 
   renderer.render(scene, camera);
 
@@ -84,10 +83,5 @@ function show() { // The rendering engine is initialized
     resizeGUI();
   }
 
-
-  function keyPress() {
-  }
-
-  window.addEventListener('keypress', keyPress, false);
   animate();
 }

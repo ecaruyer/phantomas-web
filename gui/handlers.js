@@ -57,6 +57,25 @@ function cpSelectClick(fiberindex, cpindex, notclicked) {
   guiStatus.editing('CP', cpindex);
 }
 
+// NEW MESH BUTTONS
+function newFiberClick() {
+  phantom.newFiber();
+  phantom.addToScene(scene);
+
+  setupGUI();
+  document.getElementById("fiberSelector").selectedIndex = (phantom.fibers.source.length).toString();
+  fiberSelectClick(phantom.fibers.source.length - 1);
+}
+
+function newIsotropicRegionClick() {
+  phantom.newIsotropicRegion();
+  phantom.addToScene(scene);
+
+  setupGUI();
+  document.getElementById("regionSelector").selectedIndex = (phantom.isotropicRegions.source.length).toString();
+  regionSelectClick(phantom.isotropicRegions.source.length - 1);
+}
+
 
 // PLANE SELECTORS
 // Double click for inverted axis was commented for it to be disabled for the moment. Found it annoying when attempting to move points.
@@ -65,7 +84,7 @@ function moveCameraXY() {
   controls.target = new THREE.Vector3(0, 0, 0);
   // if (camera.position.z == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
-    camera.position.z = phantom.radius()*1.5;
+    camera.position.z = phantom.radius() * 2 * 1.5;
   // }
   // else {
   //   camera.position.set(0, 0, 0);
@@ -77,7 +96,7 @@ function moveCameraXZ() {
   controls.target = new THREE.Vector3(0, 0, 0);
   // if (camera.position.y == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
-    camera.position.y = phantom.radius()*-1.5;
+    camera.position.y = phantom.radius() * 2 * -1.5;
   // }
   // else {
   //   camera.position.set(0, 0, 0);
@@ -89,7 +108,7 @@ function moveCameraZY() {
   controls.target = new THREE.Vector3(0, 0, 0);
   // if (camera.position.x == phantom.radius()*1.5) {
     camera.position.set(0, 0, 0);
-    camera.position.x = phantom.radius()*-1.5;
+    camera.position.x = phantom.radius() * 2 * -1.5;
   // }
   // else {
   //   camera.position.set(0, 0, 0);
@@ -98,5 +117,5 @@ function moveCameraZY() {
 }
 
 function saveClick() {
-  pushDownload(phantom.export());  
+  pushDownload(phantom.export());
 }

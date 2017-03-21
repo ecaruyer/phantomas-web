@@ -133,7 +133,7 @@ Phantom.prototype = {
   },
   radius: function() {
     var maxdist = 0;
-    // Return is twice the farthest point from the center
+    // Return is the farthest point from the center
     for (var i = 0; i < this.fibers.source.length; i++) {
       var cp = this.fibers.source[i].controlPoints;
       for (var j = 0; j < cp.length; j++) {
@@ -154,7 +154,26 @@ Phantom.prototype = {
       ) + region.radius;
       if (dist > maxdist) {maxdist = dist}
     }
-    return (maxdist * 2);
+    return maxdist;
+  },
+  newFiber: function() {
+    // New fiber will feature two points, following the x axis.
+    var cp = [
+      [Math.floor(-1 * this.radius() * 10) / 10, 0, 0],
+      [Math.floor(this.radius() * 10) / 10, 0, 0],
+    ];
+    var radius = Math.floor(this.radius() * 10) / 100;
+    this.addFiber(new FiberSource(cp, 'symmetric', radius));
+
+    // render();
+  },
+  newIsotropicRegion: function() {
+    // New region is to stay in the center. Radius is set to be a fifth of phantom radius.
+    var center = [0, 0, 0];
+    var radius = Math.floor(this.radius() * 10) / 50;
+    this.addIsotropicRegion(new IsotropicRegionSource(center, radius));
+
+    render();
   },
   resetColors: function(){
     // Color contained in their objects is given back to material's meshes.
