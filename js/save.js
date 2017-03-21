@@ -45,11 +45,35 @@ Phantom.prototype.export = function() {
   return parsed_phantom;
 }
 
-// From http://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
 pushDownload = function(content) {
+  // From http://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
+  function timestamp() {
+    // Partly from https://stackoverflow.com/questions/12409299/how-to-get-current-formatted-date-dd-mm-yyyy-in-javascript-and-append-it-to-an-i
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = today.getMonth()+1; //January is 0!
+    if(mm<10){
+      mm='0'+mm;
+    }
+    var dd = today.getDate();
+    if(dd<10){
+      dd='0'+dd;
+    }
+    var hh = today.getHours();
+    if (hh<10) {
+      hh='0'+hh;
+    }
+    var mn = today.getMinutes();
+    if (mn<10) {
+      mn='0'+mn;
+    }
+
+    var timestamp = dd+mm+yyyy+hh+mn;
+    return timestamp;
+  }
   var uriContent = "data:text/json;charset=utf-8," + encodeURIComponent(content);
   var dlAnchorElem = document.getElementById('downloadAnchorElem');
   dlAnchorElem.setAttribute("href", uriContent);
-  dlAnchorElem.setAttribute("download", "phantom_save.json");
+  dlAnchorElem.setAttribute("download", timestamp()+"-phantom_save.json");
   dlAnchorElem.click();
 }
