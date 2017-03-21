@@ -163,17 +163,23 @@ Phantom.prototype = {
       [Math.floor(this.radius() * 10) / 10, 0, 0],
     ];
     var radius = Math.floor(this.radius() * 10) / 100;
-    this.addFiber(new FiberSource(cp, 'symmetric', radius));
+    // Add nbElements in parameters so this.addFiber calculates segments by itself
+    var parameters = {
+      nbElements: this.fibers.source.length + this.isotropicRegions.source.length
+    };
 
-    // render();
+    this.addFiber(new FiberSource(cp, 'symmetric', radius), parameters);
   },
   newIsotropicRegion: function() {
     // New region is to stay in the center. Radius is set to be a fifth of phantom radius.
     var center = [0, 0, 0];
     var radius = Math.floor(this.radius() * 10) / 50;
-    this.addIsotropicRegion(new IsotropicRegionSource(center, radius));
+    // Add nbElements in parameters so this.addIsotropicRegion calculates segments by itself
+    var parameters = {
+      nbElements: this.fibers.source.length + this.isotropicRegions.source.length
+    };
 
-    render();
+    this.addIsotropicRegion(new IsotropicRegionSource(center, radius), parameters);
   },
   resetColors: function(){
     // Color contained in their objects is given back to material's meshes.
