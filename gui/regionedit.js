@@ -14,6 +14,7 @@ function regionEdit(index) {
   removebutton.onclick = function() { removeIsotropicRegionClick() };
   editGUI.appendChild(removebutton);
   editGUI.appendChild(document.createElement("BR"));
+  editGUI.appendChild(document.createElement("BR"));
 
   // PROPERTY FIELD
   var field = document.createElement("FIELDSET");

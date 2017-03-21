@@ -10,10 +10,10 @@ function fiberEdit( index ) {
   // REMOVE BUTTON
   var removebutton = document.createElement("BUTTON");
   removebutton.style.float = "right";
-  removebutton.style.marginBottom = "5px";
   removebutton.innerHTML = "Remove Fiber";
   removebutton.onclick = function() { removeFiberClick() };
   editGUI.appendChild(removebutton);
+  editGUI.appendChild(document.createElement("BR"));
   editGUI.appendChild(document.createElement("BR"));
 
   // PROPERTY FIELD
