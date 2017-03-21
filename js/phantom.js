@@ -273,11 +273,11 @@ Phantom.prototype = {
   },
   cpHighlight: function(fiberindex, controlpointindex, mode) {
     scene.removeCPHighlight();
-    fiber = phantom.fibers.source[fiberindex];
-    cp = fiber.controlPoints[controlpointindex];
+    var fiber = phantom.fibers.source[fiberindex];
+    var cp = fiber.controlPoints[controlpointindex];
 
-    var surface = new THREE.MeshBasicMaterial();
     var geometry = new THREE.SphereGeometry(fiber.radius/4, 16, 16);
+    var surface = new THREE.MeshBasicMaterial();
 
     var mesh = new THREE.Mesh(geometry, surface);
     mesh.isHighlight = true;

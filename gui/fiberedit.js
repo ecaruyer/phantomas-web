@@ -1,5 +1,4 @@
 function fiberEdit( index ) {
-  resizeGUI();
   scene.removeCPHighlight(true);
 
   // editGUI is emptied
@@ -161,4 +160,5 @@ function addCPselect() {
   );
   td1.appendChild(cplist);
 
+  resizeGUI();
 }

@@ -18,6 +18,14 @@ function cpEdit(index) {
   var position = document.createElement("UL");
   field.appendChild(position);
 
+  // Called on each CP position selector
+  function cpValueOnChange(index, axis, value) {
+    fiber.setControlPoint(index, axis, Number(value));
+    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
+    document.getElementById('fiberLength').innerHTML = Math.floor(phantom.fibers.source[guiStatus.editingFiber].length * 10) / 10;
+    undobutton.disabled = false;
+  }
+
   var xpos = document.createElement("LI");
   var xposlabel = document.createElement("LABEL");
   xposlabel.innerHTML = "x ";
@@ -62,10 +70,11 @@ function cpEdit(index) {
 
   // Buttons under position selectors
   var buttons = document.createElement("LI");
-  buttons.style.textAlign = 'right';
   position.appendChild(buttons);
+  buttons.innerHTML = "&nbsp;&nbsp;&nbsp;"
 
   var undobutton = document.createElement("BUTTON");
+  undobutton.style = 'margin-bottom: 10px';
   undobutton.innerHTML = "Undo";
   // If nothing to undo, button is disabled. If something to, bluepoint of editing is shown.
   if (
@@ -92,13 +101,25 @@ function cpEdit(index) {
   }
   buttons.appendChild(undobutton);
 
-  // Called on each CP position selector
-  function cpValueOnChange(index, axis, value) {
-    fiber.setControlPoint(index, axis, Number(value));
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
-    document.getElementById('fiberLength').innerHTML = Math.floor(phantom.fibers.source[guiStatus.editingFiber].length * 10) / 10;
-    undobutton.disabled = false;
-  }
+  // ADD+REMOVE
+  buttons.appendChild(document.createElement("BR"));
+
+  var newcpbutton = document.createElement("BUTTON");
+  newcpbutton.style.float = "right";
+  newcpbutton.innerHTML = "New CP";
+  newcpbutton.onmouseover = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, false) };
+  newcpbutton.onmouseout = function() { scene.removeCPHighlight(); };
+  newcpbutton.onclick = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, true) };
+
+  var removecpbutton = document.createElement("BUTTON");
+  removecpbutton.style.float = "right";
+  removecpbutton.innerHTML = "Remove CP";
+  // removecpbutton.onclick = function() { newIsotropicRegionClick() };
+
+  // As style is float, must be appended from right to left
+  buttons.appendChild(removecpbutton);
+  buttons.innerHTML += '&nbsp;'
+  buttons.appendChild(newcpbutton);
 }
 
 // Removes the whole CP edit field and creates a new one (except the CP edit field). Useful when attempting to refresh.
