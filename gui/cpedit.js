@@ -107,9 +107,9 @@ function cpEdit(index) {
   var newcpbutton = document.createElement("BUTTON");
   newcpbutton.style.float = "right";
   newcpbutton.innerHTML = "New CP";
-  newcpbutton.onmouseover = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, false) };
-  newcpbutton.onmouseout = function() { scene.removeCPHighlight(); };
-  newcpbutton.onclick = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, true) };
+  // newcpbutton.onmouseover = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, false); };
+  // newcpbutton.onmouseout = function() { scene.removeCPHighlight(); };
+  newcpbutton.onclick = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, true); };
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";

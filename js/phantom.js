@@ -91,7 +91,7 @@ function Phantom() {
 }
 
 Phantom.prototype = {
-  addFiber: function(fiber, parameters) {
+  addFiber: function(fiber, parameters, replaceindex) {
     /* If not specified, set segments constrainct so renderer is stable in browser
     This grabs nbElements thrown by load function and sets the number of segments
     each mesh will feature, choosing between a maximum of total segments in a
@@ -106,14 +106,24 @@ Phantom.prototype = {
       parameters.sphereSegments = Math.min(Math.floor(240 / parameters.nbElements), 256);
     }
 
-    this.fibers.source.push(fiber);
-    this.fibers.skeleton.push(new FiberSkeleton(fiber, parameters));
-    this.fibers.tube.push(new FiberTube(fiber, parameters));
-    parameters.color = undefined;
+    if (replaceindex !== undefined) {
+      this.fibers.source[replaceindex] = new FiberSource(fiber.controlPoints, fiber.tangents, fiber.radius, fiber.color);
+      this.fibers.skeleton[replaceindex] = new FiberSkeleton(this.fibers.source[replaceindex], parameters);
+      this.fibers.tube[replaceindex] = new FiberTube(this.fibers.source[replaceindex], parameters);
 
-    // Skeleton and Tube added as observers.
-    fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);
-    fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
+      this.fibers.source[replaceindex].addObserver(this.fibers.tube[replaceindex]);
+      this.fibers.source[replaceindex].addObserver(this.fibers.skeleton[replaceindex]);
+
+    } else {
+      this.fibers.source.push(fiber);
+      this.fibers.skeleton.push(new FiberSkeleton(fiber, parameters));
+      this.fibers.tube.push(new FiberTube(fiber, parameters));
+      parameters.color = undefined;
+      // Skeleton and Tube added as observers.
+      fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);
+      fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
+    }
+
   },
   addIsotropicRegion: function(region, parameters) {
     /* If not specified, set segments constrainct so renderer is stable in browser
