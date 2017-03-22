@@ -117,8 +117,12 @@ function cpEdit(index) {
   removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 
   // As style is float, must be appended from right to left
-  buttons.appendChild(removecpbutton);
-  buttons.appendChild(newcpbutton);
+  if ((index != 0) & (index + 1 < fiber.controlPoints.length)) {
+    buttons.appendChild(removecpbutton);
+  }
+  if (index + 1 < fiber.controlPoints.length) {
+    buttons.appendChild(newcpbutton);
+  }
 }
 
 // Removes the whole CP edit field and creates a new one (except the CP edit field). Useful when attempting to refresh.
