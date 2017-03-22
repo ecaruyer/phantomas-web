@@ -99,6 +99,37 @@ function removeIsotropicRegionClick() {
   }
 }
 
+// CP ADD+REMOVE
+function newCPclick(fiber, cp) {
+  // Fiber was added by newCPonmouseover
+  phantom.addToScene(scene);
+  guiStatus.editing('CP', cp + 1);
+  guiStatus.retrieve();
+  exitCPedit();
+  cpSelectClick(fiber, cp + 1);
+  document.getElementById("cpSelector").selectedIndex = cp + 2;
+}
+function newCPonmouseover(fiber, cp) {
+  phantom.addCP(fiber, cp);
+  phantom.addToScene(scene);
+  fiberSelectClick(fiber, true)
+  phantom.cpHighlight(fiber, cp, 'red');
+  phantom.cpHighlight(fiber, cp + 1, 'green');
+}
+function newCPonmouseout(fiber, cp) {
+  phantom.removeCP(fiber, cp + 1);
+  phantom.addToScene(scene);
+  guiStatus.retrieve();
+}
+
+function removeCPclick(fiber, cp) {
+  phantom.removeCP(fiber, cp);
+  phantom.addToScene(scene);
+  guiStatus.editing('CP', undefined);
+  guiStatus.retrieve();
+  exitCPedit();
+}
+
 // PLANE SELECTORS
 // Double click for inverted axis was commented for it to be disabled for the moment. Found it annoying when attempting to move points.
 function moveCameraXY() {

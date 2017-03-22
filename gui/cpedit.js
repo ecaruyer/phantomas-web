@@ -107,18 +107,17 @@ function cpEdit(index) {
   var newcpbutton = document.createElement("BUTTON");
   newcpbutton.style.float = "right";
   newcpbutton.innerHTML = "New CP";
-  // newcpbutton.onmouseover = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, false); };
-  // newcpbutton.onmouseout = function() { scene.removeCPHighlight(); };
-  newcpbutton.onclick = function() { phantom.addCP(guiStatus.editingFiber, guiStatus.editingCP, true); };
+  newcpbutton.onmouseenter = function() { newCPonmouseover(guiStatus.editingFiber, guiStatus.editingCP); };
+  newcpbutton.onmouseleave = function() { newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP);  }
+  newcpbutton.onclick = function() { newCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
   removecpbutton.innerHTML = "Remove CP";
-  // removecpbutton.onclick = function() { newIsotropicRegionClick() };
+  removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 
   // As style is float, must be appended from right to left
   buttons.appendChild(removecpbutton);
-  buttons.innerHTML += '&nbsp;'
   buttons.appendChild(newcpbutton);
 }
 

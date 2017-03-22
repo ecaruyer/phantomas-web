@@ -107,6 +107,7 @@ Phantom.prototype = {
     }
 
     if (replaceindex !== undefined) {
+
       this.fibers.source[replaceindex] = new FiberSource(fiber.controlPoints, fiber.tangents, fiber.radius, fiber.color);
       this.fibers.skeleton[replaceindex] = new FiberSkeleton(this.fibers.source[replaceindex], parameters);
       this.fibers.tube[replaceindex] = new FiberTube(this.fibers.source[replaceindex], parameters);
@@ -115,6 +116,7 @@ Phantom.prototype = {
       this.fibers.source[replaceindex].addObserver(this.fibers.skeleton[replaceindex]);
 
     } else {
+
       this.fibers.source.push(fiber);
       this.fibers.skeleton.push(new FiberSkeleton(fiber, parameters));
       this.fibers.tube.push(new FiberTube(fiber, parameters));
@@ -122,8 +124,28 @@ Phantom.prototype = {
       // Skeleton and Tube added as observers.
       fiber.addObserver(this.fibers.tube[this.fibers.tube.length-1]);
       fiber.addObserver(this.fibers.skeleton[this.fibers.skeleton.length-1]);
+
     }
 
+  },
+  addCP: function(fiberindex, cpbefore) {
+    var fiber = this.fibers.source[fiberindex];
+    var newts = (fiber.ts[cpbefore] + fiber.ts[cpbefore + 1]) / 2;
+    var newcp = fiber.interpolate(newts)[0];
+    fiber.controlPoints.splice(cpbefore + 1, 0, newcp);
+
+    var parameters = {
+      nbElements: this.fibers.source.length + this.isotropicRegions.source.length
+    };
+    phantom.addFiber(fiber, parameters, fiberindex);
+  },
+  removeCP: function(fiberindex, cp) {
+    var fiber = this.fibers.source[fiberindex];
+    fiber.controlPoints.splice(cp, 1);
+    var parameters = {
+      nbElements: this.fibers.source.length + this.isotropicRegions.source.length
+    };
+    phantom.addFiber(fiber, parameters, fiberindex);
   },
   addIsotropicRegion: function(region, parameters) {
     /* If not specified, set segments constrainct so renderer is stable in browser
@@ -304,9 +326,14 @@ Phantom.prototype = {
         mesh.material.color = new THREE.Color(0xFF0000)
         mesh.position.set(guiStatus.formerCP[0], guiStatus.formerCP[1], guiStatus.formerCP[2]);
         break;
+      case 'green':
+        mesh.material.color = new THREE.Color(0x00FF00);
+        // this will be later used for filtering which points are to be removed.
+        mesh.isBlueHighlight = true;
+        break;
       default: // Should not happen!
-        console.error('Incorrect cpHighlight mode');
-        mesh.material.color = new THREE.Color(0x00FF00)
+        console.error('Incorrect cpHighlight mode! Was set as ' + mode);
+        mesh.material.color = new THREE.Color(0xFFFFFF)
     }
 
     scene.add(mesh);
