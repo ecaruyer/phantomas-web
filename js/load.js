@@ -18,17 +18,17 @@ function loadPhantom( request ) {
       // Control points need to be transleted to array-of-arrays form
       var newcp = [];
       for (var i = 0; i < fiber.control_points.length; i = i + 3) {
-        newcp.push([fiber.control_points[i],
-                    fiber.control_points[i+1],
-                    fiber.control_points[i+2]]);
+        newcp.push([roundToPrecision(fiber.control_points[i]),
+                    roundToPrecision(fiber.control_points[i+1]),
+                    roundToPrecision(fiber.control_points[i+2])]);
       }
-      phantom.addFiber(new FiberSource(newcp, fiber.tangents, fiber.radius, fiber.color), parameters);
+      phantom.addFiber(new FiberSource(newcp, fiber.tangents, roundToPrecision(fiber.radius), fiber.color), parameters);
     }
   }
   for (var property in loadedRegions) {
     if (loadedRegions.hasOwnProperty(property)) {
       var region = loadedRegions[property.toString()];
-      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, region.radius, region.color), parameters);
+      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, roundToPrecision(region.radius), region.color), parameters);
     }
   }
 

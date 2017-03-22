@@ -132,6 +132,9 @@ Phantom.prototype = {
     var fiber = this.fibers.source[fiberindex];
     var newts = (fiber.ts[cpbefore] + fiber.ts[cpbefore + 1]) / 2;
     var newcp = fiber.interpolate(newts)[0];
+    newcp.forEach( function(coordinate, index) {
+      newcp[index] = roundToPrecision(coordinate);
+    });
     fiber.controlPoints.splice(cpbefore + 1, 0, newcp);
 
     var parameters = {

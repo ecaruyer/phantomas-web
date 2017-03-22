@@ -1,6 +1,14 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 var path = "examples/isbi_challenge_2013.txt";
 var container = document.getElementById('container');
+var precision = 1; // in amount of decimal digits
+
+function roundToPrecision(number) {
+  number *= 10 * precision;
+  number = Math.round(number);
+  number /= 10 * precision;
+  return number;
+}
 init();
 
 

@@ -34,7 +34,7 @@ function cpEdit(index) {
   xvalue.id = 'xvalue';
   xvalue.style.width = "65px";
   xvalue.type = "number";
-  xvalue.step = .1;
+  xvalue.step = Math.pow(10, -precision);;
   xvalue.value = cp[0];
   xvalue.onchange = function() {cpValueOnChange(index, 'x', this.value)};
   xpos.appendChild(xvalue);
@@ -48,7 +48,7 @@ function cpEdit(index) {
   yvalue.id = 'yvalue';
   yvalue.style.width = "65px";
   yvalue.type = "number";
-  yvalue.step = .1;
+  yvalue.step = Math.pow(10, -precision);
   yvalue.value = cp[1];
   yvalue.onchange = function() {cpValueOnChange(index, 'y', this.value)};
   ypos.appendChild(yvalue);
@@ -62,7 +62,7 @@ function cpEdit(index) {
   zvalue.id = 'zvalue';
   zvalue.style.width = "65px";
   zvalue.type = "number";
-  zvalue.step = .1;
+  zvalue.step = Math.pow(10, -precision);
   zvalue.value = cp[2];
   zvalue.onchange = function() {cpValueOnChange(index, 'z', this.value)};
   zpos.appendChild(zvalue);

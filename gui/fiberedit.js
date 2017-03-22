@@ -56,7 +56,7 @@ function fiberEdit( index ) {
   radiusvalue.style.width = "50px";
   radiusvalue.type = "number";
   radiusvalue.min = 0;
-  radiusvalue.step = .1;
+  radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.fibers.source[index].radius;
   radiusvalue.onchange = function() {
     phantom.fibers.source[index].radius = this.value;

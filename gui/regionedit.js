@@ -46,7 +46,7 @@ function regionEdit(index) {
   radiusvalue.style.width = "50px";
   radiusvalue.type = "number";
   radiusvalue.min = 0;
-  radiusvalue.step = .1;
+  radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.isotropicRegions.source[index].radius;
   radiusvalue.onchange = function() {
     phantom.isotropicRegions.source[index].radius = this.value;
@@ -71,7 +71,7 @@ function regionEdit(index) {
   xvalue.id = 'xvalue';
   xvalue.style.width = "60px";
   xvalue.type = "number";
-  xvalue.step = .1;
+  xvalue.step = Math.pow(10, -precision);
   xvalue.value = phantom.isotropicRegions.source[index].center[0];
   xvalue.onchange = function() {
     phantom.isotropicRegions.source[index].setCenter('x', xvalue.value);
@@ -87,7 +87,7 @@ function regionEdit(index) {
   yvalue.id = 'yvalue';
   yvalue.style.width = "60px";
   yvalue.type = "number";
-  yvalue.step = .1;
+  yvalue.step = Math.pow(10, -precision);
   yvalue.value = phantom.isotropicRegions.source[index].center[1];
   yvalue.onchange = function() {
     phantom.isotropicRegions.source[index].setCenter('y', yvalue.value);
@@ -103,7 +103,7 @@ function regionEdit(index) {
   zvalue.id = 'zvalue';
   zvalue.style.width = "60px";
   zvalue.type = "number";
-  zvalue.step = .1;
+  zvalue.step = Math.pow(10, -precision);
   zvalue.value = phantom.isotropicRegions.source[index].center[2];
   zvalue.onchange = function() {
     phantom.isotropicRegions.source[index].setCenter('z', zvalue.value);
