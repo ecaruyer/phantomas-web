@@ -28,11 +28,10 @@ function switchViewButton() {
 // This saves resources by not rebuilding editingGUI and does not reclick selectors, which would be annoying.
 function fiberSelectClick(index, notclicked) {
   if (!notclicked) {
-    document.getElementById("regionSelector").selectedIndex = 0;
     guiStatus.editing('fiber', index);
     fiberEdit(index);
   } else {
-    // We onwly want CP edition to be undefined when actually clicked!
+    // We only want CP edition to be undefined when actually clicked!
     guiStatus.editingFiber = index;
   }
   phantom.revealSkeleton(scene, index);
@@ -40,7 +39,6 @@ function fiberSelectClick(index, notclicked) {
 function regionSelectClick(index, notclicked) {
   guiStatus.editing('region', index);
   if (!notclicked) {
-    document.getElementById("fiberSelector").selectedIndex = 0;
     guiStatus.editing('region', index);
     regionEdit(index);
   }
@@ -63,7 +61,7 @@ function newFiberClick() {
   phantom.addToScene(scene);
 
   setupGUI();
-  document.getElementById("fiberSelector").selectedIndex = (phantom.fibers.source.length).toString();
+  selectOption(document.getElementById("fiberSelector"), phantom.fibers.source.length);
   fiberSelectClick(phantom.fibers.source.length - 1);
 }
 
@@ -72,7 +70,7 @@ function newIsotropicRegionClick() {
   phantom.addToScene(scene);
 
   setupGUI();
-  document.getElementById("regionSelector").selectedIndex = (phantom.isotropicRegions.source.length).toString();
+  selectOption(document.getElementById("regionSelector"), phantom.isotropicRegions.source.length);
   regionSelectClick(phantom.isotropicRegions.source.length - 1);
 }
 
@@ -109,6 +107,7 @@ function newCPclick(fiber, cp) {
   cpSelectClick(fiber, cp + 1);
   document.getElementById("cpSelector").selectedIndex = cp + 2;
   document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
+  document.getElementById('fiberSelector').childNodes[guiStatus.editingFiber + 1].childNodes[1].innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " points";
 }
 function newCPonmouseover(fiber, cp) {
   phantom.addCP(fiber, cp);
@@ -133,6 +132,7 @@ function removeCPclick(fiber, cp) {
   exitCPedit();
   document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
   document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
+  document.getElementById('fiberSelector').childNodes[guiStatus.editingFiber + 1].childNodes[1].innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " points";
 }
 
 // PLANE SELECTORS

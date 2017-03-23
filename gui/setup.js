@@ -20,9 +20,9 @@ function setupGUI() {
       if (guiStatus.editingRegion === undefined) {
         guiStatus.unediting();
         guiStatus.retrieve();
+        optionSelect(this);
       };
       resizeGUI();
-      optionSelect(this);
     };
     option.onmouseenter = function() {phantom.addToScene(scene); optionOnMouseOver(this);};
     option.onmouseleave = function() {  removeOnMouseOver(); };
@@ -67,9 +67,9 @@ function setupGUI() {
       if (guiStatus.editingFiber === undefined) {
         guiStatus.unediting();
         guiStatus.retrieve();
+        optionSelect(this);
       };
       resizeGUI();
-      optionSelect(this);
     };
     option.onmouseenter = function() {phantom.addToScene(scene); optionOnMouseOver(this);};
     option.onmouseleave = function() {  removeOnMouseOver(); };
@@ -98,11 +98,40 @@ function setupGUI() {
       regionSelector.appendChild(option);
     });
   } else {
-    var option = document.createElement("LI");
-    option.innerHTML = '(any)'
-    regionSelector.appendChild(option);
+    // var option = document.createElement("LI");
+    regionSelector.innerHTML = '(any)'
+    // regionSelector.appendChild(option);
     regionSelector.className = 'disabledList';
   }
 
   editExit();
+}
+
+// Add element buttons are only available when no element is being edited
+function editExit() {
+  var editGUI = document.getElementById('editGUI');
+  editGUI.innerHTML = ""
+
+
+  var newfiberbutton = document.createElement("BUTTON");
+  newfiberbutton.style.float = "right";
+  newfiberbutton.innerHTML = "New Fiber";
+  newfiberbutton.onclick = function() { newFiberClick() };
+
+  var newregionbutton = document.createElement("BUTTON");
+  newregionbutton.style.float = "right";
+  newregionbutton.innerHTML = "New Region";
+  newregionbutton.onclick = function() { newIsotropicRegionClick() };
+
+  // As style is float, must be appended from right to left
+  editGUI.appendChild(newregionbutton);
+  editGUI.appendChild(newfiberbutton);
+}
+
+function optionOnMouseOver(option) {
+  if (option.className == 'optionSelected') {
+    option.className = 'optionSelectedAndOnMouseOver';
+  } else {
+    option.className = 'optionOnMouseOver';
+  }
 }

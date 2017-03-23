@@ -25,25 +25,26 @@ function resizeGUI() {
   var regionSelector = document.getElementById("regionSelector");
 
   // Width is subtracted 10 pixels for allowing space to scrollbar.
-  fiberSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
-  regionSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
+  fiberSelector.style.width = (leftGUI.offsetWidth - 15).toString() + 'px';
+  regionSelector.style.width = (leftGUI.offsetWidth - 15).toString() + 'px';
 
   // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
   if (guiStatus.editingFiber !== undefined) {
-    lines -= 12 + Math.max(phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + 1, 8);
+    lines -= 12 + Math.max(phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + 1, 12);
     var cpEditor = document.getElementById("cpEditor");
     cpEditor.style.width = (leftGUI.offsetWidth - 65).toString() + 'px';
   } else if (guiStatus.editingRegion !== undefined) {
-    lines -= 13;
+    lines -= 16;
   }
 
-  // +1 is due to *none* option. 1.2 factor is due to line height correction when applying element number.
-  var fiberNumber = (phantom.fibers.source.length + 1) //* 1.2;
-  var regionNumber = (phantom.isotropicRegions.source.length + 1) //* 1.2;
+  // +1 is due to *none* option.
+  var fiberNumber = (phantom.fibers.source.length + 1)
+  var regionNumber = (phantom.isotropicRegions.source.length + 1)
 
   var minsize = 3;
 
   // Final size to be between total number of elements (no select scroll) and minsize
-  fiberSelector.style.height = Math.min( Math.max(lines - regionNumber, minsize), fiberNumber).toString() + 'em';
-  regionSelector.style.height = Math.min( Math.max(lines - fiberNumber, minsize), regionNumber).toString() + 'em';
+  // 1.2 factor is due to line height correction
+  fiberSelector.style.height = (Math.min( Math.max(lines - regionNumber, minsize), fiberNumber) * 1.2).toString() + 'em';
+  regionSelector.style.height = (Math.min( Math.max(lines - fiberNumber, minsize), regionNumber) * 1.2).toString() + 'em';
 }
