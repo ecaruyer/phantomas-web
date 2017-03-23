@@ -10,20 +10,23 @@ function countDocumentLines() {
     temp.parentNode.removeChild(temp);
     return ret;
   }
-  var divHeight = document.getElementById('container').offsetHeight;
-  var lineHeight = getLineHeight(document.getElementById('container'));
+  var divHeight = window.innerHeight;
+  var lineHeight = getLineHeight(document.getElementById('leftGUI'));
   var lines = Math.floor(divHeight / lineHeight);
   return lines;
 }
 
-
 // Resizes selector objects so those fit in the screen
 function resizeGUI() {
   // Lines is the height amount in lines left for the gui elements.
-  var lines = countDocumentLines() - 8;
+  var lines = countDocumentLines() - 10;
   var leftGUI = document.getElementById("leftGUI");
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
+
+  // Width is subtracted 10 pixels for allowing space to scrollbar.
+  fiberSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
+  regionSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
 
   // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
   if (guiStatus.editingFiber !== undefined) {
@@ -31,21 +34,16 @@ function resizeGUI() {
     var cpEditor = document.getElementById("cpEditor");
     cpEditor.style.width = (leftGUI.offsetWidth - 65).toString() + 'px';
   } else if (guiStatus.editingRegion !== undefined) {
-    lines -= 15;
+    lines -= 13;
   }
 
-  // Width is subtracted 10 pixels for allowing space to scrollbar.
-  fiberSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
-  regionSelector.style.width = (leftGUI.offsetWidth - 10).toString() + 'px';
-
-  // +1 is due to *none* option
-  var fiberNumber = phantom.fibers.source.length + 1;
-  var regionNumber = phantom.isotropicRegions.source.length + 1;
+  // +1 is due to *none* option. 1.2 factor is due to line height correction when applying element number.
+  var fiberNumber = (phantom.fibers.source.length + 1) //* 1.2;
+  var regionNumber = (phantom.isotropicRegions.source.length + 1) //* 1.2;
 
   var minsize = 3;
 
   // Final size to be between total number of elements (no select scroll) and minsize
   fiberSelector.style.height = Math.min( Math.max(lines - regionNumber, minsize), fiberNumber).toString() + 'em';
   regionSelector.style.height = Math.min( Math.max(lines - fiberNumber, minsize), regionNumber).toString() + 'em';
-
 }

@@ -5,17 +5,43 @@ hml, html, body {
   background-color: black;
 }
 
-ul {
+ul, li {
     list-style: none;
     padding-left:0;
+    color: white;
 }
 
 .enabledList {
   overflow: scroll;
   overflow-x: hidden;
+  cursor: pointer;
+  padding-left: 5px;
+
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  border-right: 0;
 }
 .disabledList {
   background-color: grey;
+}
+
+.optionUnselected {
+}
+.optionSelected {
+  padding-left: 20px;
+  color:yellow;
+  font-weight:bold;
+}
+.optionOnMouseOver {
+  font-weight:bold;
+}
+.optionSelectedAndOnMouseOver {
+  padding-left: 20px;
+  color:yellow;
+  font-weight:bold;
+
+  font-style: oblique;
 }
 
 #leftGUI {
