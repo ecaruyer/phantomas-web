@@ -108,6 +108,7 @@ function newCPclick(fiber, cp) {
   exitCPedit();
   cpSelectClick(fiber, cp + 1);
   document.getElementById("cpSelector").selectedIndex = cp + 2;
+  document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
 }
 function newCPonmouseover(fiber, cp) {
   phantom.addCP(fiber, cp);
@@ -115,11 +116,13 @@ function newCPonmouseover(fiber, cp) {
   fiberSelectClick(fiber, true)
   phantom.cpHighlight(fiber, cp, 'red');
   phantom.cpHighlight(fiber, cp + 1, 'green');
+  document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
 }
 function newCPonmouseout(fiber, cp) {
   phantom.removeCP(fiber, cp + 1);
   phantom.addToScene(scene);
   guiStatus.retrieve();
+  document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
 }
 
 function removeCPclick(fiber, cp) {
@@ -128,6 +131,8 @@ function removeCPclick(fiber, cp) {
   guiStatus.editing('CP', undefined);
   guiStatus.retrieve();
   exitCPedit();
+  document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
+  document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
 }
 
 // PLANE SELECTORS

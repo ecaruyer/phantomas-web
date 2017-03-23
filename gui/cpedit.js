@@ -22,7 +22,7 @@ function cpEdit(index) {
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
     phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
-    document.getElementById('fiberLength').innerHTML = Math.floor(phantom.fibers.source[guiStatus.editingFiber].length * 10) / 10;
+    document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
     undobutton.disabled = false;
   }
 

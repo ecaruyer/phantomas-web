@@ -28,6 +28,7 @@ function fiberEdit( index ) {
   colorSpan.innerHTML = '&nbsp;&nbsp;&#9632;';
 
   var controlPointsSpan = document.createElement("span");
+  controlPointsSpan.id = 'guiFiberTitle';
   controlPointsSpan.innerHTML = phantom.fibers.source[index].controlPoints.length + " Points";
 
   controlPointsAndColor.appendChild(controlPointsSpan);
@@ -40,7 +41,7 @@ function fiberEdit( index ) {
   var lengthspan = document.createElement("SPAN");
   length.appendChild(lengthspan);
 
-  lengthspan.id = "fiberLength";
+  lengthspan.id = "guiFiberLength";
   lengthspan.innerHTML = Math.floor(phantom.fibers.source[index].length * 10) / 10;
 
   length.innerHTML += " units long";
