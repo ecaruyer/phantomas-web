@@ -10,6 +10,14 @@ ul {
     padding-left:0;
 }
 
+.enabledList {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.disabledList {
+  background-color: grey;
+}
+
 #leftGUI {
   float: left;
   text-align: left;

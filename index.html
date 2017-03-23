@@ -11,11 +11,22 @@
   <div id="leftGUI">PHANTOM&nbsp;&nbsp;
     <input type="submit" id='switchViewButton' onclick="switchViewButton();" value="Preview"/><br><br>
 
-    <select id="fiberSelector" style="width:120px" size="10" onmouseout="guiStatus.retrieve();">
-    </select><br>
+    <!-- Title code from http://stackoverflow.com/questions/2812770/add-centered-text-to-the-middle-of-a-hr-like-line -->
+    <div style="width: 100%; height: 8px; border-bottom: 1px solid white; text-align: center">
+      <span style="background-color: #000000; padding: 0 10px">
+        Fibers
+      </span>
+    </div>
+    <ul id="fiberSelector" style="width:120px;" onmouseout="guiStatus.retrieve();">
+    </ul><br>
 
-    <select id="regionSelector" style="width:120px" size="10" onmouseout="guiStatus.retrieve();">
-    </select>
+    <div style="width: 100%; height: 8px; border-bottom: 1px solid white; text-align: center">
+      <span style="background-color: #000000; padding: 0 10px">
+        Isotropic Regions
+      </span>
+    </div>
+    <ul id="regionSelector" style="width:120px" onmouseout="guiStatus.retrieve();">
+    </ul>
 
     <br>
     <div id="editGUI">

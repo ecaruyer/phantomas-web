@@ -45,7 +45,7 @@ function resizeGUI() {
   var minsize = 3;
 
   // Final size to be between total number of elements (no select scroll) and minsize
-  fiberSelector.size = Math.min( Math.max(lines - regionNumber, minsize), fiberNumber);
-  regionSelector.size = Math.min( Math.max(lines - fiberNumber, minsize), regionNumber);
+  fiberSelector.style.height = Math.min( Math.max(lines - regionNumber, minsize), fiberNumber).toString() + 'em';
+  regionSelector.style.height = Math.min( Math.max(lines - fiberNumber, minsize), regionNumber).toString() + 'em';
 
 }

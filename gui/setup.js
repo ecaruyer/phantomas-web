@@ -12,9 +12,9 @@ function setupGUI() {
 
   if (phantom.fibers.source.length > 0) {
     // Add *none* option
-    var option = document.createElement("option");
-    option.text = '*none*'
-    option.selected = true;
+    var option = document.createElement("LI");
+    option.innerHTML = '*none*'
+    option.className = 'selected';
     // If any fiber is being edited, move to non-edit mode
     option.onclick = function() {
       if (guiStatus.editingRegion === undefined) {
@@ -23,14 +23,14 @@ function setupGUI() {
       };
       resizeGUI();
     };
-    fiberSelector.options.add(option);
-    fiberSelector.disabled = false;
+    fiberSelector.appendChild(option);
+    fiberSelector.className = 'enabledList';
 
     // Add the rest of the options
     phantom.fibers.source.forEach( function(fiber, index) {
       var backgroundColor = fiber.color;
 
-      var option = document.createElement("option");
+      var option = document.createElement("LI");
       var selectColorSpan = document.createElement("span");
       var selectTextSpan = document.createElement("span");
       selectColorSpan.style.color = backgroundColor.getStyle();
@@ -40,20 +40,24 @@ function setupGUI() {
 
       option.appendChild(selectColorSpan);
       option.appendChild(selectTextSpan);
+      option.className = 'unselected';
 
       option.onmouseover = function() {phantom.fiberHighlight(index);};
       option.onclick = function() {fiberSelectClick(index);};
-      fiberSelector.options.add(option);
+      fiberSelector.appendChild(option);
     });
   } else {
-    fiberSelector.disabled = true;
+    var option = document.createElement("LI");
+    option.innerHTML = '(any)'
+    fiberSelector.appendChild(option);
+    fiberSelector.className = 'disabledList';
   }
 
   if (phantom.isotropicRegions.source.length > 0) {
     // Add *none* option
-    var option = document.createElement("option");
+    var option = document.createElement("LI");
     option.text = '*none*'
-    option.selected = true;
+    option.className = 'selected';
     // If any fiber is being edited, move to non-edit mode
     option.onclick = function() {
       if (guiStatus.editingFiber === undefined) {
@@ -62,14 +66,14 @@ function setupGUI() {
       };
       resizeGUI();
     };
-    regionSelector.options.add(option);
-    regionSelector.disabled = false;
+    regionSelector.appendChild(option);
+    regionSelector.className = 'enabledList';
 
     // Add the rest of the options
     phantom.isotropicRegions.source.forEach( function(region, index) {
       var backgroundColor = region.color;
 
-      var option = document.createElement("option");
+      var option = document.createElement("LI");
       var selectColorSpan = document.createElement("span");
       var selectTextSpan = document.createElement("span");
       selectColorSpan.style.color = backgroundColor.getStyle();
@@ -82,10 +86,13 @@ function setupGUI() {
 
       option.onmouseover = function() {phantom.regionHighlight(index);};
       option.onclick = function() {regionSelectClick(index);};
-      regionSelector.options.add(option);
+      regionSelector.appendChild(option);
     });
   } else {
-    regionSelector.disabled = true;
+    var option = document.createElement("LI");
+    option.innerHTML = '(any)'
+    regionSelector.appendChild(option);
+    regionSelector.className = 'disabledList';
   }
 
   editExit();
