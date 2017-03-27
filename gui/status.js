@@ -55,6 +55,9 @@ GuiStatus.prototype = {
         fiberSelectClick(this.editingFiber, true);
         if (this.editingCP !== undefined) {
           cpSelectClick(this.editingFiber, this.editingCP, true);
+          if (!document.getElementById('cpUndoButton').disabled) {
+            phantom.cpHighlight(guiStatus.editingFiber, this.editingCP, 'green');
+          }
         }
       } else if (this.editingRegion !== undefined) {
         regionSelectClick(this.editingRegion, true)

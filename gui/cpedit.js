@@ -21,7 +21,7 @@ function cpEdit(index) {
   // Called on each CP position selector
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
+    phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
     document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
     undobutton.disabled = false;
   }
@@ -74,6 +74,7 @@ function cpEdit(index) {
   buttons.innerHTML = "&nbsp;&nbsp;&nbsp;"
 
   var undobutton = document.createElement("BUTTON");
+  undobutton.id = 'cpUndoButton';
   undobutton.style = 'margin-bottom: 10px';
   undobutton.innerHTML = "Undo";
   // If nothing to undo, button is disabled. If something to, bluepoint of editing is shown.
@@ -84,7 +85,7 @@ function cpEdit(index) {
   ) {
     undobutton.disabled = true;
   } else {
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'blue');
+    phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
   }
 
   // guiStatus.former created earlier is recovered when undoing.

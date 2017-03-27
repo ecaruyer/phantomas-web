@@ -136,7 +136,7 @@ function addCPselect() {
     }
   };
   cplist.onmouseleave = function () {
-    scene.removeCPHighlight();
+    guiStatus.retrieve();
   }
 
   // *n* option
