@@ -76,7 +76,7 @@ function newIsotropicRegionClick() {
 
 // REMOVE MESH
 function removeFiberClick() {
-  if (window.confirm("Are you sure you want to remove this fiber? This cannot be undone.")) {
+  if (window.confirm("Are you sure you want to remove this fiber? This action cannot be undone.")) {
     var index = guiStatus.editingFiber;
     phantom.fibers.source.splice(index, 1);
     phantom.fibers.tube.splice(index, 1);
@@ -87,7 +87,7 @@ function removeFiberClick() {
   }
 }
 function removeIsotropicRegionClick() {
-  if (window.confirm("Are you sure you want to remove this isotropic region? This cannot be undone.")) {
+  if (window.confirm("Are you sure you want to remove this isotropic region? This action cannot be undone.")) {
     var index = guiStatus.editingRegion;
     phantom.isotropicRegions.source.splice(index, 1);
     phantom.isotropicRegions.sphere.splice(index, 1);
@@ -105,7 +105,7 @@ function newCPclick(fiber, cp) {
   guiStatus.retrieve();
   exitCPedit();
   cpSelectClick(fiber, cp + 1);
-  document.getElementById("cpSelector").selectedIndex = cp + 2;
+  selectOption(document.getElementById("cpSelector"), cp + 2);
   document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
   document.getElementById('fiberSelector').childNodes[guiStatus.editingFiber + 1].childNodes[1].innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " points";
 }
@@ -125,14 +125,16 @@ function newCPonmouseout(fiber, cp) {
 }
 
 function removeCPclick(fiber, cp) {
-  phantom.removeCP(fiber, cp);
-  phantom.addToScene(scene);
-  guiStatus.editing('CP', undefined);
-  guiStatus.retrieve();
-  exitCPedit();
-  document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
-  document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
-  document.getElementById('fiberSelector').childNodes[guiStatus.editingFiber + 1].childNodes[1].innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " points";
+  if (window.confirm("Are you sure you want to remove this control point? This action cannot be undone.")) {
+    phantom.removeCP(fiber, cp);
+    phantom.addToScene(scene);
+    guiStatus.editing('CP', undefined);
+    guiStatus.retrieve();
+    exitCPedit();
+    document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
+    document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
+    document.getElementById('fiberSelector').childNodes[guiStatus.editingFiber + 1].childNodes[1].innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " points";
+  }
 }
 
 // PLANE SELECTORS

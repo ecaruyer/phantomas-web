@@ -121,42 +121,60 @@ function addCPselect() {
   td2.id = "cpEditor";
 
   // CONTROL POINTS SELECTION LIST
-  var cplist = document.createElement("SELECT");
+  var cplist = document.createElement("UL");
+  cplist.className = 'enabledList';
   var fiberindex = guiStatus.editingFiber;
-  cplist.size = phantom.fibers.source[fiberindex].controlPoints.length + 1;
+  // cplist.size = phantom.fibers.source[fiberindex].controlPoints.length + 1;
   cplist.id = 'cpSelector';
-  cplist.style.width = '65px'
-  cplist.onmouseout = function () {
-    if (cplist.selectedIndex) {
+  cplist.style.width = '60px'
+  cplist.onmouseenter = function () {
+    if (cplist.childNodes[0].className == 'optionUnselected') {
       scene.removeCPHighlight();
       cpEdit(guiStatus.editingCP);
     } else {
       scene.removeCPHighlight(true);
     }
   };
+  cplist.onmouseleave = function () {
+    scene.removeCPHighlight();
+  }
 
   // *n* option
-  var option = document.createElement("option");
-  option.text = '*n*'
-  option.selected = true;
+  var option = document.createElement("LI");
+  option.innerHTML = '*n*'
+  option.className = 'optionSelected';
+  option.onmouseenter = function () {
+    optionOnMouseOver(this);
+  }
+  option.onmouseleave = function() {
+    removeOnMouseOver();
+  }
   option.onclick = function () {
     exitCPedit();
+    optionSelect(this);
   };
-  cplist.options.add(option);
+  cplist.appendChild(option);
 
   // Each CP option
   phantom.fibers.source[fiberindex].controlPoints.forEach(
     function(point, index) {
-      var option = document.createElement("option");
-      option.text = index.toString();
-      option.onmouseover = function() {
+      var option = document.createElement("LI");
+      option.innerHTML = index.toString();
+      option.className = 'optionUnselected';
+
+      option.onmouseenter = function() {
         phantom.cpHighlight(fiberindex, index, 'blue');
+        optionOnMouseOver(this);
+      };
+      option.onmouseleave = function() {
+        removeOnMouseOver();
       };
       option.onclick = function() {
         cpSelectClick(fiberindex, index);
+        optionSelect(this);
       };
 
-      cplist.options.add(option);
+      cplist.appendChild(option);
     }
   );
   td1.appendChild(cplist);
