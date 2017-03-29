@@ -178,6 +178,25 @@ function moveCameraZY() {
   // }
 }
 
+// AXES TOGGLE
+function toggleAxes() {
+  button = document.getElementById('toggleAxesButton');
+  name = 'axes';
+  var length = phantom.radius() * 1.5;
+
+  if (scene.getObjectByName(name)) {
+    scene.remove(scene.getObjectByName(name))
+    button.className = 'w3-btn w3-border w3-hover-indigo w3-block w3-ripple';
+  } else {
+    var axes = buildAxes(length);
+    axes.name = name;
+    scene.add(axes);
+    button.className = 'w3-button w3-indigo w3-hover-grey w3-border w3-block w3-ripple';
+  }
+  render();
+}
+
+
 function saveClick() {
   pushDownload(phantom.export());
 }
