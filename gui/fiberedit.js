@@ -10,6 +10,7 @@ function fiberEdit( index ) {
   var removebutton = document.createElement("BUTTON");
   removebutton.style.float = "right";
   removebutton.innerHTML = "Remove Fiber";
+  removebutton.className = "w3-btn w3-hover-red w3-border w3-border-white"
   removebutton.onclick = function() { removeFiberClick() };
   editGUI.appendChild(removebutton);
   editGUI.appendChild(document.createElement("BR"));
@@ -73,6 +74,7 @@ function fiberEdit( index ) {
   tangentslabel.innerHTML = "Tangents: ";
 
   var tangents = document.createElement("SELECT");
+  tangents.style.margin = '3px';
   tangents.onchange = function() {
     phantom.fibers.source[index].tangents = this.value;
     phantom.fibers.source[index].polyCalc();

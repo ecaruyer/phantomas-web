@@ -116,11 +116,13 @@ function editExit() {
   var newfiberbutton = document.createElement("BUTTON");
   newfiberbutton.style.float = "right";
   newfiberbutton.innerHTML = "New Fiber";
+  newfiberbutton.className = "w3-btn w3-hover-green w3-border w3-border-white"
   newfiberbutton.onclick = function() { newFiberClick() };
 
   var newregionbutton = document.createElement("BUTTON");
   newregionbutton.style.float = "right";
   newregionbutton.innerHTML = "New Region";
+  newregionbutton.className = "w3-btn w3-hover-green w3-border w3-border-white"
   newregionbutton.onclick = function() { newIsotropicRegionClick() };
 
   // As style is float, must be appended from right to left

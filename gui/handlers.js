@@ -16,10 +16,12 @@ function switchViewButton() {
   if (!guiStatus.previewing) {
     phantom.addToScene(scene);
     button.value = "Back";
+    button.className = 'w3-button w3-aqua w3-hover-grey w3-border w3-block w3-ripple';
     guiStatus.previewing = true;
   } else {
     guiStatus.previewing = false;
     guiStatus.retrieve();
+    button.className = 'w3-btn w3-hover-aqua w3-border w3-block w3-ripple';
     button.value = "Preview";
   }
 }

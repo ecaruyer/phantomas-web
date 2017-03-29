@@ -75,6 +75,7 @@ function cpEdit(index) {
 
   var undobutton = document.createElement("BUTTON");
   undobutton.id = 'cpUndoButton';
+  undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
   undobutton.style = 'margin-bottom: 10px';
   undobutton.innerHTML = "Undo";
   // If nothing to undo, button is disabled. If something to, bluepoint of editing is shown.
@@ -107,6 +108,7 @@ function cpEdit(index) {
 
   var newcpbutton = document.createElement("BUTTON");
   newcpbutton.style.float = "right";
+  newcpbutton.className = 'w3-btn w3-hover-green w3-border w3-border-white w3-small'
   newcpbutton.innerHTML = "New CP";
   newcpbutton.onmouseenter = function() { newCPonmouseover(guiStatus.editingFiber, guiStatus.editingCP); };
   newcpbutton.onmouseleave = function() { newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP);  }
@@ -114,6 +116,7 @@ function cpEdit(index) {
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
+  removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small'
   removecpbutton.innerHTML = "Remove CP";
   removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 

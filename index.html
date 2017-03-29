@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/normalize.css"/>
     <link rel="stylesheet" href="css/switch.css"/>
+    <link rel="stylesheet" href="css/materialicons.css">
   </head>
 
 <body>
@@ -38,8 +39,10 @@
   </div>
 
   <div id="rightGUI">
-    <input type="button" id='switchViewButton' class="w3-button w3-yellow w3-block" onclick="switchViewButton();" value="Preview"/><br><br>
-    <br>
+    <button id='switchViewButton' class='w3-btn w3-border w3-hover-aqua w3-block w3-ripple' onclick="switchViewButton();">
+    <i class="material-icons">search</i></button>
+    <br><br>
+
     <!-- <label class="switch">
       <input id='switchViewButton' onclick="switchViewButton();" type="checkbox">
       <div class="slider"></div>
@@ -56,7 +59,8 @@
     </ul>
 
     <div id="bottomButtons">
-      <input type='button' class="w3-button w3-grey w3-hover-green w3-ripple w3-block" value='Save' onclick="saveClick();">
+      <button class="w3-button w3-grey w3-hover-green w3-ripple w3-block" onclick="saveClick();">
+      <i class="material-icons">file_download</i></button>
     </div>
   </div>
 

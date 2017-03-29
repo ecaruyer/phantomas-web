@@ -46,6 +46,7 @@ GuiStatus.prototype = {
     }
 
     document.getElementById("switchViewButton").disabled = false;
+    document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
   },
   retrieve: function() {
     if (this.previewing) {
@@ -75,6 +76,7 @@ GuiStatus.prototype = {
     this.previewing = false;
     document.getElementById("switchViewButton").value = "Preview";
     document.getElementById("switchViewButton").disabled = true;
+    document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
 
     this.editingFiber = undefined;
     this.editingCP = undefined;

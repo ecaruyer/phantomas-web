@@ -5,6 +5,14 @@ hml, html, body {
   background-color: black;
 }
 
+input[type=number], select {
+  background-color: black;
+  color: white;
+  border-width: thin;
+  border-style: solid;
+  height: 23px;
+}
+
 ul, li {
     list-style: none;
     padding-left:0;
@@ -79,6 +87,8 @@ ul, li {
   position: absolute;
   bottom: 0;
   right: 0;
+
+  width: 4%;
 
   padding: .5%;
   padding-left: 0;

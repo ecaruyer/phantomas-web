@@ -11,6 +11,7 @@ function regionEdit(index) {
   var removebutton = document.createElement("BUTTON");
   removebutton.style.float = "right";
   removebutton.innerHTML = "Remove Isotropic Region";
+  removebutton.className = "w3-btn w3-hover-red w3-border w3-border-white"
   removebutton.onclick = function() { removeIsotropicRegionClick() };
   editGUI.appendChild(removebutton);
   editGUI.appendChild(document.createElement("BR"));
