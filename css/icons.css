@@ -1,12 +1,12 @@
 @font-face {
-  font-family: 'Material Icons';
+  font-family: 'icons';
   font-style: normal;
   font-weight: 400;
-  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../icons/materialicons.woff) format('woff');
+  src: local('Icons'), local('icons'), url(../icons/icons.woff) format('woff');
 }
 
-.material-icons {
-  font-family: 'Material Icons';
+.icons {
+  font-family: 'icons';
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
