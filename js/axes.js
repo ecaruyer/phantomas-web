@@ -1,15 +1,16 @@
 // From https://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/
 function buildAxes( length ) {
   var axes = new THREE.Object3D();
+  var linewidth = 2;
 
   function buildAxis( src, dst, colorHex, dashed ) {
     var geom = new THREE.Geometry(),
         mat;
 
     if(dashed) {
-            mat = new THREE.LineDashedMaterial({ linewidth: 1.5, color: colorHex, dashSize: 3, gapSize: 3 });
+            mat = new THREE.LineDashedMaterial({ linewidth: linewidth, color: colorHex, dashSize: 3, gapSize: 3 });
     } else {
-            mat = new THREE.LineBasicMaterial({ linewidth: 1.5, color: colorHex });
+            mat = new THREE.LineBasicMaterial({ linewidth: linewidth, color: colorHex });
     }
 
     geom.vertices.push( src.clone() );

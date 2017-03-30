@@ -108,7 +108,7 @@ function cpEdit(index) {
 
   var newcpbutton = document.createElement("BUTTON");
   newcpbutton.style.float = "right";
-  newcpbutton.className = 'w3-btn w3-hover-green w3-border w3-border-white w3-small'
+  newcpbutton.className = 'w3-btn w3-hover-green w3-border w3-border-white w3-small w3-ripple'
   newcpbutton.innerHTML = "New CP";
   newcpbutton.onmouseenter = function() { newCPonmouseover(guiStatus.editingFiber, guiStatus.editingCP); };
   newcpbutton.onmouseleave = function() { newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP);  }
@@ -116,7 +116,7 @@ function cpEdit(index) {
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
-  removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small'
+  removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small w3-ripple'
   removecpbutton.innerHTML = "Remove CP";
   removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 

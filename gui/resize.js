@@ -19,7 +19,7 @@ function countDocumentLines() {
 // Resizes selector objects so those fit in the screen
 function resizeGUI() {
   // Lines is the height amount in lines left for the gui elements.
-  var lines = countDocumentLines() - 8;
+  var lines = countDocumentLines() - 9;
   var leftGUI = document.getElementById("leftGUI");
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");

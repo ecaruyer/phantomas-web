@@ -16,7 +16,7 @@ function switchViewButton() {
   if (!guiStatus.previewing) {
     phantom.addToScene(scene);
     button.value = "Back";
-    button.className = 'w3-button w3-aqua w3-hover-grey w3-border w3-block w3-ripple';
+    button.className = 'w3-button w3-aqua w3-hover-cyan w3-border w3-block w3-ripple';
     guiStatus.previewing = true;
   } else {
     guiStatus.previewing = false;
@@ -186,12 +186,12 @@ function toggleAxes() {
 
   if (scene.getObjectByName(name)) {
     scene.remove(scene.getObjectByName(name))
-    button.className = 'w3-btn w3-border w3-hover-indigo w3-block w3-ripple';
+    button.className = 'w3-btn w3-border w3-hover-deep-purple w3-block w3-ripple';
   } else {
     var axes = buildAxes(length);
     axes.name = name;
     scene.add(axes);
-    button.className = 'w3-button w3-indigo w3-hover-grey w3-border w3-block w3-ripple';
+    button.className = 'w3-button w3-deep-purple w3-hover-indigo w3-border w3-block w3-ripple';
   }
   render();
 }

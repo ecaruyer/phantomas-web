@@ -169,7 +169,7 @@ function addCPselect() {
         optionOnMouseOver(this);
       };
       option.onmouseleave = function() {
-        removeOnMouseOver();
+        optionOnMouseLeave(this);
       };
       option.onclick = function() {
         cpSelectClick(fiberindex, index);
