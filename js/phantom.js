@@ -92,18 +92,17 @@ function Phantom() {
 
 Phantom.prototype = {
   addFiber: function(fiber, parameters, replaceindex) {
-    /* If not specified, set segments constrainct so renderer is stable in browser
+    /* If not specified, set segments constraint so renderer is stable in browser
     This grabs nbElements thrown by load function and sets the number of segments
-    each mesh will feature, choosing between a maximum of total segments in a
-    scene (first number given) and maximum of segments per mesh (segond number given) */
+    each mesh will feature, taking values from global variable meshConstraincts (main.js) */
     if (!parameters) var parameters = [];
     if ((parameters.nbElements) && (!parameters.axialSegments) && (!parameters.radialSegments)) {
-      parameters.axialSegments = Math.min(Math.floor(1440 / parameters.nbElements), 256);
-      parameters.radialSegments = Math.min(Math.floor(480 / parameters.nbElements), 64);
+      parameters.axialSegments = Math.min(Math.floor(meshConstraincts.maxTotalAxialSegments / parameters.nbElements), meshConstraincts.maxMeshAxialSegments);
+      parameters.radialSegments = Math.min(Math.floor(meshConstraincts.maxTotalRadialSegments / parameters.nbElements), meshConstraincts.maxMeshRadialSegments);
     }
     if ((parameters.nbElements) && (!parameters.lineSegments) && (!parameters.sphereSegments)) {
-      parameters.axialSegments = Math.min(Math.floor(960 / parameters.nbElements), 256);
-      parameters.sphereSegments = Math.min(Math.floor(240 / parameters.nbElements), 256);
+      parameters.axialSegments = Math.min(Math.floor(meshConstraincts.maxTotalLineSegments / parameters.nbElements), meshConstraincts.maxMeshLineSegments);
+      parameters.sphereSegments = Math.min(Math.floor(meshConstraincts.maxTotalSkeletonSphereSegments / parameters.nbElements), meshConstraincts.maxMeshSkeletonSphereSegments);
     }
 
     if (replaceindex !== undefined) {

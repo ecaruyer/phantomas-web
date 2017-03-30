@@ -1,6 +1,21 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-var path = "examples/isbi_challenge_2013.txt";
+// var path = "examples/isbi_challenge_2013.txt";
+var path = "examples/fibers.txt";
 var container = document.getElementById('container');
+
+var meshConstraincts = {
+  maxTotalAxialSegments: 1440,
+  maxMeshAxialSegments: 128,
+
+  maxTotalRadialSegments: 480,
+  maxMeshRadialSegments: 32,
+
+  maxTotalLineSegments: 960,
+  maxMeshLineSegments: 128,
+
+  maxTotalSkeletonSphreSegments: 240,
+  maxMeshSkeletonSphereSegments: 32
+}
 
 var precision = 1; // in amount of decimal digits
 function roundToPrecision(number) {
