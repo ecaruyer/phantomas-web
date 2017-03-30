@@ -1,3 +1,11 @@
+function optionOnMouseOver(option) {
+  if (option.className == 'optionSelected') {
+    option.className = 'optionSelectedAndOnMouseOver';
+  } else if (option.className == 'optionUnselected') {
+    option.className = 'optionOnMouseOver';
+  }
+}
+
 function removeOnMouseOver() {
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
@@ -30,6 +38,7 @@ function removeOnMouseOver() {
     });
   }
 }
+
 function optionSelect(option) {
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");

@@ -46,7 +46,7 @@ function setupGUI() {
       option.className = 'optionUnselected';
 
       option.onmouseenter = function() {phantom.fiberHighlight(index); optionOnMouseOver(this);};
-      option.onmouseleave = function() {  removeOnMouseOver(); };
+      option.onmouseleave = function() { removeOnMouseOver(); };
       option.onclick = function() {fiberSelectClick(index); optionSelect(this)};
       fiberSelector.appendChild(option);
     });
@@ -93,7 +93,7 @@ function setupGUI() {
       option.appendChild(selectTextSpan);
 
       option.onmouseover = function() {phantom.regionHighlight(index); optionOnMouseOver(this);};
-      option.onmouseleave = function() {  removeOnMouseOver(); };
+      option.onmouseleave = function() { removeOnMouseOver(); };
       option.onclick = function() {regionSelectClick(index); optionSelect(this)};
       regionSelector.appendChild(option);
     });
@@ -128,12 +128,4 @@ function editExit() {
   // As style is float, must be appended from right to left
   editGUI.appendChild(newregionbutton);
   editGUI.appendChild(newfiberbutton);
-}
-
-function optionOnMouseOver(option) {
-  if (option.className == 'optionSelected') {
-    option.className = 'optionSelectedAndOnMouseOver';
-  } else {
-    option.className = 'optionOnMouseOver';
-  }
 }
