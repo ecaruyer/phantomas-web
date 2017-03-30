@@ -5,7 +5,16 @@ function optionOnMouseOver(option) {
     option.className = 'optionOnMouseOver';
   }
 }
+function optionOnMouseLeave(option) {
+  if (option.className == 'optionSelectedAndOnMouseOver') {
+    option.className = 'optionSelected';
+  } else if (option.className == 'optionOnMouseOver') {
+    option.className = 'optionUnselected';
+  }
+}
 
+// DEPRECATED
+/*
 function removeOnMouseOver() {
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
@@ -38,6 +47,7 @@ function removeOnMouseOver() {
     });
   }
 }
+*/
 
 function optionSelect(option) {
   var fiberSelector = document.getElementById("fiberSelector");

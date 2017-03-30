@@ -25,7 +25,7 @@ function setupGUI() {
       resizeGUI();
     };
     option.onmouseenter = function() {phantom.addToScene(scene); optionOnMouseOver(this);};
-    option.onmouseleave = function() {  removeOnMouseOver(); };
+    option.onmouseleave = function() {  optionOnMouseLeave(this); };
     fiberSelector.appendChild(option);
     fiberSelector.className = 'enabledList';
 
@@ -46,7 +46,7 @@ function setupGUI() {
       option.className = 'optionUnselected';
 
       option.onmouseenter = function() {phantom.fiberHighlight(index); optionOnMouseOver(this);};
-      option.onmouseleave = function() { removeOnMouseOver(); };
+      option.onmouseleave = function() { optionOnMouseLeave(this); };
       option.onclick = function() {fiberSelectClick(index); optionSelect(this)};
       fiberSelector.appendChild(option);
     });
@@ -72,7 +72,7 @@ function setupGUI() {
       resizeGUI();
     };
     option.onmouseenter = function() {phantom.addToScene(scene); optionOnMouseOver(this);};
-    option.onmouseleave = function() {  removeOnMouseOver(); };
+    option.onmouseleave = function() {  optionOnMouseLeave(this); };
     regionSelector.appendChild(option);
     regionSelector.className = 'enabledList';
 
@@ -93,7 +93,7 @@ function setupGUI() {
       option.appendChild(selectTextSpan);
 
       option.onmouseover = function() {phantom.regionHighlight(index); optionOnMouseOver(this);};
-      option.onmouseleave = function() { removeOnMouseOver(); };
+      option.onmouseleave = function() { optionOnMouseLeave(this); };
       option.onclick = function() {regionSelectClick(index); optionSelect(this)};
       regionSelector.appendChild(option);
     });
