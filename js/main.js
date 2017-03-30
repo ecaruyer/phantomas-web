@@ -1,9 +1,9 @@
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
-// var path = "examples/isbi_challenge_2013.txt";
+var path = "examples/isbi_challenge_2013.txt";
 var path = "examples/fibers.txt";
 var container = document.getElementById('container');
 
-var meshConstraincts = {
+var meshConstraints = {
   maxTotalAxialSegments: 1440,
   maxMeshAxialSegments: 128,
 
@@ -14,7 +14,10 @@ var meshConstraincts = {
   maxMeshLineSegments: 128,
 
   maxTotalSkeletonSphreSegments: 240,
-  maxMeshSkeletonSphereSegments: 32
+  maxMeshSkeletonSphereSegments: 32,
+
+  maxTotalIsotropicRegionSegments: 1024,
+  maxMeshIsotropicRegionSegments: 32
 }
 
 var precision = 1; // in amount of decimal digits

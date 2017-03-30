@@ -94,15 +94,15 @@ Phantom.prototype = {
   addFiber: function(fiber, parameters, replaceindex) {
     /* If not specified, set segments constraint so renderer is stable in browser
     This grabs nbElements thrown by load function and sets the number of segments
-    each mesh will feature, taking values from global variable meshConstraincts (main.js) */
+    each mesh will feature, taking values from global variable meshConstraints (main.js) */
     if (!parameters) var parameters = [];
     if ((parameters.nbElements) && (!parameters.axialSegments) && (!parameters.radialSegments)) {
-      parameters.axialSegments = Math.min(Math.floor(meshConstraincts.maxTotalAxialSegments / parameters.nbElements), meshConstraincts.maxMeshAxialSegments);
-      parameters.radialSegments = Math.min(Math.floor(meshConstraincts.maxTotalRadialSegments / parameters.nbElements), meshConstraincts.maxMeshRadialSegments);
+      parameters.axialSegments = Math.min(Math.floor(meshConstraints.maxTotalAxialSegments / parameters.nbElements), meshConstraints.maxMeshAxialSegments);
+      parameters.radialSegments = Math.min(Math.floor(meshConstraints.maxTotalRadialSegments / parameters.nbElements), meshConstraints.maxMeshRadialSegments);
     }
     if ((parameters.nbElements) && (!parameters.lineSegments) && (!parameters.sphereSegments)) {
-      parameters.axialSegments = Math.min(Math.floor(meshConstraincts.maxTotalLineSegments / parameters.nbElements), meshConstraincts.maxMeshLineSegments);
-      parameters.sphereSegments = Math.min(Math.floor(meshConstraincts.maxTotalSkeletonSphereSegments / parameters.nbElements), meshConstraincts.maxMeshSkeletonSphereSegments);
+      parameters.axialSegments = Math.min(Math.floor(meshConstraints.maxTotalLineSegments / parameters.nbElements), meshConstraints.maxMeshLineSegments);
+      parameters.sphereSegments = Math.min(Math.floor(meshConstraints.maxTotalSkeletonSphereSegments / parameters.nbElements), meshConstraints.maxMeshSkeletonSphereSegments);
     }
 
     if (replaceindex !== undefined) {
@@ -152,12 +152,11 @@ Phantom.prototype = {
   addIsotropicRegion: function(region, parameters) {
     /* If not specified, set segments constrainct so renderer is stable in browser
     This grabs nbElements thrown by load function and sets the number of segments
-    each mesh will feature, choosing between a maximum of total segments in a
-    scene (first number given) and maximum of segments per mesh (segond number given) */
+    each mesh will feature, from global variable meshConstraints (main.js) */
     if (!parameters) var parameters = [];
     if ((parameters.nbElements) && (!parameters.heightSegments) && (!parameters.widthSegments)) {
-      parameters.heightSegments = Math.min(Math.floor(1024 / parameters.nbElements), 128);
-      parameters.widthSegments = Math.min(Math.floor(2048 / parameters.nbElements), 32);
+      parameters.heightSegments = Math.min(Math.floor(meshConstraints.maxTotalIsotropicRegionSegments / parameters.nbElements), meshConstraints.maxMeshIsotropicRegionSegments);
+      parameters.widthSegments = Math.min(Math.floor(meshConstraints.maxTotalIsotropicRegionSegments / parameters.nbElements), meshConstraints.maxMeshIsotropicRegionSegments);
     }
 
     this.isotropicRegions.source.push(region);
