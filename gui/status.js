@@ -68,10 +68,6 @@ GuiStatus.prototype = {
       }
     }
   },
-  apply: function(element, index) {
-    this.editing(element, index);
-    this.retrieve();
-  },
   unediting: function() {
     this.previewing = false;
     document.getElementById("switchViewButton").value = "Preview";

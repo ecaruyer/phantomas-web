@@ -50,8 +50,7 @@ function regionEdit(index) {
   radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.isotropicRegions.source[index].radius;
   radiusvalue.onchange = function() {
-    phantom.isotropicRegions.source[index].radius = this.value;
-    phantom.isotropicRegions.source[index].notify();
+    phantom.isotropicRegions.source[index].setRadius(this.value);
     // Update the radius value in the region selector list
     document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = 'radius ' + this.value;
   }

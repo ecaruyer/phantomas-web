@@ -1,14 +1,3 @@
-// Checks if there is any line in the scene (any fiber in skeleton mode)
-function checkSkeleton() {
-  var skeleton = false;
-  scene.children.forEach( function(object){
-    if (object.type == "Line") {
-      skeleton = true;
-    }
-  });
-  return skeleton;
-}
-
 // SWITCH VIEW BUTTON
 // Swithes 'preview mode' which will allow the user to display the phantom in unfaded mode while editing
 function switchViewButton() {
