@@ -38,7 +38,9 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
   render();
 }
 
-/* Phantom class includes all the data related to the Phantom.
+/** @class Phantom 
+  This class includes all the data related to the Phantom.
+
   CONTENTS:
     .fibers: contains all data for all fibers present in the Phantom
       .fibers.source: array of sources for the fibers (FiberSource)
@@ -102,7 +104,7 @@ Phantom.prototype = {
     }
     if ((parameters.nbElements) && (!parameters.lineSegments) && (!parameters.sphereSegments)) {
       parameters.axialSegments = Math.min(Math.floor(meshConstraints.maxTotalLineSegments / parameters.nbElements), meshConstraints.maxMeshLineSegments);
-      parameters.sphereSegments = Math.min(Math.floor(meshConstraints.maxTotalSkeletonSphereSegments / parameters.nbElements), meshConstraints.maxMeshSkeletonSphereSegments);
+      parameters.sphereSegments = Math.min(Math.floor(meshConstraints.maxTotalSkeletonSphereSegments / parameters.nbElements), meshConstraints.maxTotalSkeletonSphereSegments);
     }
 
     if (replaceindex !== undefined) {

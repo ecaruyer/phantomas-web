@@ -1,4 +1,11 @@
-// loadFibers returns a FiberSource array of fibers contained in a JSON file.
+/** @function loadPhantom
+  * Loads a Phantom contained in a JSON file and puts it into the scene.
+  * Contains all the functions necessary to translate Phantomas' JSON structure
+  * to {@link FiberSource} parameters.
+  * @param {XMLHttpRequest} request
+  * The file request from which JSON file was retrieved.
+  * @return The phantom ready to be added to the scene.
+*/
 function loadPhantom( request ) {
   var phantom = new Phantom();
   var loadedFibers = JSON.parse(request.response).fiber_geometries;

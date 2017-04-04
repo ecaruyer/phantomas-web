@@ -1,4 +1,11 @@
-// From https://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/
+/** @function buildAxes
+  * Returns axes to be added to the scene.
+  * From https://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/
+  * @param {number} length
+  * The axis radius.
+  * @return
+  * The axis geometry ready to be added to the scene
+*/
 function buildAxes( length ) {
   var axes = new THREE.Object3D();
   var linewidth = 2;

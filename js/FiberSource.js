@@ -1,4 +1,6 @@
-// colors is a color library for random color generation in representations
+/** @constant colors
+  * An HEX array used as a color library for random generation.
+*/
 var colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
           0xBF9430, 0x2C3D82, 0x248F40, 0xA61300, 0xA67400,
           0x071C71, 0x007C21, 0xFF5640, 0xFFC640, 0x4965D6,
@@ -9,12 +11,17 @@ var colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
           0xFF8040, 0xFF9D40, 0x37B6CE, 0x35D4A0, 0xFFA273];
 
 
-/*
-This module contains the definition of ``FiberSource``, which is a continuous
-representation of a fiber. All the fibers created are supposed to connect two
+/** @class FiberSource
+  * A fiber bundle in Phantomas is defined as a cylindrical tube wrapped around
+its centerline. The centerline itself is a continuous curve in 3D, and can be
+simply created from a few control points. All the fibers created are supposed to connect two
 cortical areas.
+  * FiberSource is the basic Class for the representation of a Fiber. Objects containing
+  the geometries to be added to the scene are to be referred to FiberSource for
+  gathering any necessary information.
 
-Parameters
+@param {array} controlPoints
+  * An array-of-arrays (N, 3) containing
 ----------
 controlPoints : array-of-arrays shape (N, 3)
 tangents : 'incoming', 'outgoing', 'symmetric'

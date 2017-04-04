@@ -1,26 +1,45 @@
+/** @overview Main file. Contains the init, render, animate and show functions.
+*/
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
+/** @var {string} path
+  * Path to file in the JSON request.
+*/
 var path = "examples/isbi_challenge_2013.txt";
 // var path = "examples/fibers.txt";
 var container = document.getElementById('container');
-
+/** @constant [object meshConstraints]
+  * Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
+  * Used as a parameter for stability
+*/
 var meshConstraints = {
-  maxTotalAxialSegments: 1440,
-  maxMeshAxialSegments: 128,
 
-  maxTotalRadialSegments: 480,
-  maxMeshRadialSegments: 32,
+    maxTotalAxialSegments: 1440,
+    maxMeshAxialSegments: 128,
 
-  maxTotalLineSegments: 960,
-  maxMeshLineSegments: 128,
+    maxTotalRadialSegments: 480,
+    maxMeshRadialSegments: 32,
 
-  maxTotalSkeletonSphreSegments: 240,
-  maxMeshSkeletonSphereSegments: 32,
+    maxTotalLineSegments: 960,
+    maxMeshLineSegments: 128,
 
-  maxTotalIsotropicRegionSegments: 1024,
-  maxMeshIsotropicRegionSegments: 32
+    maxTotalSkeletonSphereSegments: 240,
+    maxMeshSkeletonSphereSegments: 32,
+
+    maxTotalIsotropicRegionSegments: 1024,
+    maxMeshIsotropicRegionSegments: 32
 }
 
+/** @constant [precision]
+  * Number of decimal digits present in all values given.
+*/
 var precision = 1; // in amount of decimal digits
+/** @function roundToPrecision
+  * Applies precision to any value.
+  * @param [number]
+  * The number to be rounded to
+  * @return
+  * The rounded number
+*/
 function roundToPrecision(number) {
   number *= 10 * precision;
   number = Math.round(number);
@@ -29,16 +48,24 @@ function roundToPrecision(number) {
 }
 init();
 
-
+/** @function render
+  * Renders the scene. Must be called anytime the scene is changed.
+  */
 function render() {
   renderer.render(scene, camera);
 }
 
+/** @function animate
+  * Called recursively. Updates the controls as well.
+  */
 function animate() {
   requestAnimationFrame( animate );
   controls.update();
 }
-
+/** @function init
+  * Initialises the app.
+  * Starting from a XMLHttpRequest, calls {@link show} and {@link setupGUI}.
+  */
 function init() {
   request = new XMLHttpRequest();
   request.overrideMimeType("text/plain");
@@ -51,7 +78,10 @@ function init() {
     };
   request.send(null);
 }
-
+/** @function show
+  * Initialises everything regarding the THREE.js environtment.
+  * Adds window events.
+*/
 function show() { // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(container.offsetWidth, window.innerHeight);
@@ -119,6 +149,6 @@ function show() { // The rendering engine is initialized
 
     resizeGUI();
   }
-
+  // Call animate to start the recursive call.
   animate();
 }
