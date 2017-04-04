@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @overview Main file. Contains the init, render, animate and show functions.
+*/
+var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
+/** @var {string} path
+  * Path to file in the JSON request.
+*/
+var path = "examples/isbi_challenge_2013.txt";
+// var path = "examples/fibers.txt";
+var container = document.getElementById('container');
+/** @constant [meshConstraints]
+  * Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
+  * Used as a parameter for stability
+*/
+var meshConstraints = {
+
+    maxTotalAxialSegments: 1440,
+    maxMeshAxialSegments: 128,
+
+    maxTotalRadialSegments: 480,
+    maxMeshRadialSegments: 32,
+
+    maxTotalLineSegments: 960,
+    maxMeshLineSegments: 128,
+
+    maxTotalSkeletonSphreSegments: 240,
+    maxMeshSkeletonSphereSegments: 32,
+
+    maxTotalIsotropicRegionSegments: 1024,
+    maxMeshIsotropicRegionSegments: 32
+}
+
+/** @constant [precision]
+  * Number of decimal digits present in all values given.
+*/
+var precision = 1; // in amount of decimal digits
+/** @function roundToPrecision
+  * Applies precision to any value.
+  * @param [number]
+  * The number to be rounded to
+  * @return
+  * The rounded number
+*/
+function roundToPrecision(number) {
+  number *= 10 * precision;
+  number = Math.round(number);
+  number /= 10 * precision;
+  return number;
+}
+init();
+
+/** @function render
+  * Renders the scene. Must be called anytime the scene is changed.
+  */
+function render() {
+  renderer.render(scene, camera);
+}
+
+/** @function animate
+  * Called recursively. Updates the controls as well.
+  */
+function animate() {
+  requestAnimationFrame( animate );
+  controls.update();
+}
+/** @function init
+  * Initialises the app.
+  * Starting from a XMLHttpRequest, calls {@link show} and {@link setupGUI}.
+  */
+function init() {
+  request = new XMLHttpRequest();
+  request.overrideMimeType("text/plain");
+  request.open("get", path, true);
+  request.onreadystatechange = function() {
+    if ( (request.readyState === 4) &amp;&amp; (request.status === 200) ) {
+      show();
+      setupGUI();
+      }
+    };
+  request.send(null);
+}
+/** @function show
+  * Initialises everything regarding the THREE.js environtment.
+  * Adds window events.
+*/
+function show() { // The rendering engine is initialized
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(container.offsetWidth, window.innerHeight);
+  // It is appended to the div container in the HTML5 tree
+  container.appendChild(renderer.domElement);
+
+  // We create a scene and a camera. Position is to be corrected further in the code.
+  camera = new THREE.PerspectiveCamera(50,
+                                       container.offsetWidth / (window.innerHeight),
+                                       1,
+                                       10000);
+  camera.position.set(0, 0, 0);
+
+  // Create, the scene and add cameras, lights.
+  scene = new THREE.Scene();
+  scene.add(camera);
+  scene.add(new THREE.AmbientLight( 0xffffff, .5 ) );
+  // Directional lights are added in all directions
+  for (var x = -100; x &lt;= 100; x=x+200) {
+    for (var y = -100; y &lt;= 100; y=y+200) {
+      for (var z = -100; z &lt;= 100; z=z+20) {
+        var directionalLight = new THREE.DirectionalLight(0x555555, .15);
+        directionalLight.position.x = x;
+        directionalLight.position.y = y;
+        directionalLight.position.z = z;
+        scene.add(directionalLight);
+      }
+    }
+  }
+
+  // Load phantom and add it in the scene
+  phantom = loadPhantom( request );
+  phantom.addToScene(scene);
+  camera.position.z = phantom.radius() * 2 * 1.5;
+
+  renderer.render(scene, camera);
+
+  // Add mouse control to the camera
+  controls = new THREE.TrackballControls( camera , renderer.domElement );
+  controls.enableZoom = true;
+  controls.rotateSpeed = 2.5;
+  controls.zoomSpeed = 1;
+  controls.noPan = false;
+  controls.addEventListener('change', render);
+
+  // Leave confirmation. From https://stackoverflow.com/questions/10311341/confirmation-before-closing-of-tab-browser
+  window.onbeforeunload = function (e) {
+    e = e || window.event;
+
+    // For IE and Firefox prior to version 4
+    if (e) {
+        e.returnValue = 'Leave Phantomas?';
+    }
+
+    // For Safari
+    return 'Leave Phantomas?';
+  };
+  window.addEventListener( 'resize', onWindowResize, false );
+  function onWindowResize(){
+    camera.aspect = container.offsetWidth / (window.innerHeight);
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( container.offsetWidth, window.innerHeight);
+    render();
+
+    resizeGUI();
+  }
+  // Call animate to start the recursive call.
+  animate();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FiberSource.html">FiberSource</a></li></ul><h3>Global</h3><ul><li><a href="global.html#animateCalledrecursively.Updatesthecontrolsaswell.">animate
+Called recursively. Updates the controls as well.</a></li><li><a href="global.html#buildAxesReturnsaxestobeaddedtothescene.Fromhttps://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/">buildAxes
+Returns axes to be added to the scene.
+From https://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/</a></li><li><a href="global.html#colors">colors</a></li><li><a href="global.html#initInitialisestheapp.StartingfromaXMLHttpRequest,calls%257B@linkshow%257Dand%257B@linksetupGUI%257D.">init
+Initialises the app.
+Starting from a XMLHttpRequest, calls {@link show} and {@link setupGUI}.</a></li><li><a href="global.html#loadPhantomLoadsaPhantomcontainedinaJSONfileandputsitintothescene.ContainsallthefunctionsnecessarytotranslatePhantomas'JSONstructureto%257B@linkFiberSource%257Dparameters.">loadPhantom
+Loads a Phantom contained in a JSON file and puts it into the scene.
+Contains all the functions necessary to translate Phantomas' JSON structure
+to {@link FiberSource} parameters.</a></li><li><a href="global.html#meshConstraints">meshConstraints</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#precision">precision</a></li><li><a href="global.html#renderRendersthescene.Mustbecalledanytimethesceneischanged.">render
+Renders the scene. Must be called anytime the scene is changed.</a></li><li><a href="global.html#roundToPrecisionAppliesprecisiontoanyvalue.">roundToPrecision
+Applies precision to any value.</a></li><li><a href="global.html#showInitialiseseverythingregardingtheTHREE.jsenvirontment.Addswindowevents.">show
+Initialises everything regarding the THREE.js environtment.
+Adds window events.</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Apr 04 2017 15:48:34 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+====================================
+User Documentation
+====================================
+
+Phantomas Web is a graphical interface for creation and edition of Phantoms
+to be used in `Phantomas`_.
+
+.. _Phantomas: http://www.emmanuelcaruyer.com/phantomas.php
+
+.. contents::
+
+
+Requirements
+-------------
+Phantomas Web is set to work with lastest version of
+`Mozilla Firefox`_. Although, it is fully compatible
+with most modern internet navigators.
+
+Any kind of extra software is needed.
+
+.. _Mozilla Firefox: http://www.firefox.com
+
+
+Capabilities
+------------------
+Using this app you will be able to
+
+  - Either load or create from scratch any Phantom model and save as a
+    JSON Phantomas file
+  - Add and remove Fibers and Isotropic Regions
+  - Change the position and the radius for the Isotropic Regions
+  - Edit the radius and the Tangents' method for the Fiber
+
+  - Add, remove and edit the position of the Control Points in a Fiber
+
+Definition of a fiber bundle
+-----------------------------
+
+A fiber bundle in Phantomas is defined as a cylindrical tube wrapped around
+its centerline. The centerline itself is a continuous curve in
+3D, and can be simply created from a few control points.
