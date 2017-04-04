@@ -97,6 +97,18 @@ function show() { // The rendering engine is initialized
   controls.noPan = false;
   controls.addEventListener('change', render);
 
+  // Leave confirmation. From https://stackoverflow.com/questions/10311341/confirmation-before-closing-of-tab-browser
+  window.onbeforeunload = function (e) {
+    e = e || window.event;
+
+    // For IE and Firefox prior to version 4
+    if (e) {
+        e.returnValue = 'Leave Phantomas?';
+    }
+
+    // For Safari
+    return 'Leave Phantomas?';
+  };
   window.addEventListener( 'resize', onWindowResize, false );
   function onWindowResize(){
     camera.aspect = container.offsetWidth / (window.innerHeight);
