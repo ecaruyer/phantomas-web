@@ -4,8 +4,7 @@ var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 /** @var {string} path
   * Path to file in the JSON request.
 */
-var path = "examples/isbi_challenge_2013.txt";
-// var path = "examples/fibers.txt";
+var path = "phantom_save.json";
 var container = document.getElementById('container');
 /** @constant [object meshConstraints]
   * Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
