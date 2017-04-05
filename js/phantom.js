@@ -38,7 +38,7 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
   render();
 }
 
-/** @class Phantom 
+/** @class Phantom
   This class includes all the data related to the Phantom.
 
   CONTENTS:
@@ -346,7 +346,7 @@ Phantom.prototype = {
     this.addToScene(scene);
     this.fadeAll();
     // Focus fiber is faded more so that thread can be seen with any problem
-    this.fibers.tube[n].mesh.material.opacity = this.highlightOpacity*4;
+    this.fibers.tube[n].mesh.material.opacity = this.highlightOpacity*2;
     this.fibers.tube[n].mesh.renderOrder = -1;
     scene.add(this.fibers.skeleton[n].line, this.fibers.skeleton[n].spheres);
     // Render so changes are made visible

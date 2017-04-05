@@ -36,7 +36,10 @@ function cpEdit(index) {
   xvalue.type = "number";
   xvalue.step = Math.pow(10, -precision);;
   xvalue.value = cp[0];
-  xvalue.onchange = function() {cpValueOnChange(index, 'x', this.value)};
+  xvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
+    cpValueOnChange(index, 'x', this.value);
+  };
   xpos.appendChild(xvalue);
   position.appendChild(xpos);
 
@@ -50,7 +53,10 @@ function cpEdit(index) {
   yvalue.type = "number";
   yvalue.step = Math.pow(10, -precision);
   yvalue.value = cp[1];
-  yvalue.onchange = function() {cpValueOnChange(index, 'y', this.value)};
+  yvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
+    cpValueOnChange(index, 'y', this.value);
+  };
   ypos.appendChild(yvalue);
   position.appendChild(ypos);
 
@@ -64,7 +70,10 @@ function cpEdit(index) {
   zvalue.type = "number";
   zvalue.step = Math.pow(10, -precision);
   zvalue.value = cp[2];
-  zvalue.onchange = function() {cpValueOnChange(index, 'z', this.value)};
+  zvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
+    cpValueOnChange(index, 'z', this.value);
+  };
   zpos.appendChild(zvalue);
   position.appendChild(zpos);
 

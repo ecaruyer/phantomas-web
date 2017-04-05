@@ -50,6 +50,7 @@ function regionEdit(index) {
   radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.isotropicRegions.source[index].radius;
   radiusvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setRadius(this.value);
     // Update the radius value in the region selector list
     document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = 'radius ' + this.value;
@@ -76,6 +77,7 @@ function regionEdit(index) {
   xvalue.step = Math.pow(10, -precision);
   xvalue.value = phantom.isotropicRegions.source[index].center[0];
   xvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('x', xvalue.value);
   }
   xpos.appendChild(xvalue);
@@ -92,6 +94,7 @@ function regionEdit(index) {
   yvalue.step = Math.pow(10, -precision);
   yvalue.value = phantom.isotropicRegions.source[index].center[1];
   yvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('y', yvalue.value);
   }
   ypos.appendChild(yvalue);
@@ -108,6 +111,7 @@ function regionEdit(index) {
   zvalue.step = Math.pow(10, -precision);
   zvalue.value = phantom.isotropicRegions.source[index].center[2];
   zvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('z', zvalue.value);
   }
   zpos.appendChild(zvalue);

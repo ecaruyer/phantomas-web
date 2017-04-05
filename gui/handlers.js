@@ -128,6 +128,23 @@ function removeCPclick(fiber, cp) {
   }
 }
 
+// AXES TOGGLE
+function toggleAxes() {
+  button = document.getElementById('toggleAxesButton');
+  name = 'axes';
+  var length = phantom.radius() * 1.5;
+
+  if (scene.getObjectByName(name)) {
+    scene.remove(scene.getObjectByName(name))
+    button.className = 'w3-btn w3-border w3-hover-deep-purple w3-block w3-ripple';
+  } else {
+    var axes = buildAxes(length);
+    axes.name = name;
+    scene.add(axes);
+    button.className = 'w3-button w3-deep-purple w3-hover-indigo w3-border w3-block w3-ripple';
+  }
+  render();
+}
 // PLANE SELECTORS
 // Double click for inverted axis was commented for it to be disabled for the moment. Found it annoying when attempting to move points.
 function moveCameraXY() {
@@ -167,24 +184,20 @@ function moveCameraZY() {
   // }
 }
 
-// AXES TOGGLE
-function toggleAxes() {
-  button = document.getElementById('toggleAxesButton');
-  name = 'axes';
-  var length = phantom.radius() * 1.5;
 
-  if (scene.getObjectByName(name)) {
-    scene.remove(scene.getObjectByName(name))
-    button.className = 'w3-btn w3-border w3-hover-deep-purple w3-block w3-ripple';
-  } else {
-    var axes = buildAxes(length);
-    axes.name = name;
-    scene.add(axes);
-    button.className = 'w3-button w3-deep-purple w3-hover-indigo w3-border w3-block w3-ripple';
+// OPACITY
+function opacitySelectChange(selector) {
+  // Make the value stay between min and max.
+  if (selector.value > selector.max) {
+    selector.value = selector.max;
+  } else if (selector.value < selector.min) {
+    selector.value = selector.min;
   }
-  render();
+  // Allow custom step; do not allow decimal values.
+  selector.value = Math.round(selector.value);
+  phantom.highlightOpacity = selector.value / 100;
+  guiStatus.retrieve();
 }
-
 
 function saveClick() {
   pushDownload(phantom.export());

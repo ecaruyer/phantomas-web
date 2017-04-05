@@ -54,6 +54,12 @@
         <input type='button' class="w3-button w3-blue w3-block" value='zy' onclick='moveCameraZY();'>
     </ul>
 
+    <br>
+    <label>
+    <i class="icons">&#xE91C;<span style='font-family:default;'>(%)</span></i>
+    </label>
+    <input id='opacitySelector' style='width:100%' type="number" min='0' max='50' step='5' onchange='opacitySelectChange(this);'/>
+
     <div id="bottomButtons">
       <button class="w3-button w3-grey w3-hover-green w3-ripple w3-block" onclick="saveClick();">
         <i class="icons">&#xE9C7;</i></button>

@@ -74,9 +74,9 @@ ul, li {
 
 #rightGUI {
   float: right;
-  text-align: right;
+  text-align: center;
   display: inline-block;
-
+  
   width: 4%;
 
   margin: 0;

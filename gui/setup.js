@@ -104,6 +104,15 @@ function setupGUI() {
     regionSelector.className = 'disabledList';
   }
 
+  // Leave edition anytime ESC is pressed.
+  window.addEventListener('keyup', function(e) {
+    if (e.keyCode == 27) {
+      fiberSelector.childNodes[0].onclick();
+      regionSelector.childNodes[0].onclick();
+    }
+  })
+
+  document.getElementById('opacitySelector').value = phantom.highlightOpacity * 100;
   editExit();
 }
 

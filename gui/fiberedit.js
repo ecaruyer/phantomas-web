@@ -61,6 +61,7 @@ function fiberEdit( index ) {
   radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.fibers.source[index].radius;
   radiusvalue.onchange = function() {
+    this.value = roundToPrecision(this.value);
     phantom.fibers.source[index].radius = this.value;
     phantom.fibers.source[index].notify();
   }

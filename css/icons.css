@@ -1,12 +1,12 @@
 @font-face {
-  font-family: 'icons';
+  font-family: 'appicons';
   font-style: normal;
   font-weight: 400;
-  src: local('Icons'), local('icons'), url(../icons/icons.woff) format('woff');
+  src: url(../icons/icons.woff) format('woff');
 }
 
 .icons {
-  font-family: 'icons';
+  font-family: 'appicons';
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
