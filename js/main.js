@@ -40,6 +40,9 @@ var precision = 1; // in amount of decimal digits
   * The rounded number
 */
 function roundToPrecision(number) {
+  // Correct type
+  number = Number(number);
+  
   number *= 10 * precision;
   number = Math.round(number);
   number /= 10 * precision;

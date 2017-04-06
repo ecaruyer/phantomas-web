@@ -188,13 +188,14 @@ function moveCameraZY() {
 // OPACITY
 function opacitySelectChange(selector) {
   // Make the value stay between min and max.
-  if (selector.value > selector.max) {
+  if (Number(selector.value) > Number(selector.max)) {
     selector.value = selector.max;
-  } else if (selector.value < selector.min) {
+  } else if (Number(selector.value) < Number(selector.min)) {
     selector.value = selector.min;
   }
   // Allow custom step; do not allow decimal values.
-  selector.value = Math.round(selector.value);
+  selector.value = Math.round(Number(selector.value));
+
   phantom.highlightOpacity = selector.value / 100;
   guiStatus.retrieve();
 }
