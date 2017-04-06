@@ -6,12 +6,20 @@ var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 */
 var path = "phantom_save.json";
 var container = document.getElementById('container');
-/** @constant [object meshConstraints]
-  * Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
-  * Used as a parameter for stability
-*/
 var meshConstraints = {
-
+  /** @constant {object} meshConstraint Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
+  Used as a parameter for WEBGL stability.
+  * @property {number} maxTotalAxialSegments Maximum number of Axial Segments in fiber tube mesh to appear in the scene
+  * @property {number} maxMeshAxialSegments Maximum number of Axial Segments to feature in a fiber tube mesh
+  * @property {number} maxTotalRadialSegments Maximum number of Radial Segments in fiber tube mesh to appear in the scene
+  * @property {number} maxMeshRadialSegments Maximum number of Radial Segments to feature in a fiber tube mesh
+  * @property {number} maxTotalLineSegments Maximum number of Line Segments to appear in the scene
+  * @property {number} maxMeshLineSegments Maximum number of Line Segments to feature in a single skeleton line
+  * @property {number} maxTotalSkeletonSphereSegments Maximum number of Radial Segments in skeleton control points to appear in the scene
+  * @property {number} maxMeshSkeletonSphereSegments Maximum number of Radial Segments to feature in a single control point sphere mesh
+  * @property {number} maxTotalIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in the scene
+  * @property {number} maxMeshIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in a single mesh
+  */
     maxTotalAxialSegments: 1440,
     maxMeshAxialSegments: 128,
 
@@ -28,21 +36,19 @@ var meshConstraints = {
     maxMeshIsotropicRegionSegments: 32
 }
 
-/** @constant [precision]
-  * Number of decimal digits present in all values given.
+/** @constant precision Number of decimal digits present in all values given.
 */
 var precision = 1; // in amount of decimal digits
-/** @function roundToPrecision
-  * Applies precision to any value.
-  * @param [number]
-  * The number to be rounded to
-  * @return
-  * The rounded number
-*/
 function roundToPrecision(number) {
+/** @function roundToPrecision
+  * @desc Applies precision to any value.
+  * @param {number|string} number Number to round
+  * @return {number} The rounded number
+  */
+
   // Correct type
   number = Number(number);
-  
+
   number *= 10 * precision;
   number = Math.round(number);
   number /= 10 * precision;
@@ -50,25 +56,24 @@ function roundToPrecision(number) {
 }
 init();
 
-/** @function render
-  * Renders the scene. Must be called anytime the scene is changed.
-  */
 function render() {
+/** @function render
+  * @desc Renders the scene. Must be called anytime the scene is changed.
+  */
   renderer.render(scene, camera);
 }
 
-/** @function animate
-  * Called recursively. Updates the controls as well.
-  */
 function animate() {
+/** @function animate
+  * @desc Called recursively. Updates the controls as well.
+  */
   requestAnimationFrame( animate );
   controls.update();
 }
-/** @function init
-  * Initialises the app.
-  * Starting from a XMLHttpRequest, calls {@link show} and {@link setupGUI}.
-  */
 function init() {
+/** @function init
+  * @desc Initialises the app. Starting from a XMLHttpRequest, calls [show()]{@link show} and [setupGUI()]{@link setupGUI}.
+  */
   request = new XMLHttpRequest();
   request.overrideMimeType("text/plain");
   request.open("get", path, true);
@@ -81,8 +86,9 @@ function init() {
   request.send(null);
 }
 /** @function show
-  * Initialises everything regarding the THREE.js environtment.
-  * Adds window events.
+  * @desc Initialises everything regarding the THREE.js environtment. Adds window events.
+  * @requires THREE.js
+  * @requires TrackballControls.js
 */
 function show() { // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();

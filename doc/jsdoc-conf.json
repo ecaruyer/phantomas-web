@@ -1,0 +1,19 @@
+{
+  "source": {
+    "include": ["js", "gui"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "opts": {
+    "destination": "./doc/developer/"
+  },
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "plugins": [],
+  "templates": {
+      "cleverLinks": false,
+      "monospaceLinks": false
+  }
+}

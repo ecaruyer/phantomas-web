@@ -1,5 +1,7 @@
+/** @overview Contains Class definitions for FiberSource and IsotropicRegionSource. */
+
 /** @constant colors
-  * An HEX array used as a color library for random generation.
+  * @desc An HEX array used as a color library for random generation.
 */
 var colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
           0xBF9430, 0x2C3D82, 0x248F40, 0xA61300, 0xA67400,
@@ -11,27 +13,27 @@ var colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
           0xFF8040, 0xFF9D40, 0x37B6CE, 0x35D4A0, 0xFFA273];
 
 
-/** @class FiberSource
-  * A fiber bundle in Phantomas is defined as a cylindrical tube wrapped around
-its centerline. The centerline itself is a continuous curve in 3D, and can be
-simply created from a few control points. All the fibers created are supposed to connect two
-cortical areas.
+function FiberSource(controlPoints, tangents, radius, color) {
+  /** @class FiberSource
+  * @classdesc A fiber bundle in Phantomas is defined as a cylindrical tube wrapped around
+  its centerline. The centerline itself is a continuous curve in 3D, and can be
+  simply created from a few control points. All the fibers created are supposed to connect two
+  cortical areas.<br>
   * FiberSource is the basic Class for the representation of a Fiber. Objects containing
   the geometries to be added to the scene are to be referred to FiberSource for
   gathering any necessary information.
 
-@param {array} controlPoints
-  * An array-of-arrays (N, 3) containing
-----------
-controlPoints : array-of-arrays shape (N, 3)
-tangents : 'incoming', 'outgoing', 'symmetric'
-radius : fiber radius; same dimensions as controlPoints.
-[ deprecated ] scale : multiplication factor.
-    This is useful when the coodinates are given dimensionless, and we
-    want a specific size for the phantom.
+  * @param {array} controlPoints Array-of-arrays (N, 3) containing the 3-D coordinates
+  of the fiber Control Points.
+  * @param {string} [tangents='symmetric'] Way the tangents are to be computed.
+  Available options: 'incoming', 'outgoing', 'symmetric'
+  * @param {number} [radius=1] Fiber radius; same dimensions as controlPoints.
+  * @param {number} [color] Color in which the fiber should be displayed. If not
+  specified, to be picked randomly from {@link colors}.
 
-*/
-function FiberSource(controlPoints, tangents, radius, color) {
+  * @property {array} observers Objects to be notified when some change is applied
+  */
+
   // Initialize properties. By default tangents = 'symmetric', radius = 1.
   this.controlPoints = controlPoints;
 
@@ -57,23 +59,17 @@ function FiberSource(controlPoints, tangents, radius, color) {
   this.observers = [];
 }
 
-/* FiberSource methods definition
-  'polyCalc' calculates coefficients for each polynomial. Needed in constructor
-    and once any of the three FiberSource input change.
-  'interpolate' goes from the continuous representation of FiberSource to a
-  discretization to given timesteps (ts) between 0 and 1.
-  Return is an array which lists [x y z] for each timestep.
-*/
 FiberSource.prototype = {
   polyCalc: function() {
-    /*
-     When called, coefficients are calculated.
-     This takes the FiberSource instance from control points, and a specified
-     mode to compute the tangents.
-
-     The output is the coefficients as f(x)=a0+a1x+a2x^2+a3x^3 for each x, y and
-     z and for each pair of points, as this.xpoly, this.ypoly and this.zpoly.
-     Timestamps normalized in [0,1] are also calculated in this.ts
+  /** @function polyCalc
+    * @memberof FiberSource
+    * @desc When called, coefficients are calculated.
+      This takes the FiberSource instance from control points, and a specified
+      mode to compute the tangents.<br>
+      The output is the coefficients as <p style='margin-left: 10em; font-family:monospace'>
+      (x,y,z)(t)= a + b[(t-ti)/(ti1-ti)] + c[(t-ti)/(ti1-ti)]^2 + d[(t-ti)/(ti1-ti)]^3</p> for each x, y and
+      z and for each pair of points, as <i>this.xpoly</i>, <i>this.ypoly</i> and <i>this.zpoly</i>.
+      Timestamps normalized in <[0,1] are also calculated in <i>this.ts</i>.
    */
    // Take distance of each pair of given control points
     nbPoints = this.controlPoints.length;
@@ -186,22 +182,13 @@ FiberSource.prototype = {
   },
 
   interpolate: function(ts) {
-  /*
-  From a ``FiberSource``, which is a continuous representation, to a
+  /** @function interpolate
+    * @memberof FiberSource
+    * @param {array|number} ts List of "timesteps" (or a single) between 0 and 1.
+      From a ``FiberSource``, which is a continuous representation, to a
       ``Fiber``, a discretization of the fiber trajectory.
-
-      Parameters
-      ----------
-      ts : array-like, shape (N, )
-          A list of "timesteps" between 0 and 1.
-          OR
-          A single value for a timestep between 0 and 1.
-
-      Returns
-      -------
-      trajectory : array-like, shape (N, 3)
-          The trajectory of the fiber, discretized over the provided
-          timesteps.
+    * @return {array} The trajectory of the fiber, discretized over the provided
+      timesteps in an array-of-arrays form (N, 3)
   */
   // interp implements equation used for coefficients [a,b,c,d], described above.
     function interp(coef, t, ti, ti1) {
@@ -239,12 +226,19 @@ FiberSource.prototype = {
     }
       return trajectory;
   },
-  // Pushes an object to the observer list. Once added, will be notified.
   addObserver: function(object) {
+    /** @function addObserver
+      * @memberof FiberSource
+      * @param {object} object Object to be added to <i>this.observers</i> array.
+      * @desc Add object to <i>this.observers</i> property
+    */
     this.observers.push(object)
   },
-  // Refreshes objects in the observer list
   notify: function() {
+    /** @function notify
+      * @memberof FiberSource
+      * @desc Runs .refresh() method to all objects present in <i>this.observers</i> property. Renders.
+    */
     for(var i = 0; i < this.observers.length; i++) {
       this.observers[i].refresh();
     }
@@ -253,6 +247,13 @@ FiberSource.prototype = {
   // setControlPoint changes a control point for this Fiber.
   // inputs: n (position in controlPoints array) and x, y, z coordinates.
   setControlPoint: function(n, axis, value) {
+    /** @function setControlPoint
+      * @memberof FiberSource
+      * @desc Sets a value to a given Control Point in a given Axis. Refreshes coefficients and notifies observers.
+      * @param {number} n Index in this.controlPoints of Control Point to be set.
+      * @param {string} axis Axis in which to apply the change 'x', 'y' or 'z'.
+      * @param {number} value Value to set.
+    */
     switch (axis) {
       case 'x':
         this.controlPoints[n][0] = value;
@@ -270,8 +271,21 @@ FiberSource.prototype = {
   }
 }
 
-// An isotropic region has a spherical shape
 function IsotropicRegionSource(center, radius, color) {
+/** @class IsotropicRegionSource
+  * @classdesc An Isotropic Region is defined in Phantomas as an empty spherical space.<br>
+  * IsotropicRegionSource is the basic Class for the representation of an Isotropic Region. Objects containing
+  the geometries to be added to the scene are to be referred to IsotropicRegionSource for
+  gathering any necessary information.
+
+  * @param {array} center Array containing the 3-D coordinates
+  of the center point in which the Isotropic Region is located.
+  * @param {number} [radius=1] Isotropic Region radius.
+  * @param {number} [color] Color in which the Isotropic Region should be displayed in. If not
+  specified, to be picked randomly from {@link colors}.
+
+  * @property {array} observers Objects to be notified when some change is applied
+*/
   this.center = center;
   this.radius = radius;
 
@@ -285,12 +299,23 @@ function IsotropicRegionSource(center, radius, color) {
 IsotropicRegionSource.prototype = {
   // Refreshes objects in the observer list
   notify: function() {
+    /** @function notify
+      * @memberof IsotropicRegionSource
+      * @desc Runs .refresh() method to all objects present in <i>this.observers</i> property. Renders.
+    */
+
     for(var i = 0; i < this.observers.length; i++) {
       this.observers[i].refresh();
     }
     render();
   },
   setCenter: function(axis, value) {
+  /** @function setCenter
+    * @memberof IsotropicRegionSource
+    * @param {string} axis Axis in which to apply the new value
+    * @param {number} value New value to be applied
+    * @desc Changes the center of the Isotropic Region for a given new. Notifies observers.
+  */
     switch (axis) {
       case 'x':
         this.center[0] = value;
@@ -306,10 +331,21 @@ IsotropicRegionSource.prototype = {
     this.notify();
   },
   setRadius: function(radius) {
+    /** @function setRadius
+      * @memberof IsotropicRegionSource
+      * @param {number} radius New value to be applied
+      * @desc Changes the radius of the Isotropic Region for a given new. Notifies observers.
+    */
     this.radius = radius;
     this.notify();
   },
   addObserver: function(object) {
+    /** @function addObserver
+      * @memberof IsotropicRegionSource
+      * @param {object} object Object to be added to <i>this.observers</i> array.
+      * @desc Add object to <i>this.observers</i> property
+    */
+
     this.observers.push(object)
   }
 }
