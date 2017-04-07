@@ -1,4 +1,4 @@
-/** @overview Main file. Contains the init, render, animate and show functions.
+/** @overview Main file. Contains {@link init}, {@link render}, {@link animate} and {@link show} functions, as well as main global functions and constants.
 */
 var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 /** @var {string} path
@@ -7,18 +7,18 @@ var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 var path = "phantom_save.json";
 var container = document.getElementById('container');
 var meshConstraints = {
-  /** @constant {object} meshConstraint Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
+  /** @constant {object} meshConstraints Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
   Used as a parameter for WEBGL stability.
-  * @property {number} maxTotalAxialSegments Maximum number of Axial Segments in fiber tube mesh to appear in the scene
-  * @property {number} maxMeshAxialSegments Maximum number of Axial Segments to feature in a fiber tube mesh
-  * @property {number} maxTotalRadialSegments Maximum number of Radial Segments in fiber tube mesh to appear in the scene
-  * @property {number} maxMeshRadialSegments Maximum number of Radial Segments to feature in a fiber tube mesh
-  * @property {number} maxTotalLineSegments Maximum number of Line Segments to appear in the scene
-  * @property {number} maxMeshLineSegments Maximum number of Line Segments to feature in a single skeleton line
-  * @property {number} maxTotalSkeletonSphereSegments Maximum number of Radial Segments in skeleton control points to appear in the scene
-  * @property {number} maxMeshSkeletonSphereSegments Maximum number of Radial Segments to feature in a single control point sphere mesh
-  * @property {number} maxTotalIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in the scene
-  * @property {number} maxMeshIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in a single mesh
+  * @property {Number} maxTotalAxialSegments Maximum number of Axial Segments in fiber tube mesh to appear in the scene
+  * @property {Number} maxMeshAxialSegments Maximum number of Axial Segments to feature in a fiber tube mesh
+  * @property {Number} maxTotalRadialSegments Maximum number of Radial Segments in fiber tube mesh to appear in the scene
+  * @property {Number} maxMeshRadialSegments Maximum number of Radial Segments to feature in a fiber tube mesh
+  * @property {Number} maxTotalLineSegments Maximum number of Line Segments to appear in the scene
+  * @property {Number} maxMeshLineSegments Maximum number of Line Segments to feature in a single skeleton line
+  * @property {Number} maxTotalSkeletonSphereSegments Maximum number of Radial Segments in skeleton control points to appear in the scene
+  * @property {Number} maxMeshSkeletonSphereSegments Maximum number of Radial Segments to feature in a single control point sphere mesh
+  * @property {Number} maxTotalIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in the scene
+  * @property {Number} maxMeshIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in a single mesh
   */
     maxTotalAxialSegments: 1440,
     maxMeshAxialSegments: 128,
@@ -43,7 +43,7 @@ function roundToPrecision(number) {
 /** @function roundToPrecision
   * @desc Applies precision to any value.
   * @param {number|string} number Number to round
-  * @return {number} The rounded number
+  * @return {Number} The rounded number
   */
 
   // Correct type

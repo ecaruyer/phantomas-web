@@ -1,6 +1,14 @@
+/** @overview Contains {@link Phantom} definition and added methods to {@link THREE.Scene} prototype.*/
+
 // Adding a scene method that removes all phantoms present.
 // This way, cameras and lights are never removed.
+/** @class THREE.Scene
+  */
 THREE.Scene.prototype.removePhantom = function() {
+/** @method removePhantom
+  * @memberof THREE.Scene
+  * @desc Removes all Phantoms present in the Scene, leaving everything not being part of a Phantom.
+  */
   var objects = [];
   this.children.forEach( function(object){
     if (((object.type == 'Mesh') || (object.type == "Line")) && (!object.isHighlight)) {
@@ -19,6 +27,12 @@ THREE.Scene.prototype.removePhantom = function() {
 
 // All boolean makes red points to be removed if true.
 THREE.Scene.prototype.removeCPHighlight = function(all) {
+  /** @method removeCPHighlight
+    * @memberof THREE.Scene
+    * @desc Removes Control Point highlights. By default, only blue colored highlights, used
+    * when hover.
+    * @param {boolean} [all] If true, removes red and green colored highlight as well.
+    */
   var objects = [];
   this.children.forEach( function(object){
     if (object.isHighlight) {
@@ -38,8 +52,7 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
   render();
 }
 
-/** @class Phantom
-  This class includes all the data related to the Phantom.
+/*
 
   CONTENTS:
     .fibers: contains all data for all fibers present in the Phantom
@@ -79,6 +92,21 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
     revealSkeleton: Reveals skeleton structure for a fiber. Inputs: (scene, fiberposition)
 */
 function Phantom() {
+  /** @class Phantom
+    * @classdesc Includes all data regarding to a Phantom and all necessary methods to modify its appareance.
+
+    * @property {Object} fibers Contains all objects for Fiber definition and representation.
+    * @property {FiberSource[]} fibers.source FiberSource for each fiber bundle.
+    * @property {FiberTube[]}  fibers.tube FiberTube for each fiber bundle. Must have same index as <i>source</i>
+    * @property {FiberSkeleton[]}  fibers.skeleton FiberSkeleton for each fiber bundle. Must have same index as <i>source</i>
+
+    * @property {Object} isotropicRegions Contains all objects for Isotropic Region definition and representation.
+    * @property {IsotropicRegionSource[]} isotropicRegions.source IsotropicRegionSource for each region bundle.
+    * @property {IsotropicRegion[]}  isotropicRegions.sphere IsotropicRegion for each region bundle. Must have same index as <i>source</i>
+
+    * @property {Number} highlightOpacity The base opacity for fading meshes in the scene. Over 1.
+    * @property {THREE.Color} highlightColor The color to be taken by highlighted objects. By default, <i>null</i>, thus color does not change.
+    */
   this.fibers = {
     source: [],
     tube: [],
@@ -94,6 +122,20 @@ function Phantom() {
 
 Phantom.prototype = {
   addFiber: function(fiber, parameters, replaceindex) {
+  /** @function addFiber
+    * @memberof Phantom
+    * @desc Adds a Fiber to the Phantom, by creating their {@link FiberTube} and {@link FiberSkeleton}.
+    * @param {FiberSource} fiber Fiber to be added to the Phantom.
+    * @param {Object} [parameters] Optional object containing different optional parameters. Those parameters
+    may be the ones to be specified in classes {@link FiberTube} and {@link FiberSkeleton} constructor.
+    <br>If only nbElements is defined, sets the rest of those parameters by itself, looking at the
+    constant {@link meshConstraints}.
+    * @param {Number} [parameters.nbElements] Number of elements to feature in the whole Phantom.
+    This allows the function to limit by itself the amout of segments present in the scene. Configurable via constant {@link meshConstraints}. <br>Only taken into
+    account if any parameter regarding segments is defined.
+    * @param {Number} [replaceindex] If specified, replaces the Fiber yet present in this same index.
+    */
+
     /* If not specified, set segments constraint so renderer is stable in browser
     This grabs nbElements thrown by load function and sets the number of segments
     each mesh will feature, taking values from global variable meshConstraints (main.js) */
@@ -130,6 +172,14 @@ Phantom.prototype = {
 
   },
   addCP: function(fiberindex, cpbefore) {
+  /** @function addCP
+    * @memberof Phantom
+    * @desc Adds a new Control Point to a specified Fiber in the Phantom.
+    <br>No position is specified; control point is added over the trajectory in between two existing control points.
+    <br>Will {@link render}.
+    * @param {Number} fiberindex Index of the fiber in which the control point is to be added to.
+    * @param {Number} cpbefore Index of the control point in which the new one is to be added after.
+    */
     var fiber = this.fibers.source[fiberindex];
     var newts = (fiber.ts[cpbefore] + fiber.ts[cpbefore + 1]) / 2;
     var newcp = fiber.interpolate(newts)[0];
@@ -144,6 +194,13 @@ Phantom.prototype = {
     phantom.addFiber(fiber, parameters, fiberindex);
   },
   removeCP: function(fiberindex, cp) {
+    /** @function removeCP
+      * @memberof Phantom
+      * @desc Removes an existing Control Point of a specified Fiber in the Phantom.
+      <br>Will {@link render}.
+      * @param {Number} fiberindex Index of the fiber in which the control point is to be removed.
+      * @param {Number} cp Index of the control point to be removed.
+      */
     var fiber = this.fibers.source[fiberindex];
     fiber.controlPoints.splice(cp, 1);
     var parameters = {
@@ -152,6 +209,19 @@ Phantom.prototype = {
     phantom.addFiber(fiber, parameters, fiberindex);
   },
   addIsotropicRegion: function(region, parameters) {
+    /** @function addIsotropicRegion
+      * @memberof Phantom
+      * @desc Adds a Fiber to the Phantom, by creating their {@link IsotropicRegion}.
+      * @param {IsotropicRegionSource} region Fiber to be added to the Phantom.
+      * @param {Object} [parameters] Optional object containing different optional parameters. Those parameters
+      may be the ones to be specified in class {@link IsotropicRegion} constructor.
+      <br>If only nbElements is defined, sets the rest of those parameters by itself, looking at the
+      constant {@link meshConstraints}.
+      * @param {Number} [parameters.nbElements] Number of elements to feature in the whole Phantom.
+      This allows the function to limit by itself the amout of segments present in the scene. Configurable via constant {@link meshConstraints}. <br>Only taken into
+      account if any parameter regarding segments is defined.
+      */
+
     /* If not specified, set segments constrainct so renderer is stable in browser
     This grabs nbElements thrown by load function and sets the number of segments
     each mesh will feature, from global variable meshConstraints (main.js) */
@@ -167,6 +237,12 @@ Phantom.prototype = {
     region.addObserver(this.isotropicRegions.sphere[this.isotropicRegions.sphere.length-1]);
   },
   radius: function() {
+    /** @function radius
+      * @memberof Phantom
+      * @desc Provides the radius of the Phantom, understood as the distance from the center
+      to the most distant bundle.
+      * @returns {Number} Radius of the Phantom.
+      */
     var maxdist = 0;
     // Return is the farthest point from the center
     for (var i = 0; i < this.fibers.source.length; i++) {
@@ -192,6 +268,13 @@ Phantom.prototype = {
     return maxdist;
   },
   newFiber: function() {
+    /** @function newFiber
+      * @memberof Phantom
+      * @desc Creates a new <i>blank</i> fiber in the scene.
+      <br>The fiber features two points in X axis with {@link Phantom.radius|phantom's radius} distance.
+      <br>Will {@link render}.
+      */
+
     // New fiber will feature two points, following the x axis.
     var cp = [
       [Math.floor(-1 * this.radius() * 10) / 10, 0, 0],
@@ -206,6 +289,13 @@ Phantom.prototype = {
     this.addFiber(new FiberSource(cp, 'symmetric', radius), parameters);
   },
   newIsotropicRegion: function() {
+    /** @function newIsotropicRegion
+      * @memberof Phantom
+      * @desc Creates a new <i>blank</i> isotropic region in the scene.
+      <br>The isotropic region will be centered in the scene and have 1/5 of {@link Phantom.radius|phantom's radius} as radius.
+      <br>Will {@link render}.
+      */
+
     // New region is to stay in the center. Radius is set to be a fifth of phantom radius.
     var center = [0, 0, 0];
     var radius = Math.floor(this.radius() * 10) / 50;
@@ -217,6 +307,12 @@ Phantom.prototype = {
     this.addIsotropicRegion(new IsotropicRegionSource(center, radius), parameters);
   },
   resetColors: function(){
+    /** @function resetColors
+      * @memberof Phantom
+      * @desc Resets color of all bundles. Important when unhighlighting with {@link Phantom#highlightColor|highlightColor} being defined.
+      <br>Will {@link render}.
+      */
+
     // Color contained in their objects is given back to material's meshes.
     for (var i = 0; i < this.fibers.tube.length; i++) {
       this.fibers.tube[i].mesh.material.color = this.fibers.tube[i].color;
@@ -228,6 +324,13 @@ Phantom.prototype = {
     render();
   },
   fadeAll: function(opacity) {
+    /** @function fadeAll
+      * @memberof Phantom
+      * @param {Number} [opacity=Phantom.highlightOpacity] Opacity to fade to (over 1)
+      * @desc Fades all bundles to given opacity.
+      <br>Will {@link render}.
+      */
+
     // Only reset colors if custom highlightColor is enabled
     if (this.highlightColor) this.resetColors();
     // Set default opacity in case none is specified
@@ -244,6 +347,12 @@ Phantom.prototype = {
     render();
   },
   unfadeAll: function() {
+    /** @function unfadeAll
+      * @memberof Phantom
+      * @desc Unfades all bundles, setting opacity to 1.
+      <br>Will {@link render}.
+      */
+
     // Only reset colors if custom highlightColor is enabled
     if (this.highlightColor) this.resetColors();
     // Opacity 1 is given back
@@ -259,6 +368,13 @@ Phantom.prototype = {
     render();
   },
   addToScene: function(scene) {
+    /** @function addToScene
+      * @memberof Phantom
+      * @param {THREE.Scene} scene Scene in which the Phantom will be added to.
+      * @desc Adds all Phantom bundles to given scene.
+      <br>Will {@link render}.
+      */
+
     // Scene is cleared so that present meshes do not disturb
     scene.removePhantom();
     this.unfadeAll();
@@ -272,6 +388,13 @@ Phantom.prototype = {
     render();
   },
   addAsSkeleton: function(scene) {
+    /** @function addAsSkeleton
+      * @memberof Phantom
+      * @param {THREE.Scene} scene Scene in which the Phantom will be added to.
+      * @desc Adds all Phantom bundles to given scene in a Skeleton form..
+      <br>Will {@link render}.
+      */
+
     // Phantom is added as faded tubes. Opacity 75% than default.
     this.addToScene(scene);
     this.fadeAll(this.highlightOpacity*.75);
@@ -283,6 +406,13 @@ Phantom.prototype = {
     render();
   },
   fiberHighlight: function(n) {
+    /** @function fiberHighlight
+      * @memberof Phantom
+      * @param {Number} n Index of the fiber to highlight.
+      * @desc Fades all but the given fiber. Highlight opacity cannot be specified.
+      <br>Will {@link render}.
+      */
+
     // Fade all but wanted fiber
     this.fadeAll();
     this.fibers.tube[n].mesh.material.opacity = 1;
@@ -294,9 +424,16 @@ Phantom.prototype = {
     // Render so changes are made visible
     render();
   },
-  regionHighlight: function(n, fadeLevel) {
+  regionHighlight: function(n) {
+    /** @function regionHighlight
+      * @memberof Phantom
+      * @param {Number} n Index of the region to highlight.
+      * @desc Fades all but the given region. Highlight opacity cannot be specified.
+      <br>Will {@link render}.
+      */
+
     // Fade all but wanted region
-    this.fadeAll(fadeLevel);
+    this.fadeAll();
     this.isotropicRegions.sphere[n].mesh.material.opacity = 1;
     this.isotropicRegions.sphere[n].mesh.renderOrder = -1;
     // If custom highlight color, apply.
@@ -307,6 +444,20 @@ Phantom.prototype = {
     render();
   },
   cpHighlight: function(fiberindex, controlpointindex, mode) {
+    /** @function cpHighlight
+      * @memberof Phantom
+      * @desc Overlays a colored slightly bigger sphere over a control point. Used for
+      the user focusing in this element.
+      <br>Will {@link render}.
+      * @param {Number} fiberindex Index of the fiber containing the control point to highlight.
+      * @param {Number} controlpointindex Index of the control point to highlight.
+      * @param {String} mode Highlight mode:
+      <ul>
+      <li>'red': Red color. This is the only one not be removed by {@link THREE.Scene.removeCPHighlight} unless specified.
+      <li>'blue': Blue color.
+      <li>'green': Green color.</ul>
+      */
+
     scene.removeCPHighlight();
     var fiber = phantom.fibers.source[fiberindex];
     var cp = fiber.controlPoints[controlpointindex];
@@ -343,6 +494,14 @@ Phantom.prototype = {
     render();
   },
   revealSkeleton: function(scene, n) {
+  /** @function revealSkeleton
+    * @memberof Phantom
+    * @desc Adds Phantom to the scene and fades all by adding a Skeleton fiber to a
+    given fiber. This fiber's tube will feature twice the default opacity for making the user stay focus.
+    <br>Will {@link render}.
+    * @param {THREE.Scene} scene Scene in which the Phantom will be added to.
+    * @param {Number} n Index of the fiber to highlight.
+    */
     this.addToScene(scene);
     this.fadeAll();
     // Focus fiber is faded more so that thread can be seen with any problem

@@ -1,4 +1,4 @@
-/** @overview Contains Class definitions for FiberSource and IsotropicRegionSource. */
+/** @overview Contains Class definitions for {@link FiberSource} and {@link IsotropicRegionSource}. */
 
 /** @constant colors
   * @desc An HEX array used as a color library for random generation.
