@@ -3,6 +3,7 @@
 // Adding a scene method that removes all phantoms present.
 // This way, cameras and lights are never removed.
 /** @class THREE.Scene
+  * @classdesc THREE.js class for a Scene. {@link https://threejs.org/docs/index.html?q=sce#Reference/Scenes/Scene|Link to THREE.js documentation}
   */
 THREE.Scene.prototype.removePhantom = function() {
 /** @method removePhantom
@@ -256,6 +257,7 @@ Phantom.prototype = {
         if (dist > maxdist) {maxdist = dist}
       }
     }
+    if (maxdist == 0) { var nofibers = true; }
     for (var i = 0; i < this.isotropicRegions.source.length; i++) {
       var region = this.isotropicRegions.source[i];
       var dist = Math.sqrt(
@@ -264,6 +266,13 @@ Phantom.prototype = {
         Math.pow(region.center[2],2)
       ) + region.radius;
       if (dist > maxdist) {maxdist = dist}
+    }
+    if (nofibers) {
+      if (maxdist > 0) {
+        maxdist *= 5;
+      } else {
+        maxdist = 1;
+      }
     }
     return maxdist;
   },
@@ -277,10 +286,10 @@ Phantom.prototype = {
 
     // New fiber will feature two points, following the x axis.
     var cp = [
-      [Math.floor(-1 * this.radius() * 10) / 10, 0, 0],
-      [Math.floor(this.radius() * 10) / 10, 0, 0],
+      [-1 * roundToPrecision(this.radius()), 0, 0],
+      [roundToPrecision(this.radius()), 0, 0],
     ];
-    var radius = Math.floor(this.radius() * 10) / 100;
+    var radius = roundToPrecision(this.radius() / 10);
     // Add nbElements in parameters so this.addFiber calculates segments by itself
     var parameters = {
       nbElements: this.fibers.source.length + this.isotropicRegions.source.length

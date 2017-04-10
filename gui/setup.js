@@ -1,6 +1,16 @@
+/** @overview Contains basic GUI constructors.*/
+/** @module GUI Construction */
+/** @var {guiStatus} guiStatus
+  * @desc Global variable indicating the current task the GUI is performing.
+  */
 var guiStatus;
 
 function setupGUI() {
+/** @function setupGUI
+  * @memberof module:GUI Construction
+  * @desc Constructs basic-static GUI when no action has taken place yet.
+  Defines {@link guiStatus} global variable.
+  */
   guiStatus =  new GuiStatus();
   resizeGUI();
 
@@ -118,6 +128,10 @@ function setupGUI() {
 
 // Add element buttons are only available when no element is being edited
 function editExit() {
+/** @function editExit
+  * @memberof module:GUI Construction
+  * @desc Removes any edition UI. Adds new element buttons.
+  */
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = ""
 

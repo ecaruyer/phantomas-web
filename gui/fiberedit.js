@@ -1,4 +1,11 @@
+/**@overview Contains functions regarding the fiber edition GUI.*/
+
 function fiberEdit( index ) {
+/** @function fiberEdit
+  * @memberof module:GUI Construction
+  * @param {Number} index The index in the array of the fiber to edit.
+  * @desc Adds the fiber edition GUI.
+*/
   scene.removeCPHighlight(true);
 
   // editGUI is emptied
@@ -106,6 +113,12 @@ function fiberEdit( index ) {
 
 // This is a separate function so it may be refreshed independently
 function addCPselect() {
+/** @function addCPselect
+  * @memberof module:GUI Construction
+  * @desc Adds the control point selector UI for the current fiber.
+  <br>Built in a separate function so it may be refreshed independently.
+  */
+
   var editGUI = document.getElementById('editGUI');
 
   // Control Points edition table creation.

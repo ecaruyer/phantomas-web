@@ -1,4 +1,11 @@
+/**@overview Contains all functions regarding selection lists hover*/
+
 function optionOnMouseOver(option) {
+/** @function optionOnMouseOver
+  * @memberof module:GUI Handlers
+  * @param {DOM} option Parent option DOM element.
+  * @desc Applies hover classes to onmouseovered options in lists.
+  */
   if (option.className == 'optionSelected') {
     option.className = 'optionSelectedAndOnMouseOver';
   } else if (option.className == 'optionUnselected') {
@@ -6,6 +13,11 @@ function optionOnMouseOver(option) {
   }
 }
 function optionOnMouseLeave(option) {
+/** @function optionOnMouseLeave
+  * @memberof module:GUI Handlers
+  * @param {DOM} option Parent option DOM element.
+  * @desc Restores class to onmouseovered options in lists.
+  */
   if (option.className == 'optionSelectedAndOnMouseOver') {
     option.className = 'optionSelected';
   } else if (option.className == 'optionOnMouseOver') {
@@ -13,43 +25,12 @@ function optionOnMouseLeave(option) {
   }
 }
 
-// DEPRECATED
-/*
-function removeOnMouseOver() {
-  var fiberSelector = document.getElementById("fiberSelector");
-  var regionSelector = document.getElementById("regionSelector");
-  var cpSelector = document.getElementById("cpSelector");
-  var fiberoptions = Array.from(fiberSelector.childNodes);
-  var regionoptions = Array.from(regionSelector.childNodes);
-
-  fiberoptions.forEach( function( element ) {
-    if (element.className == 'optionOnMouseOver') {
-      element.className = 'optionUnselected';
-    } else if (element.className == 'optionSelectedAndOnMouseOver'){
-      element.className = 'optionSelected';
-    }
-  });
-  regionoptions.forEach( function( element ) {
-    if (element.className == 'optionOnMouseOver') {
-      element.className = 'optionUnselected';
-    } else if (element.className == 'optionSelectedAndOnMouseOver'){
-      element.className = 'optionSelected';
-    }
-  });
-  if (cpSelector) {
-    var pointsoptions = Array.from(cpSelector.childNodes);
-    pointsoptions.forEach( function( element ) {
-      if (element.className == 'optionOnMouseOver') {
-        element.className = 'optionUnselected';
-      } else if (element.className == 'optionSelectedAndOnMouseOver'){
-        element.className = 'optionSelected';
-      }
-    });
-  }
-}
-*/
-
 function optionSelect(option) {
+/** @function optionSelect
+  * @memberof module:GUI Handlers
+  * @param {DOM} option Parent option DOM element.
+  * @desc Applies selected class to selected options in lists. Removes selected options from other lists.
+  */
   var fiberSelector = document.getElementById("fiberSelector");
   var regionSelector = document.getElementById("regionSelector");
   if ((option.parentNode == fiberSelector) | (option.parentNode == regionSelector)) {
@@ -78,6 +59,12 @@ function optionSelect(option) {
 }
 
 function selectOption(list, number) {
+/** @function optionSelect
+  * @memberof module:GUI Managers
+  * @param {DOM} list List's DOM element.
+  * @param {Number} number Index of option to select
+  * @desc Changes class of option as if it was clicked, given the list and its index.
+  */
   var options = Array.from(list.childNodes);
   optionSelect(options[number]);
 }

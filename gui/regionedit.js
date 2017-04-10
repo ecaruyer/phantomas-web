@@ -1,4 +1,12 @@
+/**@overview Contains functions regarding the isotropic region edition GUI.*/
+
 function regionEdit(index) {
+/** @function regionEdit
+  * @memberof module:GUI Construction
+  * @param {Number} index The index in the array of the fiber to edit.
+  * @desc Adds the isotropic region edition GUI.
+  */
+
   resizeGUI();
   scene.removeCPHighlight(true);
 

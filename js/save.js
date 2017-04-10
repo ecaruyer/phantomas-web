@@ -1,31 +1,52 @@
+/**@overview Contains functions regarding the parse, export and download process of a Phantom.*/
 // Parsable objects must contain only those parameters the loaders expect to find
-ParsableFiber = function(control_points, tangents, radius, color) {
-  this.control_points = control_points;
-  this.tangents = tangents;
-  this.radius = Number(radius);
-  this.color = Number(color.getHex());
-}
-ParsableRegion = function(center, radius, color) {
-  this.center = center;
-  this.radius = Number(radius);
-  this.color = Number(color.getHex());
-}
 
 // Returns a JSON string with the phantom in ParsableFiber and ParsableRegion classes
 Phantom.prototype.export = function() {
+/** @function export
+  * @memberof Phantom
+  * @desc Parses Fibers and Isotropic Regions in the Phantom and returns a parsed, indented string.
+  <br>The JSON is fully compatible with Phantomas. Index in the array is used as name.
+  <br>Information from fibers:
+  <ul><li>Control points
+  <li>Tangents
+  <li>Radius
+  <li>Color
+  </ul>
+  Information from Isotropic Regions:
+  <ul><li>Center
+  <li>Radius
+  <li>Color
+  </ul>
+  * @returns {String} Parsed variable ready for pushing to download.
+*/
+  // PRIVATE CONSTRUCTORS
+  ParsableFiber = function(control_points, tangents, radius, color) {
+    this.control_points = control_points;
+    this.tangents = tangents;
+    this.radius = Number(radius);
+    this.color = Number(color.getHex());
+  }
+  ParsableRegion = function(center, radius, color) {
+    this.center = center;
+    this.radius = Number(radius);
+    this.color = Number(color.getHex());
+  }
+
+  var control_points = [];
+  // Control Points are expected in a unique string.
+  source.controlPoints.forEach( function(cp) {
+    cp.forEach( function(element){
+      control_points.push(element);
+    });
+  });
+
   var parsable_phantom = new Object;
   parsable_phantom.fiber_geometries = new Object;
   parsable_phantom.isotropic_regions = new Object;
 
   // FIBERS
   this.fibers.source.forEach( function(source, index) {
-    var control_points = [];
-    // Control Points are expected in a unique string.
-    source.controlPoints.forEach( function(cp) {
-      cp.forEach( function(element){
-        control_points.push(element);
-      });
-    });
 
     var parsable_fiber = new ParsableFiber(control_points, source.tangents, source.radius, source.color);
     // Fiber names featured in Phantomas are not featured here. Instead, numbers are applied.
@@ -46,6 +67,12 @@ Phantom.prototype.export = function() {
 }
 
 pushDownload = function(content) {
+/** @function pushDownload
+  * @desc Pushes to the navigator the download of a string as a  ddmmyyyyhhmm-phantom_save.JSON file.
+  <br> Requires an &lt;a&gt; element in the HTML with id="downloadAnchorElem".
+  * @param {string} content A string containing the content to be included in the file.
+*/
+
   // From http://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
   function timestamp() {
     // Partly from https://stackoverflow.com/questions/12409299/how-to-get-current-formatted-date-dd-mm-yyyy-in-javascript-and-append-it-to-an-i

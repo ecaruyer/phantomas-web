@@ -1,4 +1,11 @@
+/**@overview Code creating and removing the Control Point edition UI*/
+
 function cpEdit(index) {
+/** @function cpEdit
+  * @memberof module:GUI Construction
+  * @desc Constructs the Control Point edition UI for a given index of a control point.
+  * @param {Number} index The index of the Control Point to edit.
+  */
   var fiber = phantom.fibers.source[guiStatus.editingFiber];
   var cp = fiber.controlPoints[index];
   var former = guiStatus.formerCP;
@@ -140,6 +147,11 @@ function cpEdit(index) {
 
 // Removes the whole CP edit field and creates a new one (except the CP edit field). Useful when attempting to refresh.
 function exitCPedit() {
+/** @function exitCPedit
+  * @memberof module:GUI Construction
+  * @desc Removes former Control Point edition UI.
+  <br>Restores {@link guiStatus}.
+  */
   var editGUI = document.getElementById('editGUI');
   var cpTable = document.getElementById("cpTable");
 

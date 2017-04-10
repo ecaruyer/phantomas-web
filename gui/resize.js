@@ -1,23 +1,34 @@
-// Returns amout of window height in text lines
-function countDocumentLines() {
-  // From http://stackoverflow.com/questions/4392868/javascript-find-divs-line-height-not-css-property-but-actual-line-height
-  function getLineHeight(element){
-    var temp = document.createElement(element.nodeName);
-    temp.setAttribute("style","margin:0px;padding:0px;font-family:"+element.style.fontFamily+";font-size:"+element.style.fontSize);
-    temp.innerHTML = "test";
-    temp = element.parentNode.appendChild(temp);
-    var ret = temp.clientHeight;
-    temp.parentNode.removeChild(temp);
-    return ret;
-  }
-  var divHeight = window.innerHeight;
-  var lineHeight = getLineHeight(document.getElementById('leftGUI'));
-  var lines = Math.floor(divHeight / lineHeight);
-  return lines;
-}
+/**@overview Contains resizeGUI() function*/
+/**@module GUI Managers*/
 
 // Resizes selector objects so those fit in the screen
 function resizeGUI() {
+/** @function resizeGUI
+  * @memberof module:GUI Managers
+  * @desc Resizes element selector lists so those just take the amount of space
+  left in the screen. This avoids overflows and maintains the page size same as
+  the window size.
+  <br>Called when elements are added or removed and when window is resized.
+  */
+  
+  // PRIVATE FUNCTION Returns amout of window height in text lines
+  function countDocumentLines() {
+    // From http://stackoverflow.com/questions/4392868/javascript-find-divs-line-height-not-css-property-but-actual-line-height
+    function getLineHeight(element){
+      var temp = document.createElement(element.nodeName);
+      temp.setAttribute("style","margin:0px;padding:0px;font-family:"+element.style.fontFamily+";font-size:"+element.style.fontSize);
+      temp.innerHTML = "test";
+      temp = element.parentNode.appendChild(temp);
+      var ret = temp.clientHeight;
+      temp.parentNode.removeChild(temp);
+      return ret;
+    }
+    var divHeight = window.innerHeight;
+    var lineHeight = getLineHeight(document.getElementById('leftGUI'));
+    var lines = Math.floor(divHeight / lineHeight);
+    return lines;
+  }
+
   // Lines is the height amount in lines left for the gui elements.
   var lines = countDocumentLines() - 9;
   var leftGUI = document.getElementById("leftGUI");

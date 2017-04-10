@@ -42,7 +42,7 @@ var precision = 1; // in amount of decimal digits
 function roundToPrecision(number) {
 /** @function roundToPrecision
   * @desc Applies precision to any value.
-  * @param {number|string} number Number to round
+  * @param {Number|String} number Number to round
   * @return {Number} The rounded number
   */
 

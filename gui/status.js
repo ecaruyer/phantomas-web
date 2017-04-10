@@ -1,21 +1,15 @@
-var guiStatus;
+/**@overview Contains class GuiStatus and its modules.*/
 
 function GuiStatus() {
-  /* Using two properties:
-    editingFiber -> fiber currently being edited
-    editingCP -> CP of the fiber in current edition
-    editingRegion -> region currently being edited.
-  editingFiber and editingRegion must never be defined at the same time.
+/** @class GuiStatus
+  * @memberof module:GUI Managers
+  * @classdesc Class used for defining current app GUI status.
+  * @prop {Number} editingFiber=undefined; Index of currently being edited fiber. If any, undefined.
+  * @prop {Number} editingCP=undefined; Index of currently being edited control point. If any, undefined.
+  * @prop {Number} editingRegion=undefined; Index of currently being edited isotropic region. If any, undefined.
+  * @prop {Boolean} previewing=false Whether preview mode is active or not.
+  */
 
-  Featuring three methods:
-    editing, which recieves as input:
-      element, with 'fiber', 'CP' or 'region' as string value.
-      index, which specifies its index
-    viewing, which removes any editing state. Constructor leaves status this way.
-    retrieve, which brings back the state in which it the editor was
-
-    *TO BE CHECKED* apply method usability.
-*/
     this.previewing = false;
     document.getElementById("switchViewButton").disabled = true;
 
@@ -26,6 +20,12 @@ function GuiStatus() {
 
 GuiStatus.prototype = {
   editing: function(element, index) {
+  /** @function editing
+    * @memberof module:GUI Managers.GuiStatus
+    * @param {String} element Element to be edited. 'fiber', 'CP' or 'region'.
+    * @param {Number} index Index of the element in its array.
+    * @desc Changes the properties of the object matching the specified input.
+    */
     switch (element) {
       case 'fiber':
         this.unediting();
@@ -49,6 +49,10 @@ GuiStatus.prototype = {
     document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
   },
   retrieve: function() {
+  /** @function retrieve
+    * @memberof module:GUI Managers.GuiStatus
+    * @desc Turns the scene into the current status. Refreshes the GUI.
+    */
     if (this.previewing) {
       phantom.addToScene(scene);
     } else {
@@ -69,6 +73,10 @@ GuiStatus.prototype = {
     }
   },
   unediting: function() {
+  /** @function unediting
+    * @memberof module:GUI Managers.GuiStatus
+    * @desc Turns the scene into unediting status. Restores the GUI.
+    */
     this.previewing = false;
     document.getElementById("switchViewButton").value = "Preview";
     document.getElementById("switchViewButton").disabled = true;
