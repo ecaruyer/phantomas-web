@@ -1,13 +1,15 @@
 /** @overview Contains {@link Phantom} definition and added methods to {@link THREE.Scene} prototype.*/
+/** @module THREE*/
 
 // Adding a scene method that removes all phantoms present.
 // This way, cameras and lights are never removed.
-/** @class THREE.Scene
+/** @class Scene
+  * @memberof module:THREE
   * @classdesc THREE.js class for a Scene. {@link https://threejs.org/docs/index.html?q=sce#Reference/Scenes/Scene|Link to THREE.js documentation}
   */
 THREE.Scene.prototype.removePhantom = function() {
 /** @method removePhantom
-  * @memberof THREE.Scene
+  * @memberof module:THREE.Scene
   * @desc Removes all Phantoms present in the Scene, leaving everything not being part of a Phantom.
   */
   var objects = [];
@@ -29,7 +31,7 @@ THREE.Scene.prototype.removePhantom = function() {
 // All boolean makes red points to be removed if true.
 THREE.Scene.prototype.removeCPHighlight = function(all) {
   /** @method removeCPHighlight
-    * @memberof THREE.Scene
+    * @memberof module:THREE.Scene
     * @desc Removes Control Point highlights. By default, only blue colored highlights, used
     * when hover.
     * @param {boolean} [all] If true, removes red and green colored highlight as well.
@@ -53,48 +55,10 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
   render();
 }
 
-/*
-
-  CONTENTS:
-    .fibers: contains all data for all fibers present in the Phantom
-      .fibers.source: array of sources for the fibers (FiberSource)
-      .fibers.tube: array of tubes for the fibers (FiberTube)
-      .fibers.skeleton: array of skeletons for the fibers (FiberSkeleton)
-
-    .isotropicRegions: contains all data for all isotropic regions present in the Phantom
-      .isotropicRegions.source: array of sources for the regions (IsotropicRegionSource)
-      .isotropicRegions.sphere: array of builders for the regions (IsotropicRegion)
-
-  Fibers and Isotropic Regions related source and builders are supposed to stay in the
-  same position of the array as their respectives.
-
-  PROPERTIES:
-    .highlightOpacity, by default .3. Opacity that background meshes will adopt when
-      highlighting one particular mesh.
-    .highlightColor, by default null. Color that the highlighted mesh will adopt when
-      highlighted. If null, meshes are adopting their own color.
-
-  METHODS:
-    addFiber: Adds a FiberSource (input) to the phantom. Automatically builds skeleton and tube.
-      Parameters are the ones set for SkeletonTube and TubeSource classes.
-      If not specified and nbElements as number of Fibers, addFiber decides parameters for best reliability.
-    addIsotropicRegion: Adds IsotropicRegionSource (input). Builds sphere.
-     Parameters are the ones set for IsotropicRegion class.
-     Parameters are the ones set for SkeletonTube and TubeSource classes.
-     If not specified and nbElements as number of Fibers, addIsotropicRegion decides parameters for best reliability.
-    radius: Returns an approximate radius of the phantom. Usually used for positioning camera.
-    resetColors: Brings original color back to meshes
-    fadeAll: Fades all the meshes. Optional input: wanted opacity.
-    unfadeAll: Unfades all the meshes
-    addToScene: Adds the Phantom to a given scene (input)
-    addAsSkeleton: Adds the Phantom to a given scene in Skeleton form (input)
-    fiberHighlight: Highlights fiber. Input is the position of the fiber in its array.
-    regionHighlight: Highlights region. Input is the position of the region in its array.
-    revealSkeleton: Reveals skeleton structure for a fiber. Inputs: (scene, fiberposition)
-*/
 function Phantom() {
   /** @class Phantom
-    * @classdesc Includes all data regarding to a Phantom and all necessary methods to modify its appareance.
+    * @global
+    * @classdesc Includes all data regarding a Phantom and methods to modify its appareance.
 
     * @property {Object} fibers Contains all objects for Fiber definition and representation.
     * @property {FiberSource[]} fibers.source FiberSource for each fiber bundle.
@@ -105,8 +69,8 @@ function Phantom() {
     * @property {IsotropicRegionSource[]} isotropicRegions.source IsotropicRegionSource for each region bundle.
     * @property {IsotropicRegion[]}  isotropicRegions.sphere IsotropicRegion for each region bundle. Must have same index as <i>source</i>
 
-    * @property {Number} highlightOpacity The base opacity for fading meshes in the scene. Over 1.
-    * @property {THREE.Color} highlightColor The color to be taken by highlighted objects. By default, <i>null</i>, thus color does not change.
+    * @property {Number} highlightOpacity=0.1 The base opacity for fading meshes in the scene. Over 1.
+    * @property {THREE.Color} highlightColor=null The color to be taken by highlighted objects. By default, <i>null</i>, thus color does not change.
     */
   this.fibers = {
     source: [],

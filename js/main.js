@@ -7,7 +7,7 @@ var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 var path = "phantom_save.json";
 var container = document.getElementById('container');
 var meshConstraints = {
-  /** @constant {object} meshConstraints Constant used in Phantom.addFiber Phantom.addIsotropicRegion for defining segments in meshes.
+  /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
   Used as a parameter for WEBGL stability.
   * @property {Number} maxTotalAxialSegments Maximum number of Axial Segments in fiber tube mesh to appear in the scene
   * @property {Number} maxMeshAxialSegments Maximum number of Axial Segments to feature in a fiber tube mesh
@@ -36,12 +36,13 @@ var meshConstraints = {
     maxMeshIsotropicRegionSegments: 32
 }
 
-/** @constant precision Number of decimal digits present in all values given.
+/** @constant {Number} precision
+  * @desc Number of decimal digits present in all values given. Used in {@link roundToPrecision}.
 */
 var precision = 1; // in amount of decimal digits
 function roundToPrecision(number) {
 /** @function roundToPrecision
-  * @desc Applies precision to any value.
+  * @desc Applies precision to any value. Uses {@link precision} constant.
   * @param {Number|String} number Number to round
   * @return {Number} The rounded number
   */
@@ -72,7 +73,7 @@ function animate() {
 }
 function init() {
 /** @function init
-  * @desc Initialises the app. Starting from a XMLHttpRequest, calls [show()]{@link show} and [setupGUI()]{@link setupGUI}.
+  * @desc Initialises the app. Starting from a XMLHttpRequest, calls [show()]{@link show} and [setupGUI()]{@link module:GUI Construction.setupGUI}.
   */
   request = new XMLHttpRequest();
   request.overrideMimeType("text/plain");

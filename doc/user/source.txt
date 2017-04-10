@@ -1,8 +1,14 @@
-====================================
-User Documentation
-====================================
+===========================================
+Phantomas Web Designer User Documentation
+===========================================
 
-Phantomas Web is a graphical interface for creation and edition of Phantoms
+:License: `BSD 2-Clause License`_
+:GitHub: You can find Phantomas Web Designer on GitHub_
+
+.. _BSD 2-Clause License: ../../LICENSE.txt
+.. _GitHub: https://github.com/ecaruyer/phantomas-web
+
+Phantomas Web Designer is a graphical interface for creation and edition of Phantoms
 to be used in `Phantomas`_.
 
 .. _Phantomas: http://www.emmanuelcaruyer.com/phantomas.php
@@ -12,7 +18,7 @@ to be used in `Phantomas`_.
 
 Requirements
 -------------
-Phantomas Web is set to work with lastest version of
+Phantomas Web was tested on
 `Mozilla Firefox`_. Although, it is fully compatible
 with most modern internet navigators.
 
