@@ -119,7 +119,7 @@ function setupGUI() {
 
   // Add keyboard shortcuts
   window.addEventListener('keyup', function(e) {
-    if (document.hasFocus) { //Prevents events from firing when not being focused on the app
+    if (document.hasFocus()) { //Prevents events from firing when not being focused on the app
       switch (e.keyCode) {
         case 27: //Esc
         if (guiStatus.editingFiber + 1) {

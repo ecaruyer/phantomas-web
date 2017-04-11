@@ -45,9 +45,13 @@ function optionSelect(option) {
     });
 
     if (option.parentNode == fiberSelector) {
-      regionoptions[0].className = 'optionSelected';
+      if (regionoptions.length > 1) {  //Avoids selecting (any) option.
+        regionoptions[0].className = 'optionSelected';
+      }
     } else {
-      fiberoptions[0].className = 'optionSelected';
+      if (fiberoptions.length > 1) {  //Avoids selecting (any) option.
+        fiberoptions[0].className = 'optionSelected';
+      }
     }
   } else {
     var listoptions = Array.from(option.parentNode.childNodes);
