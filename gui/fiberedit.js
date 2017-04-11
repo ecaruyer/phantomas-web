@@ -17,6 +17,7 @@ function fiberEdit( index ) {
   var removebutton = document.createElement("BUTTON");
   removebutton.style.float = "right";
   removebutton.innerHTML = "Remove Fiber";
+  removebutton.id = "removebutton";
   removebutton.className = "w3-btn w3-hover-red w3-border w3-border-white"
   removebutton.onclick = function() { removeFiberClick() };
   editGUI.appendChild(removebutton);
@@ -68,7 +69,7 @@ function fiberEdit( index ) {
   radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.fibers.source[index].radius;
   radiusvalue.onchange = function() {
-    this.value = roundToPrecision(this.value);
+    this.value = roundToPrecision(Math.max(1 / (10*precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
     phantom.fibers.source[index].radius = this.value;
     phantom.fibers.source[index].notify();
   }

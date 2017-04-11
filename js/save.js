@@ -33,13 +33,6 @@ Phantom.prototype.export = function() {
     this.color = Number(color.getHex());
   }
 
-  var control_points = [];
-  // Control Points are expected in a unique string.
-  source.controlPoints.forEach( function(cp) {
-    cp.forEach( function(element){
-      control_points.push(element);
-    });
-  });
 
   var parsable_phantom = new Object;
   parsable_phantom.fiber_geometries = new Object;
@@ -47,6 +40,13 @@ Phantom.prototype.export = function() {
 
   // FIBERS
   this.fibers.source.forEach( function(source, index) {
+    var control_points = [];
+    // Control Points are expected in a unique string.
+    source.controlPoints.forEach( function(cp) {
+      cp.forEach( function(element){
+        control_points.push(element);
+      });
+    });
 
     var parsable_fiber = new ParsableFiber(control_points, source.tangents, source.radius, source.color);
     // Fiber names featured in Phantomas are not featured here. Instead, numbers are applied.

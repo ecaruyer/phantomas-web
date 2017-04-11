@@ -10,6 +10,7 @@ function setupGUI() {
   * @memberof module:GUI Construction
   * @desc Constructs basic-static GUI when no action has taken place yet.
   Defines {@link guiStatus} global variable.
+  <br>Adds event listeners to window object for keyboard bindings.
   */
   guiStatus =  new GuiStatus();
   resizeGUI();
@@ -62,7 +63,7 @@ function setupGUI() {
     });
   } else {
     var option = document.createElement("LI");
-    option.innerHTML = '(any)'
+    option.innerHTML = '(any)';
     fiberSelector.appendChild(option);
     fiberSelector.className = 'disabledList';
   }
@@ -114,13 +115,63 @@ function setupGUI() {
     regionSelector.className = 'disabledList';
   }
 
-  // Leave edition anytime ESC is pressed.
+  // Add keyboard shortcuts
   window.addEventListener('keyup', function(e) {
-    if (e.keyCode == 27) {
-      fiberSelector.childNodes[0].onclick();
-      regionSelector.childNodes[0].onclick();
+    switch (e.keyCode) {
+      case 27: //Esc
+        if (guiStatus.editingFiber) {
+          if (guiStatus.editingCP) {
+            document.getElementById('cpSelector').childNodes[0].onclick();
+          } else {
+            fiberSelector.childNodes[0].onclick();
+          }
+        }
+        if (guiStatus.editingRegion) {
+          regionSelector.childNodes[0].onclick();
+        }
+        break;
+      case 80: //P
+        if (guiStatus.editingFiber | guiStatus.editingRegion) {
+          switchViewButton();
+        }
+        break;
+      case 65: //A
+        toggleAxes();
+        break;
+      case 88: //X
+        moveCameraXZ();
+        break;
+      case 89: //Y
+        moveCameraXY();
+        break;
+      case 90: //Z
+        moveCameraZY();
+        break;
+      case 83: //S
+        saveClick();
+        break;
+      case 46: //Del
+        if (guiStatus.editingFiber) {
+          if (guiStatus.editingCP) {
+            document.getElementById('removecpbutton').onclick(); //If does not exist, won't fire.
+          } else {
+            removeFiberClick();
+          }
+        }
+        if (guiStatus.editingRegion) {
+          removeIsotropicRegionClick();
+        }
+        break;
+      case 85: //U
+        if (document.getElementById('cpUndoButton')) {
+          if (!document.getElementById('cpUndoButton').disabled) {
+            document.getElementById('cpUndoButton').click();
+          }
+        }
+        break;
+      default: console.log('KP');
     }
-  })
+  });
 
   document.getElementById('opacitySelector').value = phantom.highlightOpacity * 100;
   editExit();

@@ -271,7 +271,7 @@ Phantom.prototype = {
 
     // New region is to stay in the center. Radius is set to be a fifth of phantom radius.
     var center = [0, 0, 0];
-    var radius = Math.floor(this.radius() * 10) / 50;
+    var radius = roundToPrecision(this.radius() / 5);
     // Add nbElements in parameters so this.addIsotropicRegion calculates segments by itself
     var parameters = {
       nbElements: this.fibers.source.length + this.isotropicRegions.source.length

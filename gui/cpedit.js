@@ -134,6 +134,7 @@ function cpEdit(index) {
   removecpbutton.style.float = "right";
   removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small w3-ripple'
   removecpbutton.innerHTML = "Remove CP";
+  removecpbutton.id = 'removecpbutton';
   removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 
   // As style is float, must be appended from right to left
