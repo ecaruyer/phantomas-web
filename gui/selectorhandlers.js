@@ -67,4 +67,5 @@ function selectOption(list, number) {
   */
   var options = Array.from(list.childNodes);
   optionSelect(options[number]);
+  optionOnMouseLeave(options[number]);
 }

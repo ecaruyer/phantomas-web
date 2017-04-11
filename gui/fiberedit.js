@@ -18,6 +18,7 @@ function fiberEdit( index ) {
   removebutton.style.float = "right";
   removebutton.innerHTML = "Remove Fiber";
   removebutton.id = "removebutton";
+  removebutton.title = "Remove Fiber (Del)"
   removebutton.className = "w3-btn w3-hover-red w3-border w3-border-white"
   removebutton.onclick = function() { removeFiberClick() };
   editGUI.appendChild(removebutton);
@@ -159,6 +160,7 @@ function addCPselect() {
   // *n* option
   var option = document.createElement("LI");
   option.innerHTML = '*n*'
+  option.title = "Exit edit (Esc)"
   option.className = 'optionSelected';
   option.onmouseenter = function () {
     optionOnMouseOver(this);

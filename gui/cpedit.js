@@ -91,6 +91,7 @@ function cpEdit(index) {
 
   var undobutton = document.createElement("BUTTON");
   undobutton.id = 'cpUndoButton';
+  undobutton.tile = "Undo (U)";
   undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
   undobutton.style = 'margin-bottom: 10px';
   undobutton.innerHTML = "Undo";
@@ -135,6 +136,7 @@ function cpEdit(index) {
   removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small w3-ripple'
   removecpbutton.innerHTML = "Remove CP";
   removecpbutton.id = 'removecpbutton';
+  removecpbutton.title = "Remove CP (Del)"
   removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 
   // As style is float, must be appended from right to left

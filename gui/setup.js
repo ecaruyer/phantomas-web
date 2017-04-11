@@ -25,6 +25,7 @@ function setupGUI() {
     // Add *none* option
     var option = document.createElement("LI");
     option.innerHTML = '*none*'
+    option.title = "Exit edit (Esc)"
     option.className = 'optionSelected';
     // If any fiber is being edited, move to non-edit mode
     option.onclick = function() {
@@ -72,6 +73,7 @@ function setupGUI() {
     // Add *none* option
     var option = document.createElement("LI");
     option.innerHTML = '*none*'
+    option.title = "Exit edit (Esc)"
     option.className = 'optionSelected';
     // If any fiber is being edited, move to non-edit mode
     option.onclick = function() {
@@ -117,59 +119,63 @@ function setupGUI() {
 
   // Add keyboard shortcuts
   window.addEventListener('keyup', function(e) {
-    switch (e.keyCode) {
-      case 27: //Esc
-        if (guiStatus.editingFiber) {
-          if (guiStatus.editingCP) {
+    if (document.hasFocus) { //Prevents events from firing when not being focused on the app
+      switch (e.keyCode) {
+        case 27: //Esc
+        if (guiStatus.editingFiber + 1) {
+          if (guiStatus.editingCP + 1) {
             document.getElementById('cpSelector').childNodes[0].onclick();
+            optionOnMouseLeave(document.getElementById('cpSelector').childNodes[0]);
           } else {
             fiberSelector.childNodes[0].onclick();
+            optionOnMouseLeave(fiberSelector.childNodes[0]);
           }
         }
-        if (guiStatus.editingRegion) {
+        if (guiStatus.editingRegion + 1) {
           regionSelector.childNodes[0].onclick();
+          optionOnMouseLeave(regionSelector.childNodes[0]);
         }
         break;
-      case 80: //P
+        case 80: //P
         if (guiStatus.editingFiber | guiStatus.editingRegion) {
           switchViewButton();
         }
         break;
-      case 65: //A
+        case 65: //A
         toggleAxes();
         break;
-      case 88: //X
+        case 88: //X
         moveCameraXZ();
         break;
-      case 89: //Y
+        case 89: //Y
         moveCameraXY();
         break;
-      case 90: //Z
+        case 90: //Z
         moveCameraZY();
         break;
-      case 83: //S
-        saveClick();
+        case 83: //S
+          saveClick();
         break;
-      case 46: //Del
-        if (guiStatus.editingFiber) {
-          if (guiStatus.editingCP) {
+        case 46: //Del
+        if (guiStatus.editingFiber + 1) {
+          if (guiStatus.editingCP + 1) {
             document.getElementById('removecpbutton').onclick(); //If does not exist, won't fire.
           } else {
             removeFiberClick();
           }
         }
-        if (guiStatus.editingRegion) {
+        if (guiStatus.editingRegion + 1) {
           removeIsotropicRegionClick();
         }
         break;
-      case 85: //U
+        case 85: //U
         if (document.getElementById('cpUndoButton')) {
           if (!document.getElementById('cpUndoButton').disabled) {
             document.getElementById('cpUndoButton').click();
           }
         }
         break;
-      default: console.log('KP');
+      }
     }
   });
 
