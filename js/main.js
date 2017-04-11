@@ -4,7 +4,7 @@ var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
 /** @var {string} path
   * Path to file in the JSON request.
 */
-var path = "empty";
+var path = "phantom_save.json";
 var container = document.getElementById('container');
 var meshConstraints = {
   /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
