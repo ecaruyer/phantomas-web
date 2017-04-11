@@ -4,7 +4,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils 0.12: http://docutils.sourceforge.net/" />
-<title>Phantomas Web Designer User Documentation</title>
+<title>Phantomas Web Designer</title>
+<meta name="author" content="Guillem González Vela, Emmanuel Caruyer - Firstname.Lastname&#64;irisa.fr" />
 <style type="text/css">
 
 /*
@@ -338,54 +339,259 @@ ul.auto-toc {
 </style>
 </head>
 <body>
-<div class="document" id="phantomas-web-designer-user-documentation">
-<h1 class="title">Phantomas Web Designer User Documentation</h1>
+<div class="document" id="phantomas-web-designer">
+<h1 class="title">Phantomas Web Designer</h1>
+<h2 class="subtitle" id="user-documentation">User Documentation</h2>
 <table class="docinfo" frame="void" rules="none">
 <col class="docinfo-name" />
 <col class="docinfo-content" />
 <tbody valign="top">
-<tr class="field"><th class="docinfo-name">License:</th><td class="field-body"><a class="reference external" href="../../LICENSE.txt">BSD 2-Clause License</a></td>
+<tr><th class="docinfo-name">Author:</th>
+<td>Guillem González Vela, Emmanuel Caruyer - <a class="last reference external" href="mailto:Firstname.Lastname&#64;irisa.fr">Firstname.Lastname&#64;irisa.fr</a></td></tr>
+<tr class="field"><th class="docinfo-name">License:</th><td class="field-body"><a class="reference external" href="../../LICENSE">BSD 2-Clause License</a></td>
 </tr>
-<tr class="field"><th class="docinfo-name">GitHub:</th><td class="field-body">You can find Phantomas Web Designer on <a class="reference external" href="https://github.com/ecaruyer/phantomas-web">GitHub</a></td>
+<tr class="field"><th class="docinfo-name">Source:</th><td class="field-body">Phantomas Web Designer is on <a class="reference external" href="https://github.com/ecaruyer/phantomas-web">GitHub</a></td>
 </tr>
 </tbody>
 </table>
-<p>Phantomas Web Designer is a graphical interface for creation and edition of Phantoms
+<!-- -*- coding: utf-8 -*- -->
+<p>Phantomas Web Designer is a graphical interface for creation and
+edition of phantoms
 to be used in <a class="reference external" href="http://www.emmanuelcaruyer.com/phantomas.php">Phantomas</a>.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
-<ul class="simple">
-<li><a class="reference internal" href="#requirements" id="id1">Requirements</a></li>
-<li><a class="reference internal" href="#capabilities" id="id2">Capabilities</a></li>
-<li><a class="reference internal" href="#definition-of-a-fiber-bundle" id="id3">Definition of a fiber bundle</a></li>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#requirements" id="id2">1&nbsp;&nbsp;&nbsp;Requirements</a></li>
+<li><a class="reference internal" href="#capabilities" id="id3">2&nbsp;&nbsp;&nbsp;Capabilities</a><ul class="auto-toc">
+<li><a class="reference internal" href="#definition-of-a-fiber-bundle" id="id4">2.1&nbsp;&nbsp;&nbsp;Definition of a fiber bundle</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-usage" id="id5">3&nbsp;&nbsp;&nbsp;Basic Usage</a><ul class="auto-toc">
+<li><a class="reference internal" href="#phantom-overview" id="id6">3.1&nbsp;&nbsp;&nbsp;Phantom overview</a></li>
+<li><a class="reference internal" href="#left-panel" id="id7">3.2&nbsp;&nbsp;&nbsp;Left panel</a><ul class="auto-toc">
+<li><a class="reference internal" href="#edition-mode" id="id8">3.2.1&nbsp;&nbsp;&nbsp;Edition mode</a></li>
+<li><a class="reference internal" href="#editing-an-isotropic-region" id="id9">3.2.2&nbsp;&nbsp;&nbsp;Editing an Isotropic Region</a></li>
+<li><a class="reference internal" href="#editing-a-fiber" id="id10">3.2.3&nbsp;&nbsp;&nbsp;Editing a Fiber</a></li>
+<li><a class="reference internal" href="#editing-a-control-point" id="id11">3.2.4&nbsp;&nbsp;&nbsp;Editing a Control Point</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#right-panel" id="id12">3.3&nbsp;&nbsp;&nbsp;Right panel</a></li>
+<li><a class="reference internal" href="#export-phantom" id="id13">3.4&nbsp;&nbsp;&nbsp;Export Phantom</a></li>
+<li><a class="reference internal" href="#keyboard-shortcuts" id="id14">3.5&nbsp;&nbsp;&nbsp;Keyboard Shortcuts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#source-code" id="id15">4&nbsp;&nbsp;&nbsp;Source Code</a></li>
 </ul>
 </div>
 <div class="section" id="requirements">
-<h1><a class="toc-backref" href="#id1">Requirements</a></h1>
-<p>Phantomas Web was tested on
+<h1><a class="toc-backref" href="#id2">1&nbsp;&nbsp;&nbsp;Requirements</a></h1>
+<p>Phantomas Web Designer was tested on
 <a class="reference external" href="http://www.firefox.com">Mozilla Firefox</a>. Although, it is fully compatible
-with most modern internet navigators.</p>
-<p>Any kind of extra software is needed.</p>
+with any modern internet navigator.</p>
+<p>No extra software is needed.</p>
 </div>
 <div class="section" id="capabilities">
-<h1><a class="toc-backref" href="#id2">Capabilities</a></h1>
+<h1><a class="toc-backref" href="#id3">2&nbsp;&nbsp;&nbsp;Capabilities</a></h1>
 <p>Using this app you will be able to</p>
 <blockquote>
 <ul class="simple">
-<li>Either load or create from scratch any Phantom model and save as a
+<li>Load or create from scratch any phantom model and save it as a
 JSON Phantomas file</li>
-<li>Add and remove Fibers and Isotropic Regions</li>
-<li>Change the position and the radius for the Isotropic Regions</li>
-<li>Edit the radius and the Tangents' method for the Fiber</li>
-<li>Add, remove and edit the position of the Control Points in a Fiber</li>
+<li>Visualize any phantom model and its structure and components individually
+in a lightweight, three-dimensional and fully interactive interface.</li>
+<li>Add and remove fibers and isotropic regions in the phantom.</li>
+<li>Change the position and the radius for any isotropic region</li>
+<li>Edit the radius and the tangents' method for any fiber</li>
+<li>Add, remove and edit the position of any control point in a fiber</li>
 </ul>
 </blockquote>
-</div>
 <div class="section" id="definition-of-a-fiber-bundle">
-<h1><a class="toc-backref" href="#id3">Definition of a fiber bundle</a></h1>
+<h2><a class="toc-backref" href="#id4">2.1&nbsp;&nbsp;&nbsp;Definition of a fiber bundle</a></h2>
 <p>A fiber bundle in Phantomas is defined as a cylindrical tube wrapped around
 its centerline. The centerline itself is a continuous curve in
 3D, and can be simply created from a few control points.</p>
+<p>This app uses the same specifications as Phantomas. More information
+may be found in its <a class="reference external" href="http://www.emmanuelcaruyer.com/phantomas/fiber_bundle.html">documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="basic-usage">
+<h1><a class="toc-backref" href="#id5">3&nbsp;&nbsp;&nbsp;Basic Usage</a></h1>
+<div class="contents local topic" id="id1">
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#phantom-overview" id="id16">3.1&nbsp;&nbsp;&nbsp;Phantom overview</a></li>
+<li><a class="reference internal" href="#left-panel" id="id17">3.2&nbsp;&nbsp;&nbsp;Left panel</a><ul class="auto-toc">
+<li><a class="reference internal" href="#edition-mode" id="id18">3.2.1&nbsp;&nbsp;&nbsp;Edition mode</a></li>
+<li><a class="reference internal" href="#editing-an-isotropic-region" id="id19">3.2.2&nbsp;&nbsp;&nbsp;Editing an Isotropic Region</a></li>
+<li><a class="reference internal" href="#editing-a-fiber" id="id20">3.2.3&nbsp;&nbsp;&nbsp;Editing a Fiber</a></li>
+<li><a class="reference internal" href="#editing-a-control-point" id="id21">3.2.4&nbsp;&nbsp;&nbsp;Editing a Control Point</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#right-panel" id="id22">3.3&nbsp;&nbsp;&nbsp;Right panel</a></li>
+<li><a class="reference internal" href="#export-phantom" id="id23">3.4&nbsp;&nbsp;&nbsp;Export Phantom</a></li>
+<li><a class="reference internal" href="#keyboard-shortcuts" id="id24">3.5&nbsp;&nbsp;&nbsp;Keyboard Shortcuts</a></li>
+</ul>
+</div>
+<p>Phantomas Web Designer divides the window in three panels:</p>
+<ul class="simple">
+<li>Left panel allows you to navigate through the elements and edit them</li>
+<li>Central panel displays the fiber in a what-you-see-is-what-you-get manner.
+It is fully mouse interactive.</li>
+<li>Right panel lets the user tweak the display options.</li>
+</ul>
+<img alt="img/capture.png" class="align-center" src="img/capture.png" style="width: 60%;" />
+<div class="section" id="phantom-overview">
+<h2><a class="toc-backref" href="#id16">3.1&nbsp;&nbsp;&nbsp;Phantom overview</a></h2>
+<p>The largest panel displays the current phantom layout. At start, view is from
+plane XY.</p>
+<p>You may click to rotate, right-click to pan and use the mouse wheel to zoom.
+The view may be restored at any time by using the (<a class="reference internal" href="#right-panel">right panel</a>)
+camera placements.</p>
+<p>To identify and view the structure of individual phantom elements, you may use
+the (<a class="reference internal" href="#left-panel">left panel</a>) element navigator.</p>
+</div>
+<div class="section" id="left-panel">
+<h2><a class="toc-backref" href="#id17">3.2&nbsp;&nbsp;&nbsp;Left panel</a></h2>
+<p>The left panel allows you to navigate between the different phantom elements.
+You may also edit those, or add and remove.</p>
+<p>To identify the different elements you may place your mouse over the selector
+lists. Those will highlight while mouse is placed onto their selection option.
+Highlighting elements for identifying will not affect the current task.</p>
+<div class="section" id="edition-mode">
+<h3><a class="toc-backref" href="#id18">3.2.1&nbsp;&nbsp;&nbsp;Edition mode</a></h3>
+<p>When clicking onto an option, edition options will pop up and the element will
+stay highlighted. To exit edition mode, select the <em>*none*</em> option or press
+<em>Esc</em>. Changes are saved once those take place.</p>
+<p>To remove an element, you must access its edition mode.</p>
+<p>Numeral inputs allow keyboard input, although it is restricted to valid values
+and a 1-decimal precision by default.</p>
+</div>
+<div class="section" id="editing-an-isotropic-region">
+<h3><a class="toc-backref" href="#id19">3.2.2&nbsp;&nbsp;&nbsp;Editing an Isotropic Region</a></h3>
+<img alt="img/regionedit.png" class="align-center" src="img/regionedit.png" />
+<p>The editable elements in a region concern:</p>
+<blockquote>
+<ul class="simple">
+<li>Its radius</li>
+<li>Its position (x y z)</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="editing-a-fiber">
+<h3><a class="toc-backref" href="#id20">3.2.3&nbsp;&nbsp;&nbsp;Editing a Fiber</a></h3>
+<img alt="img/fiberedit.png" class="align-center" src="img/fiberedit.png" />
+<p>When entering fiber edition mode, its structure will feature in the scene.</p>
+<p>The editable elements in a fiber concern:</p>
+<blockquote>
+<ul class="simple">
+<li>Its radius</li>
+<li>Its tangent-computing mode:<ul>
+<li>Symmetric</li>
+<li>Incoming</li>
+<li>Outgoing</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>A selection list for the fibers' control points will is available
+at the bottom.
+Hovering those will also highglight them in the scene to help identifying.</p>
+</div>
+<div class="section" id="editing-a-control-point">
+<h3><a class="toc-backref" href="#id21">3.2.4&nbsp;&nbsp;&nbsp;Editing a Control Point</a></h3>
+<p>Clicking over a control point in the list will pop up control
+point edition mode.</p>
+<img alt="img/cpedit.png" class="align-center" src="img/cpedit.png" />
+<p>Only position may be edited.</p>
+<p>While editing and navigating through control points, those may adopt four
+different colors in the scene:</p>
+<blockquote>
+<ul class="simple">
+<li><em>Yellow</em>: Control points the user is not interacting with.</li>
+<li><em>Blue</em>: For the control point being hovered in selection list.</li>
+<li><em>Red</em>: Currently being edited control point.</li>
+<li><em>Green</em>: Position changed control point that may be saved.</li>
+</ul>
+</blockquote>
+<p>A control point is saved whenever its edition is quitted. When position was
+changed, the former version is on the scene in red color while the one to
+be saved is in green. The former may be recovered by pressing the <em>Undo</em> button.</p>
+<p><em>New CP</em> button creates a new control point. It is to be
+placed in the mid-point between the current and the next one. <em>Remove CP</em>
+removes the current control point after asking for confirmation.</p>
+<p><em>Remove CP</em> option is not available in first and last control points.</p>
+</div>
+</div>
+<div class="section" id="right-panel">
+<h2><a class="toc-backref" href="#id22">3.3&nbsp;&nbsp;&nbsp;Right panel</a></h2>
+<p>Right panel concerns everything regarding the visualisation.</p>
+<img alt="img/rightpanel.png" class="align-center" src="img/rightpanel.png" />
+<p>Options are:</p>
+<blockquote>
+<ul class="simple">
+<li><em>Preview Switch</em>: Only available in editing mode.
+Allows the user to preview the phantom with any fade. Does not affect
+the edition. Unactivate in the screenshot.</li>
+<li><em>Axes Switch</em>: Shows and hides the coordinates axis. Active
+in the screenshot. Each axis has a different color:
++ Red for X
++ Blue for Y
++ Green for Z</li>
+<li><em>Position</em>: Move the scene to XY, XZ or ZY plane.</li>
+<li><em>Opacity</em>: Select [0 - 50%] the opacity of the faded elements.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="export-phantom">
+<h2><a class="toc-backref" href="#id23">3.4&nbsp;&nbsp;&nbsp;Export Phantom</a></h2>
+<p>At bottom-right corner the export button allows you, at any moment, to download
+the JSON file for the current phantom.</p>
+<p>The file is compatible with Phantomas and may be loaded as well in Phantomas
+Web Designer for further edition.</p>
+</div>
+<div class="section" id="keyboard-shortcuts">
+<h2><a class="toc-backref" href="#id24">3.5&nbsp;&nbsp;&nbsp;Keyboard Shortcuts</a></h2>
+<p>Keyboard shortcuts are available for most commonly used functions:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="92%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Esc</td>
+<td>Exit current edit</td>
+</tr>
+<tr><td>P</td>
+<td>Switch preview mode</td>
+</tr>
+<tr><td>A</td>
+<td>Switch axes</td>
+</tr>
+<tr><td>X</td>
+<td>Move to XZ plane</td>
+</tr>
+<tr><td>Y</td>
+<td>Move to XY plane</td>
+</tr>
+<tr><td>Z</td>
+<td>Move to ZY plane</td>
+</tr>
+<tr><td>S</td>
+<td>Save phantom</td>
+</tr>
+<tr><td>U</td>
+<td>Undo control point edition</td>
+</tr>
+<tr><td>Del</td>
+<td>Remove current element</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="source-code">
+<h1><a class="toc-backref" href="#id15">4&nbsp;&nbsp;&nbsp;Source Code</a></h1>
+<p>Phantomas Web Designer is open source and may be
+<a class="reference external" href="https://github.com/ecaruyer/phantomas-web">downloaded and forked on GitHub</a>. Pull Requests are welcome!</p>
 </div>
 </div>
 </body>
