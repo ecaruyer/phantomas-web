@@ -1,0 +1,53 @@
+{
+  "fiber_geometries": {
+    "0": {
+      "control_points": [
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -50
+      ],
+      "tangents": "symmetric",
+      "radius": 4,
+      "color": 16757504
+    },
+    "1": {
+      "control_points": [
+        0,
+        -50,
+        0,
+        0,
+        0,
+        0,
+        50,
+        0,
+        0
+      ],
+      "tangents": "symmetric",
+      "radius": 4,
+      "color": 16733696
+    },
+    "2": {
+      "control_points": [
+        -50,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        50
+      ],
+      "tangents": "symmetric",
+      "radius": 4,
+      "color": 296349
+    }
+  },
+  "isotropic_regions": {}
+}

@@ -14,7 +14,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 6610821
+      "color": 12542000
     },
     "1": {
       "control_points": [
@@ -51,7 +51,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 16745331
+      "color": 4810198
     },
     "2": {
       "control_points": [
@@ -88,7 +88,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 296349
+      "color": 87654
     },
     "3": {
       "control_points": [
@@ -125,7 +125,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 28234
+      "color": 3527840
     },
     "4": {
       "control_points": [
@@ -141,7 +141,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 10908672
+      "color": 12533808
     },
     "5": {
       "control_points": [
@@ -157,7 +157,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 87654
+      "color": 10899712
     },
     "6": {
       "control_points": [
@@ -173,7 +173,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 12547632
+      "color": 7308246
     },
     "7": {
       "control_points": [
@@ -189,7 +189,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16758643
+      "color": 12555312
     },
     "8": {
       "control_points": [
@@ -205,7 +205,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16733760
+      "color": 16719360
     },
     "9": {
       "control_points": [
@@ -242,7 +242,7 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 1389485
+      "color": 43634
     },
     "10": {
       "control_points": [
@@ -279,7 +279,7 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 12533808
+      "color": 12555312
     },
     "11": {
       "control_points": [
@@ -316,7 +316,7 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 2129760
+      "color": 12555312
     },
     "12": {
       "control_points": [
@@ -353,7 +353,7 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 4810198
+      "color": 1389485
     },
     "13": {
       "control_points": [
@@ -369,7 +369,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16753267
+      "color": 4810198
     },
     "14": {
       "control_points": [
@@ -385,7 +385,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16744512
+      "color": 16762432
     },
     "15": {
       "control_points": [
@@ -422,7 +422,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 2899330
+      "color": 7308246
     },
     "16": {
       "control_points": [
@@ -459,7 +459,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 16766323
+      "color": 16733760
     },
     "17": {
       "control_points": [
@@ -475,7 +475,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 10908672
+      "color": 4810198
     },
     "18": {
       "control_points": [
@@ -512,7 +512,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 16762432
+      "color": 6274510
     },
     "19": {
       "control_points": [
@@ -530,7 +530,7 @@
         40.6
       ],
       "tangents": "incoming",
-      "radius": 1.5,
+      "radius": 4,
       "color": 3651278
     },
     "20": {
@@ -550,7 +550,7 @@
       ],
       "tangents": "incoming",
       "radius": 4,
-      "color": 16743424
+      "color": 48946
     },
     "21": {
       "control_points": [
@@ -569,7 +569,7 @@
       ],
       "tangents": "incoming",
       "radius": 2,
-      "color": 16753267
+      "color": 3727204
     },
     "22": {
       "control_points": [
@@ -606,7 +606,7 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 296349
+      "color": 6610821
     },
     "23": {
       "control_points": [
@@ -643,7 +643,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 3727204
+      "color": 16757504
     },
     "24": {
       "control_points": [
@@ -680,7 +680,7 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 87654
+      "color": 296349
     },
     "25": {
       "control_points": [
@@ -699,7 +699,7 @@
       ],
       "tangents": "incoming",
       "radius": 6,
-      "color": 7308246
+      "color": 12555312
     },
     "26": {
       "control_points": [
@@ -724,7 +724,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 28234
+      "color": 16733696
     }
   },
   "isotropic_regions": {
@@ -735,7 +735,7 @@
         -10
       ],
       "radius": 10,
-      "color": 296349
+      "color": 12533808
     },
     "1": {
       "center": [
@@ -744,7 +744,7 @@
         -20
       ],
       "radius": 12.5,
-      "color": 10893312
+      "color": 2129760
     },
     "2": {
       "center": [
@@ -753,7 +753,7 @@
         -20
       ],
       "radius": 12.5,
-      "color": 12542000
+      "color": 16719360
     }
   }
 }
