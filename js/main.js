@@ -1,9 +1,7 @@
 /** @overview Main file. Contains {@link init}, {@link render}, {@link animate} and {@link show} functions, as well as main global functions and constants.
 */
 var mesh, renderer, scene, camera, directionalLight, controls, phantom;
-/** @var {string} path
-  * Path to file in the JSON request.
-*/
+window.onload = init;
 var container = document.getElementById('container');
 var meshConstraints = {
   /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
@@ -55,7 +53,6 @@ function roundToPrecision(number) {
   return number;
 }
 
-window.onload = init;
 
 function render() {
 /** @function render
@@ -77,10 +74,8 @@ function init() {
   calls [show()]{@link show} and [setupGUI()]{@link module:GUI Construction.setupGUI}.
   */
 
-  path = null;
-  var path = "phantam_save.json";
-
-  if (path) {
+  if (location.href.indexOf('?') > 0) {
+    path = location.href.substring( location.href.indexOf('?') + 1);
     makeRequest();
   } else {
     phantom = new Phantom();
@@ -97,7 +92,7 @@ function init() {
         if (this.status === 200) {
           phantom = loadPhantom(this.response);
         } else {
-          console.error('Error: ' + path + ' was not found.')
+          console.error('Error: ' + location.href.substring( location.href.indexOf('?') - 1) + ' was not found. Loading scratch mode.')
           phantom = new Phantom();
         }
         show();
@@ -144,6 +139,7 @@ function show() { // The rendering engine is initialized
 
   // Load phantom and add it in the scene
   phantom.addToScene(scene);
+
   camera.position.z = phantom.radius() * 2 * 1.5;
 
   renderer.render(scene, camera);
