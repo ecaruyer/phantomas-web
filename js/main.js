@@ -1,10 +1,9 @@
 /** @overview Main file. Contains {@link init}, {@link render}, {@link animate} and {@link show} functions, as well as main global functions and constants.
 */
-var request, mesh, renderer, scene, camera, directionalLight, controls, phantom;
+var mesh, renderer, scene, camera, directionalLight, controls, phantom;
 /** @var {string} path
   * Path to file in the JSON request.
 */
-var path = "phantom_save.json";
 var container = document.getElementById('container');
 var meshConstraints = {
   /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
@@ -55,7 +54,8 @@ function roundToPrecision(number) {
   number /= 10 * precision;
   return number;
 }
-init();
+
+window.onload = init;
 
 function render() {
 /** @function render
@@ -73,18 +73,39 @@ function animate() {
 }
 function init() {
 /** @function init
-  * @desc Initialises the app. Starting from a XMLHttpRequest, calls [show()]{@link show} and [setupGUI()]{@link module:GUI Construction.setupGUI}.
+  * @desc To be called when page is loaded, initialises the app. Starting from a XMLHttpRequest,
+  calls [show()]{@link show} and [setupGUI()]{@link module:GUI Construction.setupGUI}.
   */
-  request = new XMLHttpRequest();
-  request.overrideMimeType("text/plain");
-  request.open("get", path, true);
-  request.onreadystatechange = function() {
-    if ( (request.readyState === 4) && (request.status === 200) ) {
-      show();
-      setupGUI();
+
+  path = null;
+  var path = "phantam_save.json";
+
+  if (path) {
+    makeRequest();
+  } else {
+    phantom = new Phantom();
+    show();
+    setupGUI();
+  }
+
+  function makeRequest() {
+    var request = new XMLHttpRequest();
+    request.overrideMimeType("text/plain");
+    request.open("get", path, true);
+    request.onreadystatechange = function() {
+      if (this.readyState === 4) {
+        if (this.status === 200) {
+          phantom = loadPhantom(this.response);
+        } else {
+          console.error('Error: ' + path + ' was not found.')
+          phantom = new Phantom();
+        }
+        show();
+        setupGUI();
       }
     };
-  request.send(null);
+    request.send(null);
+  }
 }
 /** @function show
   * @desc Initialises everything regarding the THREE.js environtment. Adds window events.
@@ -122,7 +143,6 @@ function show() { // The rendering engine is initialized
   }
 
   // Load phantom and add it in the scene
-  phantom = loadPhantom( request );
   phantom.addToScene(scene);
   camera.position.z = phantom.radius() * 2 * 1.5;
 

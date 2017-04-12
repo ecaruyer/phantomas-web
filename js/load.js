@@ -2,14 +2,14 @@
   * @desc Loads a Phantom contained in a JSON file and puts it into the scene.<br>
   * Contains all the functions necessary to translate Phantomas' JSON structure
   * to {@link FiberSource} parameters.
-  * @param {XMLHttpRequest} request
-  * The file request from which JSON file was retrieved.
+  * @param {String} string
+  * The string containing the parsed phantom variable.
   * @return {Phantom} The phantom ready to be added to the scene.
 */
-function loadPhantom( request ) {
+function loadPhantom( string ) {
   var phantom = new Phantom();
-  var loadedFibers = JSON.parse(request.response).fiber_geometries;
-  var loadedRegions = JSON.parse(request.response).isotropic_regions;
+  var loadedFibers = JSON.parse(string).fiber_geometries;
+  var loadedRegions = JSON.parse(string).isotropic_regions;
   // Send number of elements as parameters to addFiber and addIsotropicRegion
   nbLoads = 0;
   if (loadedFibers) nbLoads += Object.keys(loadedFibers).length;
@@ -40,7 +40,7 @@ function loadPhantom( request ) {
   }
 
   // log an error in case fibers or regions were not found.
-  if (phantom.isotropicRegions.source.length == 0) console.warn('Any region found in file '+path);
-  if (phantom.fibers.source.length == 0) console.warn('Any fiber found in file '+path);
+  if (phantom.isotropicRegions.source.length == 0) console.warn('Any region found in file');
+  if (phantom.fibers.source.length == 0) console.warn('Any fiber found in file');
   return phantom;
 }
