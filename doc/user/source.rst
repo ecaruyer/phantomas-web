@@ -1,10 +1,10 @@
 .. -*- coding: utf-8 -*-
 
 ===========================================
-Phantomas Web Designer
+User Documentation
 ===========================================
 ------------------------------------------
- User Documentation
+Phantomas Web Designer
 ------------------------------------------
 
 :Author: Guillem González Vela, Emmanuel Caruyer - Firstname.Lastname@irisa.fr
@@ -191,7 +191,7 @@ Options are:
     + Red for X
     + Green for Y
     + Blue for Z
-    
+
   - *Position*: Move the scene to XY, XZ or ZY plane.
 
   - *Opacity*: Select [0 - 50%] the opacity of the faded elements.

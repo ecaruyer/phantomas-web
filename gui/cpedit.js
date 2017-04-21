@@ -93,11 +93,11 @@ function cpEdit(index) {
   ddbutton.id = 'ddbutton';
   ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
   ddbutton.tile = "Drag and Drop point to edit it";
-  ddbutton.innerHTML = "Drag&Drop";
+  ddbutton.innerHTML = '<i class="icons">&#xE901;</i>';
   ddbutton.onclick = function() {
     if (!this.active) {
       this.active = true;
-      this.className = 'w3-button w3-yellow w3-hover-khaki w3-border w3-block w3-ripple w3-small';
+      this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
       xvalue.disabled = true;
       yvalue.disabled = true;
       zvalue.disabled = true;
@@ -121,7 +121,7 @@ function cpEdit(index) {
   undobutton.tile = "Undo (U)";
   undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
   undobutton.style = 'margin-bottom: 10px';
-  undobutton.innerHTML = "Undo";
+  undobutton.innerHTML = '<i class="icons">&#xE900;</i>';
   // If nothing to undo, button is disabled. If something to, bluepoint of editing is shown.
   if (
     former[0] == Number(xvalue.value) &&
