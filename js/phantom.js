@@ -455,6 +455,7 @@ Phantom.prototype = {
         break;
       case 'green':
         mesh.material.color = new THREE.Color(0x00FF00);
+        mesh.geometry.radius = fiber.radius/4.5;
         // this will be later used for filtering which points are to be removed.
         mesh.isBlueHighlight = true;
         break;

@@ -1,7 +1,6 @@
 /** @overview Main file. Contains {@link init}, {@link render}, {@link animate} and {@link show} functions, as well as main global functions and constants.
 */
-var mesh, renderer, scene, camera, directionalLight, controls, phantom;
-window.onload = init;
+var mesh, renderer, scene, camera, directionalLight, controls, phantom, control;
 var container = document.getElementById('container');
 var meshConstraints = {
   /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
@@ -52,6 +51,9 @@ function roundToPrecision(number) {
   number /= 10 * precision;
   return number;
 }
+
+
+window.onload = init;
 
 
 function render() {

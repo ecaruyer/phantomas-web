@@ -89,6 +89,33 @@ function cpEdit(index) {
   position.appendChild(buttons);
   buttons.innerHTML = "&nbsp;&nbsp;&nbsp;"
 
+  var ddbutton = document.createElement("BUTTON");
+  ddbutton.id = 'ddbutton';
+  ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+  ddbutton.tile = "Drag and Drop point to edit it";
+  ddbutton.innerHTML = "Drag&Drop";
+  ddbutton.onclick = function() {
+    if (!this.active) {
+      this.active = true;
+      this.className = 'w3-button w3-yellow w3-hover-khaki w3-border w3-block w3-ripple w3-small';
+      xvalue.disabled = true;
+      yvalue.disabled = true;
+      zvalue.disabled = true;
+      xvalue.onchange();
+      dragAndDrop();
+    } else {
+      this.active = false;
+      this.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+      xvalue.disabled = false;
+      yvalue.disabled = false;
+      zvalue.disabled = false;
+      scene.remove(control);
+      render();
+    }
+  }
+  buttons.appendChild(ddbutton);
+
+
   var undobutton = document.createElement("BUTTON");
   undobutton.id = 'cpUndoButton';
   undobutton.tile = "Undo (U)";
@@ -164,4 +191,39 @@ function exitCPedit() {
 
   addCPselect();
   resizeGUI();
+}
+
+function dragAndDrop() {
+  control = new THREE.TransformControls(camera, renderer.domElement);
+  scene.children.forEach(function(object) {
+    if (object.isHighlight) {
+      if (object.material.color.getHex() == 0x00FF00) {
+        control.object = object;
+      }
+    }
+  });
+
+  control.addEventListener('change', function() {
+    var pos = this.object.position;
+    pos.x = roundToPrecision(pos.x);
+    pos.y = roundToPrecision(pos.y);
+    pos.z = roundToPrecision(pos.z);
+
+    document.getElementById('xvalue').value = pos.x;
+    document.getElementById('yvalue').value = pos.y;
+    document.getElementById('zvalue').value = pos.z;
+    render();
+  });
+
+  control.addEventListener('mouseUp', function() {
+    var pos = this.object.position;
+    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'x', pos.x);
+    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'y', pos.y);
+    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'z', pos.z);
+  })
+
+
+  control.attach(control.object);
+  scene.add(control);
+  render();
 }
