@@ -145,13 +145,13 @@ function setupGUI() {
         toggleAxes();
         break;
         case 88: //X
-        moveCameraXZ();
+        moveCameraZY();
         break;
         case 89: //Y
-        moveCameraXY();
+        moveCameraXZ();
         break;
         case 90: //Z
-        moveCameraZY();
+        moveCameraXY();
         break;
         case 83: //S
           saveClick();

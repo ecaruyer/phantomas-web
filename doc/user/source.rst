@@ -187,9 +187,11 @@ Options are:
     the edition. Unactivate in the screenshot.
   - *Axes Switch*: Shows and hides the coordinates axis. Active
     in the screenshot. Each axis has a different color:
+
     + Red for X
-    + Blue for Y
-    + Green for Z
+    + Green for Y
+    + Blue for Z
+    
   - *Position*: Move the scene to XY, XZ or ZY plane.
 
   - *Opacity*: Select [0 - 50%] the opacity of the faded elements.
@@ -213,11 +215,11 @@ P      Switch preview mode
 ----  ---------------------------------------------
 A      Switch axes
 ----  ---------------------------------------------
-X      Move to XZ plane
+X      Move to X=0 plane
 ----  ---------------------------------------------
-Y      Move to XY plane
+Y      Move to Y=0 plane
 ----  ---------------------------------------------
-Z      Move to ZY plane
+Z      Move to Z=0 plane
 ----  ---------------------------------------------
 S      Save phantom
 ----  ---------------------------------------------
