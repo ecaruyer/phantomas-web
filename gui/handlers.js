@@ -9,6 +9,13 @@ function switchViewButton() {
   * @desc Handler for preview button. Switches fade of the scene.
 */
   var button = document.getElementById('switchViewButton');
+  if (guiStatus.editingCP) {
+    if (document.getElementById('ddbutton').active) {
+      var ddrop = true;
+      scene.removeControls();
+    }
+  }
+
   if (!guiStatus.previewing) {
     phantom.addToScene(scene);
     button.value = "Back";
@@ -20,6 +27,11 @@ function switchViewButton() {
     button.className = 'w3-btn w3-hover-aqua w3-border w3-block w3-ripple';
     button.value = "Preview";
   }
+
+  if (ddrop) {
+    dragAndDrop = new DragAndDrop();
+  }
+
 }
 
 // disable booleans must be true when the user does not click directly the option.
@@ -71,9 +83,10 @@ function cpSelectClick(fiberindex, cpindex, notclicked) {
   */
   if (!notclicked) {
     guiStatus.formerCP = phantom.fibers.source[fiberindex].controlPoints[cpindex].slice(0);
+    cpEdit(cpindex);
   }
+  scene.removeControls();
   phantom.cpHighlight(fiberindex, cpindex, 'red');
-  cpEdit(cpindex);
   guiStatus.editing('CP', cpindex);
 }
 

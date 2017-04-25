@@ -13,6 +13,8 @@ function GuiStatus() {
     this.previewing = false;
     document.getElementById("switchViewButton").disabled = true;
 
+    this.dragAndDropping = false;
+
     this.editingFiber = undefined;
     this.editingCP = undefined;
     this.editingRegion = undefined;
@@ -44,7 +46,8 @@ GuiStatus.prototype = {
         break;
       default: console.error('Element string in status was not correct');
     }
-
+    this.dragAndDropping = false;
+    
     document.getElementById("switchViewButton").disabled = false;
     document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
   },
@@ -62,6 +65,10 @@ GuiStatus.prototype = {
           cpSelectClick(this.editingFiber, this.editingCP, true);
           if (!document.getElementById('cpUndoButton').disabled) {
             phantom.cpHighlight(guiStatus.editingFiber, this.editingCP, 'green');
+          }
+          if (guiStatus.dragAndDropping) {
+            guiStatus.dragAndDropping = false;
+            document.getElementById('ddbutton').onclick();
           }
         }
       } else if (this.editingRegion !== undefined) {

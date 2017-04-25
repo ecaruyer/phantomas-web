@@ -422,6 +422,7 @@ Phantom.prototype = {
       * @desc Overlays a colored slightly bigger sphere over a control point. Used for
       the user focusing in this element.
       <br>Will {@link render}.
+      * @returns {THREE.MeshBasicMaterial} The highlight mesh
       * @param {Number} fiberindex Index of the fiber containing the control point to highlight.
       * @param {Number} controlpointindex Index of the control point to highlight.
       * @param {String} mode Highlight mode:
@@ -455,7 +456,9 @@ Phantom.prototype = {
         break;
       case 'green':
         mesh.material.color = new THREE.Color(0x00FF00);
-        mesh.geometry.radius = fiber.radius/4.5;
+        mesh.scale.x = 0.9;
+        mesh.scale.y = 0.9;
+        mesh.scale.z = 0.9;
         // this will be later used for filtering which points are to be removed.
         mesh.isBlueHighlight = true;
         break;
@@ -466,6 +469,8 @@ Phantom.prototype = {
 
     scene.add(mesh);
     render();
+
+    return mesh;
   },
   revealSkeleton: function(scene, n) {
   /** @function revealSkeleton

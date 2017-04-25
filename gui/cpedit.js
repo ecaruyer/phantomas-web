@@ -28,8 +28,9 @@ function cpEdit(index) {
   // Called on each CP position selector
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
+    scene.removeCPHighlight();
     phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
-    document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
+    document.getElementById('guiFiberLength').innerHTML = roundToPrecision(fiber.length);
     undobutton.disabled = false;
   }
 
@@ -91,26 +92,30 @@ function cpEdit(index) {
 
   var ddbutton = document.createElement("BUTTON");
   ddbutton.id = 'ddbutton';
-  ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+  if (guiStatus.dragAndDropping) { //Acting only when hovering over CPs
+    ddbutton.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
+  } else {
+    ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+  }
   ddbutton.tile = "Drag and Drop point to edit it";
+  ddbutton.style = 'margin-top: 10px; margin-bottom: 10px';
   ddbutton.innerHTML = '<i class="icons">&#xE901;</i>';
   ddbutton.onclick = function() {
-    if (!this.active) {
-      this.active = true;
+    undobutton.disabled = false;
+    if (!guiStatus.dragAndDropping) {
+      guiStatus.dragAndDropping = true;
       this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
       xvalue.disabled = true;
       yvalue.disabled = true;
       zvalue.disabled = true;
-      xvalue.onchange();
-      dragAndDrop();
+      dragAndDrop = new DragAndDrop();
     } else {
-      this.active = false;
+      guiStatus.dragAndDropping = false;
       this.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
       xvalue.disabled = false;
       yvalue.disabled = false;
       zvalue.disabled = false;
-      scene.remove(control);
-      render();
+      scene.removeControls();
     }
   }
   buttons.appendChild(ddbutton);
@@ -120,21 +125,28 @@ function cpEdit(index) {
   undobutton.id = 'cpUndoButton';
   undobutton.tile = "Undo (U)";
   undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
-  undobutton.style = 'margin-bottom: 10px';
+  undobutton.style = ddbutton.style;
   undobutton.innerHTML = '<i class="icons">&#xE900;</i>';
-  // If nothing to undo, button is disabled. If something to, bluepoint of editing is shown.
+  // If nothing to undo, button is disabled. If something to, greenpoint of editing is shown.
   if (
     former[0] == Number(xvalue.value) &&
     former[1] == Number(yvalue.value) &&
     former[2] == Number(zvalue.value)
   ) {
     undobutton.disabled = true;
-  } else {
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
   }
 
   // guiStatus.former created earlier is recovered when undoing.
   undobutton.onclick = function() {
+    scene.removeControls();
+    scene.removeCPHighlight();
+
+    // xvalue.value = former[0];
+    // yvalue.value = former[1];
+    // zvalue.value = former[2];
+    // xvalue.onchange();
+    // yvalue.onchange();
+    // zvalue.onchange();
     cpValueOnChange(index, 'x', former[0]);
     xvalue.value = former[0];
     cpValueOnChange(index, 'y', former[1]);
@@ -142,8 +154,11 @@ function cpEdit(index) {
     cpValueOnChange(index, 'z', former[2]);
     zvalue.value = former[2];
 
-    scene.removeCPHighlight();
-    this.disabled = true;
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop = new DragAndDrop();
+    } else {
+      this.disabled = true;
+    }
   }
   buttons.appendChild(undobutton);
 
@@ -186,44 +201,10 @@ function exitCPedit() {
   var cpTable = document.getElementById("cpTable");
 
   editGUI.removeChild(cpTable);
+  scene.removeControls();
   scene.removeCPHighlight(true);
   guiStatus.editing('CP', undefined);
 
   addCPselect();
   resizeGUI();
-}
-
-function dragAndDrop() {
-  control = new THREE.TransformControls(camera, renderer.domElement);
-  scene.children.forEach(function(object) {
-    if (object.isHighlight) {
-      if (object.material.color.getHex() == 0x00FF00) {
-        control.object = object;
-      }
-    }
-  });
-
-  control.addEventListener('change', function() {
-    var pos = this.object.position;
-    pos.x = roundToPrecision(pos.x);
-    pos.y = roundToPrecision(pos.y);
-    pos.z = roundToPrecision(pos.z);
-
-    document.getElementById('xvalue').value = pos.x;
-    document.getElementById('yvalue').value = pos.y;
-    document.getElementById('zvalue').value = pos.z;
-    render();
-  });
-
-  control.addEventListener('mouseUp', function() {
-    var pos = this.object.position;
-    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'x', pos.x);
-    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'y', pos.y);
-    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'z', pos.z);
-  })
-
-
-  control.attach(control.object);
-  scene.add(control);
-  render();
 }

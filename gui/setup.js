@@ -189,6 +189,7 @@ function editExit() {
   * @memberof module:GUI Construction
   * @desc Removes any edition UI. Adds new element buttons.
   */
+  scene.remove(dragAndDrop); //In case of being present
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = ""
 
