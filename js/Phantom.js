@@ -429,7 +429,7 @@ Phantom.prototype = {
       <ul>
       <li>'red': Red color. This is the only one not be removed by {@link THREE.Scene.removeCPHighlight} unless specified.
       <li>'blue': Blue color.
-      <li>'green': Green color.</ul>
+      <li>'green': Green color. This one is 90% the size to avoid bad rendering in clashes with the orthers.</ul>
       */
 
     scene.removeCPHighlight();

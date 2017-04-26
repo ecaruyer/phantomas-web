@@ -1,15 +1,20 @@
+/** @overview Contains THREE.js functions responsible of the Drag and Dropping feature.
+*/
+
 function dragAndDrop() {
+  /** @function dragAndDrop
+    * @desc Builds or resets Drag and Drop interactive controls in the scene.
+    */
+
   var control = new THREE.TransformControls(camera, renderer.domElement);
 
   scene.removeControls();
   scene.removeCPHighlight();
-  control.object = phantom.cpHighlight(guiStatus.editingFiber, guiStatus.editingCP, 'green');
+  var object = phantom.cpHighlight(guiStatus.editingFiber, guiStatus.editingCP, 'green');
 
   control.name = 'dragAndDrop';
-  this.control = control;
-  this.object = this.control.object;
 
-  this.control.addEventListener('change', function() {
+  control.addEventListener('change', function() {
     var pos = this.object.position;
     pos.x = roundToPrecision(pos.x);
     pos.y = roundToPrecision(pos.y);
@@ -23,21 +28,26 @@ function dragAndDrop() {
     document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
   });
 
-  this.control.addEventListener('mouseUp', function() {
-    var pos = this.object.position;
+  control.addEventListener('mouseUp', function() {
+    var pos = object.position;
     phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'x', pos.x);
     phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'y', pos.y);
     phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'z', pos.z);
   });
 
 
-  control.attach(this.object);
-  scene.add(this.control);
+  control.attach(object);
+  scene.add(control);
   render();
 }
 
 THREE.Scene.prototype.removeControls = function() {
+/** @method removeControls
+  * @memberof module:THREE.Scene
+  * @desc Removes all Drag and Drop controls present in the Scene.
+  */
   var remove = [];
+  var scene = this;
   scene.children.forEach(function(object) {
     if (object.name == 'dragAndDrop') {
       remove.push(object);
