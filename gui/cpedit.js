@@ -144,13 +144,6 @@ function cpEdit(index) {
     yvalue.value = former[1]; yvalue.onchange();
     zvalue.value = former[2]; zvalue.onchange();
 
-    // xvalue.value = former[0];
-    // yvalue.value = former[1];
-    // zvalue.value = former[2];
-    // cpValueOnChange(index, 'x', former[0]);
-    // cpValueOnChange(index, 'y', former[1]);
-    // cpValueOnChange(index, 'z', former[2]);
-
     if (guiStatus.dragAndDropping) {
       dragAndDrop();
     } else {
