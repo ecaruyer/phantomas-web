@@ -46,8 +46,7 @@ GuiStatus.prototype = {
         break;
       default: console.error('Element string in status was not correct');
     }
-    this.dragAndDropping = false;
-    
+
     document.getElementById("switchViewButton").disabled = false;
     document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
   },
@@ -63,11 +62,8 @@ GuiStatus.prototype = {
         fiberSelectClick(this.editingFiber, true);
         if (this.editingCP !== undefined) {
           cpSelectClick(this.editingFiber, this.editingCP, true);
-          if (!document.getElementById('cpUndoButton').disabled) {
-            phantom.cpHighlight(guiStatus.editingFiber, this.editingCP, 'green');
-          }
           if (guiStatus.dragAndDropping) {
-            guiStatus.dragAndDropping = false;
+            guiStatus.dragAndDropping = false; //Simulate D&D bare click
             document.getElementById('ddbutton').onclick();
           }
         }

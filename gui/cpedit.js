@@ -95,7 +95,7 @@ function cpEdit(index) {
   if (guiStatus.dragAndDropping) { //Acting only when hovering over CPs
     ddbutton.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
   } else {
-    ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+    ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple';
   }
   ddbutton.tile = "Drag and Drop point to edit it";
   ddbutton.style = 'margin-top: 10px; margin-bottom: 10px';
@@ -141,12 +141,6 @@ function cpEdit(index) {
     scene.removeControls();
     scene.removeCPHighlight();
 
-    // xvalue.value = former[0];
-    // yvalue.value = former[1];
-    // zvalue.value = former[2];
-    // xvalue.onchange();
-    // yvalue.onchange();
-    // zvalue.onchange();
     cpValueOnChange(index, 'x', former[0]);
     xvalue.value = former[0];
     cpValueOnChange(index, 'y', former[1]);

@@ -83,11 +83,12 @@ function cpSelectClick(fiberindex, cpindex, notclicked) {
   */
   if (!notclicked) {
     guiStatus.formerCP = phantom.fibers.source[fiberindex].controlPoints[cpindex].slice(0);
+    guiStatus.dragAndDropping = false;
     cpEdit(cpindex);
   }
-  scene.removeControls();
   phantom.cpHighlight(fiberindex, cpindex, 'red');
   guiStatus.editing('CP', cpindex);
+  scene.removeControls();
 }
 
 // NEW MESH BUTTONS
