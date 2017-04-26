@@ -165,7 +165,22 @@ different colors in the scene:
 
 A control point is saved whenever its edition is quitted. When position was
 changed, the former version is on the scene in red color while the one to
-be saved is in green. The former may be recovered by pressing the *Undo* button.
+be saved is in green. The former may be recovered by pressing the *Undo* button,
+marked with an arrow.
+
+Position may be edited manually by using the given fields. As well, by clicking
+on the *Drag and Drop* button, marked with a pointer. This option will disable
+the manual fields while allowing an interactive edition in the scene itself.
+
+.. image:: img/draganddrop.png
+    :align: center
+
+The interactive edition allows different liberty grades:
+
+  - *Axes*, by using the arrows shown.
+  - *Planes*, by dragging the planes formed between the arrows.
+
+  - *The screen plane*, by clicking directly on the point.
 
 *New CP* button creates a new control point. It is to be
 placed in the mid-point between the current and the next one. *Remove CP*
