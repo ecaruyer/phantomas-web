@@ -17,7 +17,7 @@ var meshConstraints = {
   * @property {Number} maxMeshIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in a single mesh
   */
     maxTotalAxialSegments: 1440,
-    maxMeshAxialSegments: 128,
+    maxMeshAxialSegments: 64,
 
     maxTotalRadialSegments: 480,
     maxMeshRadialSegments: 32,
@@ -26,7 +26,7 @@ var meshConstraints = {
     maxMeshLineSegments: 128,
 
     maxTotalSkeletonSphereSegments: 240,
-    maxMeshSkeletonSphereSegments: 32,
+    maxMeshSkeletonSphereSegments: 16,
 
     maxTotalIsotropicRegionSegments: 1024,
     maxMeshIsotropicRegionSegments: 32

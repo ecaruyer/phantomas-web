@@ -108,7 +108,7 @@ function cpEdit(index) {
       xvalue.disabled = true;
       yvalue.disabled = true;
       zvalue.disabled = true;
-      dragAndDrop = new DragAndDrop();
+      dragAndDrop();
     } else {
       guiStatus.dragAndDropping = false;
       this.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
@@ -139,17 +139,20 @@ function cpEdit(index) {
   // guiStatus.former created earlier is recovered when undoing.
   undobutton.onclick = function() {
     scene.removeControls();
-    scene.removeCPHighlight();
 
-    cpValueOnChange(index, 'x', former[0]);
-    xvalue.value = former[0];
-    cpValueOnChange(index, 'y', former[1]);
-    yvalue.value = former[1];
-    cpValueOnChange(index, 'z', former[2]);
-    zvalue.value = former[2];
+    xvalue.value = former[0]; xvalue.onchange();
+    yvalue.value = former[1]; yvalue.onchange();
+    zvalue.value = former[2]; zvalue.onchange();
+
+    // xvalue.value = former[0];
+    // yvalue.value = former[1];
+    // zvalue.value = former[2];
+    // cpValueOnChange(index, 'x', former[0]);
+    // cpValueOnChange(index, 'y', former[1]);
+    // cpValueOnChange(index, 'z', former[2]);
 
     if (guiStatus.dragAndDropping) {
-      dragAndDrop = new DragAndDrop();
+      dragAndDrop();
     } else {
       this.disabled = true;
     }
@@ -164,8 +167,9 @@ function cpEdit(index) {
   newcpbutton.className = 'w3-btn w3-hover-green w3-border w3-border-white w3-small w3-ripple'
   newcpbutton.innerHTML = "New CP";
   newcpbutton.onmouseenter = function() { newCPonmouseover(guiStatus.editingFiber, guiStatus.editingCP); };
-  newcpbutton.onmouseleave = function() { newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP);  }
+  newcpbutton.onmouseleave = function() { fiber = newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP); } // It is necessary to renovate the reference
   newcpbutton.onclick = function() { newCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
+
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
