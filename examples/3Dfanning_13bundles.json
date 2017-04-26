@@ -1,0 +1,213 @@
+{
+  "fiber_geometries": {
+    "0": {
+      "control_points": [
+        -43.3,
+        25,
+        0,
+        0,
+        -20,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 16757504
+    },
+    "1": {
+      "control_points": [
+        -25,
+        43.3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 4810198
+    },
+    "2": {
+      "control_points": [
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 7308246
+    },
+    "3": {
+      "control_points": [
+        25,
+        43.3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 6610821
+    },
+    "4": {
+      "control_points": [
+        43.3,
+        25,
+        0,
+        0,
+        -20,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 12533808
+    },
+    "5": {
+      "control_points": [
+        0,
+        25,
+        -43.3,
+        0,
+        -20,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 7308246
+    },
+    "6": {
+      "control_points": [
+        0,
+        43.3,
+        -25,
+        0,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 16733696
+    },
+    "7": {
+      "control_points": [
+        0,
+        43.3,
+        25,
+        0,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 2395968
+    },
+    "8": {
+      "control_points": [
+        0,
+        25,
+        43.3,
+        0,
+        -20,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 2899330
+    },
+    "9": {
+      "control_points": [
+        28.9,
+        28.9,
+        28.9,
+        0,
+        -10,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 16743424
+    },
+    "10": {
+      "control_points": [
+        -28.9,
+        28.9,
+        28.9,
+        0,
+        -10,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 16758643
+    },
+    "11": {
+      "control_points": [
+        28.9,
+        28.9,
+        -28.9,
+        0,
+        -10,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 16766323
+    },
+    "12": {
+      "control_points": [
+        -28.9,
+        28.9,
+        -28.9,
+        0,
+        -10,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 296349
+    }
+  },
+  "isotropic_regions": {}
+}

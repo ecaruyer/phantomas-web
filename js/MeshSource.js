@@ -1,46 +1,30 @@
-// colors is a color library for random color generation in representations
-colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
-          0xBF9430, 0x2C3D82, 0x248F40, 0xA61300, 0xA67400,
-          0x071C71, 0x007C21, 0xFF5640, 0xFFC640, 0x4965D6,
-          0x38DF64, 0xFF8373, 0xFFD573, 0x6F83D6, 0x64DF85,
-          0xFF5600, 0xFF7C00, 0x04859D, 0x00AA72, 0x60D4AE,
-          0xBF6030, 0xBF7630, 0x206876, 0x207F60, 0x5FBDCE,
-          0xA63800, 0xA65100, 0x015666, 0x006E4A, 0xFFB773,
-          0xFF8040, 0xFF9D40, 0x37B6CE, 0x35D4A0, 0xFFA273];
+/**@overview Contains Class definitions for {@link FiberSkeleton}, {@link FiberTube} and {@link IsotropicRegion}.*/
 
-/* FiberSkeleton creates 3D representation of control points and fiber path
-  from a given fiber.
-  Subject-Observer pattern must be enabled and fired from subject with .refresh();
-  Input: fiber - FiberSource object.
-         parameters object (not compulsory):
-          .color
-          .lineSegments
-          .sphereSegments
-
-  Main properties:
-    .line - the thread representing the path. Ready for scene.add.
-    .spheres - the mesh of all the spheres representing the control points.
-          ready for scene.add.
-
-  Other properties:
-    .fiber - The fiber from which the representation constructed (FiberSource)
-    .lineSegments - The amount of length segments in which the fiber is divided
-        for representation. By default, 256.
-    .sphereSegments - The amount of segments each controlpoint sphere will have
-    .color - color of the thread
-
-  Methods:
-    .refresh() - Updates meshes after fiber change. No input no output.
-
-*/
 function FiberSkeleton(fiber, parameters) {
+/** @class FiberSkeleton
+  * @classdesc FiberSkeleton creates 3D representation of control points and fiber path
+    from a given fiber.<br>
+    Subject-Observer pattern must be enabled from its {@link FiberSource} reference and fired from subject with {@link FiberSkeleton.refresh|refresh();}.
+  * @property {THREE.Line} line The thread representing the path. Ready for {@link scene}.add.
+  * @property {THREE.Mesh} spheres Big mesh containing all control-point marking spheres. Ready for {@link scene}.add.
+  * @property {FiberSource} fiber Reference to source fiber object.
+  * @property {THREE.Color} color Color of the thread.
+  * @property {Number} sphereSegments Amount of segments (in each dimension) each controlpoint sphere will feature.
+  * @property {Number} lineSegments Amount of segments the thread will feature.
+  *
+  * @param {FiberSource} fiber Reference fiber.
+  * @param {Object} [parameters] Optional parameters
+  * @param {Number} [parameters.lineSegments=256] Number of axial segments to feature in line's {@link FiberSkeleton}
+  * @param {Number} [parameters.sphereSegments=32] Number of radial segments to feature in each control point of {@link FiberSkeleton}
+  * @param {THREE.Color} [parameters.color] Color of the thread. If not specified, generated randomly from {@link colors}.
+  */
   this.fiber = fiber;
-  points = fiber.controlPoints;
+  this.points = fiber.controlPoints; //Private property
 
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
-    this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+    this.color = fiber.color;
   } else {
     this.color = parameters.color;
   }
@@ -77,9 +61,9 @@ function FiberSkeleton(fiber, parameters) {
   var sphereGeometry = new THREE.Geometry();
   // All spheres to be added are meshed in one single geometry
   var meshes = [];
-  for (var i = 0; i < points.length; i++) {
+  for (var i = 0; i < this.points.length; i++) {
     meshes[i] = new THREE.Mesh(sphere);
-    meshes[i].position.set(points[i][0], points[i][1], points[i][2]);
+    meshes[i].position.set(this.points[i][0], this.points[i][1], this.points[i][2]);
     meshes[i].updateMatrix();
     sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
@@ -89,13 +73,17 @@ function FiberSkeleton(fiber, parameters) {
 }
 
 FiberSkeleton.prototype.refresh = function() {
+  /** @function refresh
+    * @memberof FiberSkeleton
+    * @desc Updates thread and spheres position from self properties. Must be fired when those change.
+    */
   // Spheres mesh must be built again
   var sphere = new THREE.SphereGeometry(this.fiber.radius/5, this.sphereSegments, this.sphereSegments);
   var sphereGeometry = new THREE.Geometry();
   var meshes = [];
-  for (var i = 0; i < points.length; i++) {
+  for (var i = 0; i < this.points.length; i++) {
     meshes[i] = new THREE.Mesh(sphere);
-    meshes[i].position.set(points[i][0], points[i][1], points[i][2]);
+    meshes[i].position.set(this.points[i][0], this.points[i][1], this.points[i][2]);
     meshes[i].updateMatrix();
     sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
@@ -115,39 +103,32 @@ FiberSkeleton.prototype.refresh = function() {
   this.line.material.color = this.color;
 }
 
-
-/* FiberTube creates a 3D representation of a given fiber in a tubular form
- of given radius.
- Subject-Observer pattern must be enabled and fired from subject with .refresh();
- Inputs: fiber - FiberSource object.
-           parameters object (not compulsory):
-            .color
-            .axialSegments
-            .radialSegments
-
-
- Main properties:
-   .mesh - the mesh of the fiber Ready for scene.add.
-
- Other properties:
-   .fiber - The fiber from which the representation constructed (FiberSource)
-   .curve - THREE.Curve object used for representation
-   .axialSegments and .radialSegments: The segments that make up the tube in
-      each dimension. Default is 256 and 64.
-   .color - color of the tube
-
-  Methods:
-   .refresh() - Updates mesh after fiber change. No input no output.
- */
 function FiberTube(fiber, parameters) {
+  /** @class FiberTube
+    * @classdesc FiberTube creates a 3D representation of a given fiber in a tubular shape
+     of given radius.
+    <br>Subject-Observer pattern must be enabled from its {@link FiberSource} reference and fired from subject with {@link FiberSkeleton.refresh|refresh();}.
+    * @property {THREE.Mesh} mesh Mesh containing the fiber's tubular shape. Ready for {@link scene}.add.
+    * @property {FiberSource} fiber Reference to source fiber object.
+    * @property {THREE.Color} color Color of the tube.
+    * @property {Number} axialSegments Amount of segments to feature in the tube mesh.
+    * @property {Number} radialSegments Amount of radial segments to feature in the tube mesh.
+    *
+    * @param {FiberSource} fiber Reference fiber.
+    * @param {Object} [parameters] Optional parameters
+    * @param {Number} [parameters.axialSegments=256] Number of axial segments to feature in the tube mesh.
+    * @param {Number} [parameters.radialSegments=64] Number of radial segments to feature in the tube mesh.
+    * @param {THREE.Color} [parameters.color] Color of the thread. If not specified, generated randomly from {@link colors}.
+    */
+
   this.fiber = fiber;
   // Check if radius was specified. If not, set default.
-  if (fiber.radius === undefined) fiber.radius = 1;
-  this.radius = fiber.radius;
+  if (this.fiber.radius === undefined) this.fiber.radius = 1;
+  var radius = this.fiber.radius;
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
-    this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+    this.color = fiber.color;
   } else {
     this.color = parameters.color;
   }
@@ -163,7 +144,7 @@ function FiberTube(fiber, parameters) {
   }
 
   //Curve is part of tube geometry
-  this.curve = Object.create(THREE.Curve.prototype);
+  this.curve = Object.create(THREE.Curve.prototype); //Private property
   // .getPoint must be part of curve object
   this.curve.getPoint = function(t) {
       var tx = fiber.interpolate(t)[0][0];
@@ -173,7 +154,7 @@ function FiberTube(fiber, parameters) {
   }
   // Geometry and materials are created
   var geometry = new THREE.TubeGeometry(this.curve,
-                        this.axialSegments , this.radius, this.radialSegments);
+                        this.axialSegments , radius, this.radialSegments);
   var material = new THREE.MeshPhongMaterial( { color:this.color, shading: THREE.FlatShading } );
   // Transparency must be enabled so to be able to fade the tube
   material.transparent = true;
@@ -182,8 +163,12 @@ function FiberTube(fiber, parameters) {
   this.mesh = new THREE.Mesh(geometry, material);
 }
 FiberTube.prototype.refresh = function() {
+  /** @function refresh
+    * @memberof FiberTube
+    * @desc Updates tube shape and position from self properties. Must be fired when those change.
+    */
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
-                this.axialSegments, this.radius, this.radialSegments);
+                this.axialSegments, this.fiber.radius, this.radialSegments);
 }
 
 /* IsotropicRegion creates a mesh from an IsotropicRegionSource.
@@ -208,12 +193,28 @@ FiberTube.prototype.refresh = function() {
     .refresh() - Updates mesh after source change. No input no output.
 */
 function IsotropicRegion(source, parameters) {
+  /** @class IsotropicRegion
+    * @classdesc IsotropicRegion creates a 3D representation of an Isotropic Region.
+    <br>Subject-Observer pattern must be enabled from its {@link FiberSource} reference and fired from subject with {@link FiberSkeleton.refresh|refresh();}.
+    * @property {THREE.Mesh} mesh Mesh containing the Isotropic Region sphere. Ready for {@link scene}.add.
+    * @property {IsotropicRegionSource} fiber Reference to source fiber object.
+    * @property {THREE.Color} color Color of the sphere.
+    * @property {Number} widthSegments Amount of width segments to feature in the sphere mesh.
+    * @property {Number} heightSegments Amount of height segments to feature in the sphere mesh.
+    *
+    * @param {IsotropicRegionSource} source Reference Isotropic Region.
+    * @param {Object} [parameters] Optional parameters
+    * @param {Number} [parameters.widthSegments=128] Number of width segments to feature in the sphere mesh.
+    * @param {Number} [parameters.heightSegments=128] Number of height segments to feature in the sphere mesh.
+    * @param {THREE.Color} [parameters.color] Color of the thread. If not specified, generated randomly from {@link colors}.
+    */
+
   this.source = source;
-  
+
   // Assign either specified parameters or default values
   if (!parameters) var parameters = [];
   if (parameters.color === undefined) {
-    this.color = new THREE.Color(colors[Math.floor(Math.random()*colors.length)]);
+    this.color = source.color;
   } else {
     this.color = parameters.color;
   }
@@ -236,6 +237,10 @@ function IsotropicRegion(source, parameters) {
   this.mesh.position.set(source.center[0], source.center[1], source.center[2]);
 }
 IsotropicRegion.prototype.refresh = function() {
+  /** @function refresh
+    * @memberof IsotropicRegion
+    * @desc Updates sphere position and radius from self properties. Must be fired when those change.
+    */
     this.mesh.geometry = new THREE.SphereGeometry( this.source.radius, this.widthSegments, this.heightSegments );
     this.mesh.position.set(this.source.center[0], this.source.center[1], this.source.center[2]);
 }

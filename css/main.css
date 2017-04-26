@@ -1,48 +1,95 @@
-hml, body, div {
+hml, html, body {
   margin: 0;
   padding: 0;
   color: white;
   background-color: black;
-  height:98%;
 }
 
-canvas {
-  /* fix necessary to remove space at bottom of canvas */
-    display: block;
+input[type=number], select {
+  background-color: black;
+  color: white;
+  border-width: thin;
+  border-style: solid;
+  height: 23px;
+}
+
+ul, li {
+    list-style: none;
+    padding-left:0;
+    color: white;
+}
+
+.enabledList {
+  overflow: scroll;
+  overflow-x: hidden;
+  cursor: pointer;
+  padding-left: 5px;
+
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  border-right: 0;
+}
+.disabledList {
+  background-color: grey;
+  padding-left: 10px;
+}
+
+.optionUnselected {
+}
+.optionSelected {
+  padding-left: 15px;
+  color:yellow;
+  font-weight:bold;
+}
+.optionOnMouseOver {
+  font-weight:bold;
+}
+.optionSelectedAndOnMouseOver {
+  padding-left: 20px;
+  color:yellow;
+  font-weight:bold;
+
+  font-style: oblique;
 }
 
 #leftGUI {
-  float:left;
+  float: left;
   text-align: left;
-  display: block;
+  display: inline-block;
 
-	padding-left: 1%;
-  padding-right: 0;
-  width: 14%;
-	margin-bottom: 1%;
-  margin-top: 1%;
+  width: 19%;
+  margin: 0;
+	padding: .5%;
 }
 
 #container {
-  display:inline-block;
-  /*position: absolute;*/
-  padding-left: 0;
-  padding-right: 0;
-  margin-bottom: 0;
-  margin-top: 0;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 
-  width: 70%;
+  width: 73%;
+  height: 99%;
 }
 
 #rightGUI {
-  float:right;
-  /*position: absolute;*/
-  text-align: right;
-  width: 14%;
-  display: block;
+  float: right;
+  text-align: center;
+  display: inline-block;
+  
+  width: 4%;
 
-  margin-right: 1%;
-  padding-right: 0;
-	margin-bottom: 1%;
-  margin-top: 1%;
+  margin: 0;
+	padding: .5%;
+}
+
+#bottomButtons {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  width: 4%;
+
+  padding: .5%;
+  padding-left: 0;
 }

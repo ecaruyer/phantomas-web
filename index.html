@@ -1,45 +1,49 @@
 <!doctype html>
 <html>
-
   <head>
-    <title>Phantomas web interface development</title>
     <meta charset="utf-8">
-    <link  href="css/main.css" rel="stylesheet"/>
+    <meta name="author" content="Guillem González Vela, Emmanuel Caruyer - Firstname.Lastname&#64;irisa.fr" />
+    <title>Phantomas Web</title>
+    <center><h1>Phantomas Web</h1></center>
+    <hr>
+    <br><br><br>
   </head>
 
-<body>
-  <div id="leftGUI">PHANTOM&nbsp;&nbsp;
-    <input type="submit" onclick="switchFiberViewMode();" value="Switch View"/><br><br>
-
-    <select id="fiberSelector" style="width:120px" size="10" onmouseout="selectOnMouseOut();">
-    </select><br>
-
-    <select id="regionSelector" style="width:120px" size="10" onmouseout="selectOnMouseOut();">
-    </select>
-  </div>
-
-  <div id="container">
-    <script type="text/javascript" src="js/three.min.js"></script>
-    <script type="text/javascript" src="js/TrackballControls.js"></script>
-
-    <script type="text/javascript" src="js/FiberSource.js"></script>
-    <script type="text/javascript" src="js/MeshSource.js"></script>
-    <script type="text/javascript" src="js/phantom.js"></script>
-    <script type="text/javascript" src="js/load.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-
-    <script type="text/javascript" src="gui/functions.js"></script>
-    <script type="text/javascript" src="gui/setup.js"></script>
-  </div>
-
-  <div id="rightGUI">NAVIGATION
-    <br>
-    <input type='button' value='xy' onclick='moveCameraXY();'>
-    <br>
-    <input type='button' value='xz' onclick='moveCameraXZ();'>
-    <br>
-    <input type='button' value='yz' onclick='moveCameraYZ();'>
-  </div>
-</body>
-
+  <body style="background: black; color: white">
+    <center><table style="padding:7%; width:80%; background: white; color: black"></center>
+      <tr><center>
+        <th><h2>Load the app</h2></th>
+        <th><h2>Other resources</h2></th>
+      </center></tr>
+      <tr>
+        <td>
+          <h3><a href="phantomas.html">Start a new model from scratch</a></h3>
+          <h4>or load an example:</h4>
+          <ul>
+            <li><a href="phantomas.html?examples/fibers.json">Basic phantom</a>
+            <li><a href="phantomas.html?examples/3Dfanning_13bundles.json">13 fanning bundles</a>
+            <li><a href="phantomas.html?examples/60crossing_3bundles.json">3 bundles crossing at 60&ordm;</a>
+            <li><a href="phantomas.html?examples/90kissing_3bundles.json">3 bundles kissing at 90&ordm;</a>
+            <li><a href="phantomas.html?examples/isbi_challenge_2013.json">Phantom used at 2013 HARDI reconstruction challenge</a>
+          </ul>
+        </td>
+        <td style="padding-left:10%">
+          <b>Authors:</b> Guillem Gonz&aacute;lez Vela and Emmanuel Caruyer (Firstname.Lastname@irisa.fr)
+          <br><br>
+          <ul>
+            <li><a href="doc/user">User documentation</a>
+            <li><a href="doc/developer">Developer documentation</a>
+            <li><a href="LICENSE">License - BSD 2-Clause License<a>
+          </ul>
+          <br>
+          External links:
+          <ul>
+            <li>This app is Open Source and
+              <a href="http://www.github.com/ecaruyer/phantomas-web" target="_blank">may be forked in GitHub.<a>&nbsp;Pull requests are welcome!
+            <li><a href="http://emmanuelcaruyer.com/phantomas.php" target="_blank">Phantomas' homepage</a>
+            <li><a href="http://www.github.com/ecaruyer/phantomas" target="_blank">Phantomas' GitHub</a>
+            <li><a href="http://emmanuelcaruyer.com/phantomas/" target="_blank">Phantomas' API Documentation</a>
+            <li><a href="http://hardi.epfl.ch/static/events/2013_ISBI/" target="_blank">HARDI reconstruction challenge 2013 homepage</a>
+          </ul>
+  </body>
 </html>
