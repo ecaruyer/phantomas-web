@@ -8,6 +8,7 @@ function GuiStatus() {
   * @prop {Number} editingCP=undefined; Index of currently being edited control point. If any, undefined.
   * @prop {Number} editingRegion=undefined; Index of currently being edited isotropic region. If any, undefined.
   * @prop {Boolean} previewing=false Whether preview mode is active or not.
+  * @prop {Boolean} dragAndDropping=false Whether drag and drop control point edit mode is active or not.
   */
 
     this.previewing = false;

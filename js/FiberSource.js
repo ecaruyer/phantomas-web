@@ -184,7 +184,7 @@ FiberSource.prototype = {
   interpolate: function(ts) {
   /** @function interpolate
     * @memberof FiberSource
-    * @param {array|number} ts List of "timesteps" (or a single) between 0 and 1.
+    * @param {Number[]|Number} ts List of "timesteps" (or a single) between 0 and 1.
       From a ``FiberSource``, which is a continuous representation, to a
       ``Fiber``, a discretization of the fiber trajectory.
     * @return {array} The trajectory of the fiber, discretized over the provided

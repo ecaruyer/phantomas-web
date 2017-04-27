@@ -34,7 +34,7 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
     * @memberof module:THREE.Scene
     * @desc Removes Control Point highlights. By default, only blue colored highlights, used
     * when hover.
-    * @param {boolean} [all] If true, removes red and green colored highlight as well.
+    * @param {boolean} [all] If true, removes red colored highlight as well.
     */
   var objects = [];
   this.children.forEach( function(object){
