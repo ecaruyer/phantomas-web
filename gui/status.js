@@ -49,7 +49,9 @@ GuiStatus.prototype = {
     }
 
     document.getElementById("switchViewButton").disabled = false;
-    document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+    if (!this.previewing) {
+      document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+    }
   },
   retrieve: function() {
   /** @function retrieve
@@ -82,7 +84,9 @@ GuiStatus.prototype = {
     * @desc Turns the scene into unediting status. Restores the GUI.
     */
     this.previewing = false;
-    this.dragAndDropping = false; scene.removeControls();
+    this.dragAndDropping = false;
+    scene.removeControls();
+
     document.getElementById("switchViewButton").value = "Preview";
     document.getElementById("switchViewButton").disabled = true;
     document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
