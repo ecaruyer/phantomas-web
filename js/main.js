@@ -81,6 +81,7 @@ function init() {
     makeRequest();
   } else {
     phantom = new Phantom();
+    console.log('No specified path found. Loading scratch mode.');
     show();
     setupGUI();
   }
@@ -94,7 +95,7 @@ function init() {
         if (this.status === 200) {
           phantom = loadPhantom(this.response);
         } else {
-          console.error('Error: ' + location.href.substring( location.href.indexOf('?') - 1) + ' was not found. Loading scratch mode.')
+          console.error('Error: ' + path + ' was not found. Loading scratch mode.')
           phantom = new Phantom();
         }
         show();
