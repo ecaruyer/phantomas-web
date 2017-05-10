@@ -173,11 +173,14 @@ function cpEdit(index) {
   removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 
   // As style is float, must be appended from right to left
-  if ((index != 0) & (index + 1 < fiber.controlPoints.length)) {
-    buttons.appendChild(removecpbutton);
+  buttons.appendChild(removecpbutton);
+  buttons.appendChild(newcpbutton);
+
+  if (!((index != 0) & (index + 1 < fiber.controlPoints.length))) {
+    removecpbutton.disabled = true;
   }
-  if (index + 1 < fiber.controlPoints.length) {
-    buttons.appendChild(newcpbutton);
+  if (!(index + 1 < fiber.controlPoints.length)) {
+    newcpbutton.disabled = true;
   }
 }
 
