@@ -1,18 +1,18 @@
 /** @overview Contains basic GUI constructors.*/
 /** @module GUI Construction */
 /** @var {guiStatus} guiStatus
-  * @desc Global variable indicating the current task the GUI is performing.
-  */
+ * @desc Global variable indicating the current task the GUI is performing.
+ */
 var guiStatus;
 
 function setupGUI() {
-/** @function setupGUI
-  * @memberof module:GUI Construction
-  * @desc Constructs basic-static GUI when no action has taken place yet.
-  Defines {@link guiStatus} global variable.
-  <br>Adds event listeners to window object for keyboard bindings.
-  */
-  guiStatus =  new GuiStatus();
+  /** @function setupGUI
+    * @memberof module:GUI Construction
+    * @desc Constructs basic-static GUI when no action has taken place yet.
+    Defines {@link guiStatus} global variable.
+    <br>Adds event listeners to window object for keyboard bindings.
+    */
+  guiStatus = new GuiStatus();
   resizeGUI();
 
   var fiberSelector = document.getElementById("fiberSelector");
@@ -36,13 +36,18 @@ function setupGUI() {
       };
       resizeGUI();
     };
-    option.onmouseenter = function() {phantom.addToScene(scene); optionOnMouseOver(this);};
-    option.onmouseleave = function() {  optionOnMouseLeave(this); };
+    option.onmouseenter = function() {
+      phantom.addToScene(scene);
+      optionOnMouseOver(this);
+    };
+    option.onmouseleave = function() {
+      optionOnMouseLeave(this);
+    };
     fiberSelector.appendChild(option);
     fiberSelector.className = 'enabledList';
 
     // Add the rest of the options
-    phantom.fibers.source.forEach( function(fiber, index) {
+    phantom.fibers.source.forEach(function(fiber, index) {
       var backgroundColor = fiber.color;
 
       var option = document.createElement("LI");
@@ -57,9 +62,17 @@ function setupGUI() {
       option.appendChild(selectTextSpan);
       option.className = 'optionUnselected';
 
-      option.onmouseenter = function() {phantom.fiberHighlight(index); optionOnMouseOver(this);};
-      option.onmouseleave = function() { optionOnMouseLeave(this); };
-      option.onclick = function() {fiberSelectClick(index); optionSelect(this)};
+      option.onmouseenter = function() {
+        phantom.fiberHighlight(index);
+        optionOnMouseOver(this);
+      };
+      option.onmouseleave = function() {
+        optionOnMouseLeave(this);
+      };
+      option.onclick = function() {
+        fiberSelectClick(index);
+        optionSelect(this)
+      };
       fiberSelector.appendChild(option);
     });
   } else {
@@ -84,13 +97,18 @@ function setupGUI() {
       };
       resizeGUI();
     };
-    option.onmouseenter = function() {phantom.addToScene(scene); optionOnMouseOver(this);};
-    option.onmouseleave = function() {  optionOnMouseLeave(this); };
+    option.onmouseenter = function() {
+      phantom.addToScene(scene);
+      optionOnMouseOver(this);
+    };
+    option.onmouseleave = function() {
+      optionOnMouseLeave(this);
+    };
     regionSelector.appendChild(option);
     regionSelector.className = 'enabledList';
 
     // Add the rest of the options
-    phantom.isotropicRegions.source.forEach( function(region, index) {
+    phantom.isotropicRegions.source.forEach(function(region, index) {
       var backgroundColor = region.color;
 
       var option = document.createElement("LI");
@@ -105,9 +123,17 @@ function setupGUI() {
       option.appendChild(selectColorSpan);
       option.appendChild(selectTextSpan);
 
-      option.onmouseover = function() {phantom.regionHighlight(index); optionOnMouseOver(this);};
-      option.onmouseleave = function() { optionOnMouseLeave(this); };
-      option.onclick = function() {regionSelectClick(index); optionSelect(this)};
+      option.onmouseover = function() {
+        phantom.regionHighlight(index);
+        optionOnMouseOver(this);
+      };
+      option.onmouseleave = function() {
+        optionOnMouseLeave(this);
+      };
+      option.onclick = function() {
+        regionSelectClick(index);
+        optionSelect(this)
+      };
       regionSelector.appendChild(option);
     });
   } else {
@@ -122,59 +148,64 @@ function setupGUI() {
     if (document.hasFocus()) { //Prevents events from firing when not being focused on the app
       switch (e.keyCode) {
         case 27: //Esc
-        if (guiStatus.editingFiber + 1) {
-          if (guiStatus.editingCP + 1) {
-            document.getElementById('cpSelector').childNodes[0].onclick();
-            optionOnMouseLeave(document.getElementById('cpSelector').childNodes[0]);
-          } else {
-            fiberSelector.childNodes[0].onclick();
-            optionOnMouseLeave(fiberSelector.childNodes[0]);
+          if (guiStatus.editingFiber + 1) {
+            if (guiStatus.editingCP + 1) {
+              document.getElementById('cpSelector').childNodes[0].onclick();
+              optionOnMouseLeave(document.getElementById('cpSelector').childNodes[0]);
+            } else {
+              fiberSelector.childNodes[0].onclick();
+              optionOnMouseLeave(fiberSelector.childNodes[0]);
+            }
           }
-        }
-        if (guiStatus.editingRegion + 1) {
-          regionSelector.childNodes[0].onclick();
-          optionOnMouseLeave(regionSelector.childNodes[0]);
-        }
-        break;
+          if (guiStatus.editingRegion + 1) {
+            regionSelector.childNodes[0].onclick();
+            optionOnMouseLeave(regionSelector.childNodes[0]);
+          }
+          break;
         case 80: //P
-        if (guiStatus.editingFiber | guiStatus.editingRegion) {
-          switchViewButton();
-        }
-        break;
+          if (guiStatus.editingFiber | guiStatus.editingRegion) {
+            switchViewButton();
+          }
+          break;
         case 65: //A
-        toggleAxes();
-        break;
+          toggleAxes();
+          break;
         case 88: //X
-        moveCameraXZ();
-        break;
+          moveCameraZY();
+          break;
         case 89: //Y
-        moveCameraXY();
-        break;
+          moveCameraXZ();
+          break;
         case 90: //Z
-        moveCameraZY();
-        break;
+          moveCameraXY();
+          break;
         case 83: //S
           saveClick();
-        break;
+          break;
+        case 68: //D
+            if (document.getElementById('ddbutton')) { //If does not exist, won't fire.
+              document.getElementById('ddbutton').onclick();
+            }
+          break;
         case 46: //Del
-        if (guiStatus.editingFiber + 1) {
-          if (guiStatus.editingCP + 1) {
-            document.getElementById('removecpbutton').onclick(); //If does not exist, won't fire.
-          } else {
-            removeFiberClick();
+          if (guiStatus.editingFiber + 1) {
+            if (guiStatus.editingCP + 1) {
+              if (document.getElementById('removecpbutton')) { //If does not exist, won't fire.
+                document.getElementById('removecpbutton').onclick();
+              }
+            } else {
+              removeFiberClick();
+            }
+          } else if (guiStatus.editingRegion + 1) {
+            removeIsotropicRegionClick();
           }
-        }
-        if (guiStatus.editingRegion + 1) {
-          removeIsotropicRegionClick();
-        }
-        break;
+          break;
         case 85: //U
-        if (document.getElementById('cpUndoButton')) {
-          if (!document.getElementById('cpUndoButton').disabled) {
-            document.getElementById('cpUndoButton').click();
+          if (document.getElementById('cpUndoButton')) {
+            if (!document.getElementById('cpUndoButton').disabled) {
+              document.getElementById('cpUndoButton').click();
+            }
           }
-        }
-        break;
       }
     }
   });
@@ -185,10 +216,11 @@ function setupGUI() {
 
 // Add element buttons are only available when no element is being edited
 function editExit() {
-/** @function editExit
-  * @memberof module:GUI Construction
-  * @desc Removes any edition UI. Adds new element buttons.
-  */
+  /** @function editExit
+   * @memberof module:GUI Construction
+   * @desc Removes any edition UI. Adds new element buttons.
+   */
+  scene.remove(dragAndDrop); //In case of being present
   var editGUI = document.getElementById('editGUI');
   editGUI.innerHTML = ""
 
@@ -197,13 +229,17 @@ function editExit() {
   newfiberbutton.style.float = "right";
   newfiberbutton.innerHTML = "New Fiber";
   newfiberbutton.className = "w3-btn w3-hover-green w3-border w3-border-white"
-  newfiberbutton.onclick = function() { newFiberClick() };
+  newfiberbutton.onclick = function() {
+    newFiberClick()
+  };
 
   var newregionbutton = document.createElement("BUTTON");
   newregionbutton.style.float = "right";
   newregionbutton.innerHTML = "New Region";
   newregionbutton.className = "w3-btn w3-hover-green w3-border w3-border-white"
-  newregionbutton.onclick = function() { newIsotropicRegionClick() };
+  newregionbutton.onclick = function() {
+    newIsotropicRegionClick()
+  };
 
   // As style is float, must be appended from right to left
   editGUI.appendChild(newregionbutton);

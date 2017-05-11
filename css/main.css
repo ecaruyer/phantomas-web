@@ -44,13 +44,15 @@ ul, li {
 }
 .optionOnMouseOver {
   font-weight:bold;
+  background-color: DimGrey;
 }
 .optionSelectedAndOnMouseOver {
+  background-color: DimGrey;
   padding-left: 20px;
   color:yellow;
   font-weight:bold;
 
-  font-style: oblique;
+  /*font-style: oblique;*/
 }
 
 #leftGUI {
@@ -76,7 +78,7 @@ ul, li {
   float: right;
   text-align: center;
   display: inline-block;
-  
+
   width: 4%;
 
   margin: 0;

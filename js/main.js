@@ -1,7 +1,6 @@
 /** @overview Main file. Contains {@link init}, {@link render}, {@link animate} and {@link show} functions, as well as main global functions and constants.
 */
-var mesh, renderer, scene, camera, directionalLight, controls, phantom;
-window.onload = init;
+var mesh, renderer, scene, camera, directionalLight, controls, phantom, dragAndDrop;
 var container = document.getElementById('container');
 var meshConstraints = {
   /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
@@ -18,7 +17,7 @@ var meshConstraints = {
   * @property {Number} maxMeshIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in a single mesh
   */
     maxTotalAxialSegments: 1440,
-    maxMeshAxialSegments: 128,
+    maxMeshAxialSegments: 64,
 
     maxTotalRadialSegments: 480,
     maxMeshRadialSegments: 32,
@@ -27,7 +26,7 @@ var meshConstraints = {
     maxMeshLineSegments: 128,
 
     maxTotalSkeletonSphereSegments: 240,
-    maxMeshSkeletonSphereSegments: 32,
+    maxMeshSkeletonSphereSegments: 16,
 
     maxTotalIsotropicRegionSegments: 1024,
     maxMeshIsotropicRegionSegments: 32
@@ -52,6 +51,9 @@ function roundToPrecision(number) {
   number /= 10 * precision;
   return number;
 }
+
+
+window.onload = init;
 
 
 function render() {
@@ -79,6 +81,7 @@ function init() {
     makeRequest();
   } else {
     phantom = new Phantom();
+    console.log('No specified path found. Loading scratch mode.');
     show();
     setupGUI();
   }
@@ -92,7 +95,7 @@ function init() {
         if (this.status === 200) {
           phantom = loadPhantom(this.response);
         } else {
-          console.error('Error: ' + location.href.substring( location.href.indexOf('?') - 1) + ' was not found. Loading scratch mode.')
+          console.error('Error: ' + path + ' was not found. Loading scratch mode.')
           phantom = new Phantom();
         }
         show();

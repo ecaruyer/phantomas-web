@@ -28,8 +28,9 @@ function cpEdit(index) {
   // Called on each CP position selector
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
+    scene.removeCPHighlight();
     phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
-    document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
+    document.getElementById('guiFiberLength').innerHTML = roundToPrecision(fiber.length);
     undobutton.disabled = false;
   }
 
@@ -89,34 +90,65 @@ function cpEdit(index) {
   position.appendChild(buttons);
   buttons.innerHTML = "&nbsp;&nbsp;&nbsp;"
 
+  var ddbutton = document.createElement("BUTTON");
+  ddbutton.id = 'ddbutton';
+  if (guiStatus.dragAndDropping) { //Acting only when hovering over CPs
+    ddbutton.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
+  } else {
+    ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple';
+  }
+  ddbutton.tile = "Drag and Drop point to edit it";
+  ddbutton.style = 'margin-top: 10px; margin-bottom: 10px';
+  ddbutton.innerHTML = '<i class="icons">&#xE901;</i>';
+  ddbutton.onclick = function() {
+    undobutton.disabled = false;
+    if (!guiStatus.dragAndDropping) {
+      guiStatus.dragAndDropping = true;
+      this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
+      xvalue.disabled = true;
+      yvalue.disabled = true;
+      zvalue.disabled = true;
+      dragAndDrop();
+    } else {
+      guiStatus.dragAndDropping = false;
+      this.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+      xvalue.disabled = false;
+      yvalue.disabled = false;
+      zvalue.disabled = false;
+      scene.removeControls();
+    }
+  }
+  buttons.appendChild(ddbutton);
+
+
   var undobutton = document.createElement("BUTTON");
   undobutton.id = 'cpUndoButton';
   undobutton.tile = "Undo (U)";
   undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
-  undobutton.style = 'margin-bottom: 10px';
-  undobutton.innerHTML = "Undo";
-  // If nothing to undo, button is disabled. If something to, bluepoint of editing is shown.
+  undobutton.style = ddbutton.style;
+  undobutton.innerHTML = '<i class="icons">&#xE900;</i>';
+  // If nothing to undo, button is disabled. If something to, greenpoint of editing is shown.
   if (
     former[0] == Number(xvalue.value) &&
     former[1] == Number(yvalue.value) &&
     former[2] == Number(zvalue.value)
   ) {
     undobutton.disabled = true;
-  } else {
-    phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
   }
 
   // guiStatus.former created earlier is recovered when undoing.
   undobutton.onclick = function() {
-    cpValueOnChange(index, 'x', former[0]);
-    xvalue.value = former[0];
-    cpValueOnChange(index, 'y', former[1]);
-    yvalue.value = former[1];
-    cpValueOnChange(index, 'z', former[2]);
-    zvalue.value = former[2];
+    scene.removeControls();
 
-    scene.removeCPHighlight();
-    this.disabled = true;
+    xvalue.value = former[0]; xvalue.onchange();
+    yvalue.value = former[1]; yvalue.onchange();
+    zvalue.value = former[2]; zvalue.onchange();
+
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    } else {
+      this.disabled = true;
+    }
   }
   buttons.appendChild(undobutton);
 
@@ -128,8 +160,9 @@ function cpEdit(index) {
   newcpbutton.className = 'w3-btn w3-hover-green w3-border w3-border-white w3-small w3-ripple'
   newcpbutton.innerHTML = "New CP";
   newcpbutton.onmouseenter = function() { newCPonmouseover(guiStatus.editingFiber, guiStatus.editingCP); };
-  newcpbutton.onmouseleave = function() { newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP);  }
+  newcpbutton.onmouseleave = function() { fiber = newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP); } // It is necessary to renovate the reference
   newcpbutton.onclick = function() { newCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
+
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
@@ -140,11 +173,14 @@ function cpEdit(index) {
   removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
 
   // As style is float, must be appended from right to left
-  if ((index != 0) & (index + 1 < fiber.controlPoints.length)) {
-    buttons.appendChild(removecpbutton);
+  buttons.appendChild(removecpbutton);
+  buttons.appendChild(newcpbutton);
+
+  if (!((index != 0) & (index + 1 < fiber.controlPoints.length))) {
+    removecpbutton.disabled = true;
   }
-  if (index + 1 < fiber.controlPoints.length) {
-    buttons.appendChild(newcpbutton);
+  if (!(index + 1 < fiber.controlPoints.length)) {
+    newcpbutton.disabled = true;
   }
 }
 
@@ -159,6 +195,7 @@ function exitCPedit() {
   var cpTable = document.getElementById("cpTable");
 
   editGUI.removeChild(cpTable);
+  scene.removeControls();
   scene.removeCPHighlight(true);
   guiStatus.editing('CP', undefined);
 

@@ -34,7 +34,7 @@ THREE.Scene.prototype.removeCPHighlight = function(all) {
     * @memberof module:THREE.Scene
     * @desc Removes Control Point highlights. By default, only blue colored highlights, used
     * when hover.
-    * @param {boolean} [all] If true, removes red and green colored highlight as well.
+    * @param {boolean} [all] If true, removes red colored highlight as well.
     */
   var objects = [];
   this.children.forEach( function(object){
@@ -422,13 +422,14 @@ Phantom.prototype = {
       * @desc Overlays a colored slightly bigger sphere over a control point. Used for
       the user focusing in this element.
       <br>Will {@link render}.
+      * @returns {THREE.MeshBasicMaterial} The highlight mesh
       * @param {Number} fiberindex Index of the fiber containing the control point to highlight.
       * @param {Number} controlpointindex Index of the control point to highlight.
       * @param {String} mode Highlight mode:
       <ul>
       <li>'red': Red color. This is the only one not be removed by {@link THREE.Scene.removeCPHighlight} unless specified.
       <li>'blue': Blue color.
-      <li>'green': Green color.</ul>
+      <li>'green': Green color. This one is 90% the size to avoid bad rendering in clashes with the orthers.</ul>
       */
 
     scene.removeCPHighlight();
@@ -455,6 +456,9 @@ Phantom.prototype = {
         break;
       case 'green':
         mesh.material.color = new THREE.Color(0x00FF00);
+        mesh.scale.x = 0.9;
+        mesh.scale.y = 0.9;
+        mesh.scale.z = 0.9;
         // this will be later used for filtering which points are to be removed.
         mesh.isBlueHighlight = true;
         break;
@@ -465,6 +469,8 @@ Phantom.prototype = {
 
     scene.add(mesh);
     render();
+
+    return mesh;
   },
   revealSkeleton: function(scene, n) {
   /** @function revealSkeleton

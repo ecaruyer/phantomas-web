@@ -1,24 +1,28 @@
 .. -*- coding: utf-8 -*-
+.. raw:: html
+
+  <link rel="icon" href="../../icons/favicon.ico">
+
 
 ===========================================
-Phantomas Web Designer
+User Documentation
 ===========================================
 ------------------------------------------
- User Documentation
+Phantom |alpha| s Web Designer
 ------------------------------------------
 
-:Author: Guillem González Vela, Emmanuel Caruyer - Firstname.Lastname@irisa.fr
+:Author: Guillem González Vela, Emmanuel Caruyer - Firstname.Lastname\@irisa.fr
 :License: `BSD 2-Clause License`_
-:Source: Phantomas Web Designer is on GitHub_
+:Source: Phantom |alpha| s Web Designer is on GitHub_
 
 .. _BSD 2-Clause License: ../../LICENSE
 .. _GitHub: https://github.com/ecaruyer/phantomas-web
 
-Phantomas Web Designer is a graphical interface for creation and
+Phantom |alpha| s Web Designer is a graphical interface for creation and
 edition of phantoms
-to be used in `Phantomas`_.
+to be used in Phantom |alpha| s (`link`_ to Phantom |alpha| s' homepage).
 
-.. _Phantomas: http://www.emmanuelcaruyer.com/phantomas.php
+.. _link: http://www.emmanuelcaruyer.com/phantomas.php
 
 .. contents::
 .. section-numbering::
@@ -26,7 +30,7 @@ to be used in `Phantomas`_.
 
 Requirements
 =====================
-Phantomas Web Designer was tested on
+Phantom |alpha| s Web Designer was tested on
 `Mozilla Firefox`_. Although, it is fully compatible
 with any modern internet navigator.
 
@@ -40,7 +44,7 @@ Capabilities
 Using this app you will be able to
 
   - Load or create from scratch any phantom model and save it as a
-    JSON Phantomas file
+    JSON Phantom |alpha| s file
   - Visualize any phantom model and its structure and components individually
     in a lightweight, three-dimensional and fully interactive interface.
   - Add and remove fibers and isotropic regions in the phantom.
@@ -52,11 +56,11 @@ Using this app you will be able to
 Definition of a fiber bundle
 -----------------------------
 
-A fiber bundle in Phantomas is defined as a cylindrical tube wrapped around
+A fiber bundle in Phantom |alpha| s is defined as a cylindrical tube wrapped around
 its centerline. The centerline itself is a continuous curve in
 3D, and can be simply created from a few control points.
 
-This app uses the same specifications as Phantomas. More information
+This app uses the same specifications as Phantom |alpha| s. More information
 may be found in its documentation_.
 
 .. _documentation: http://www.emmanuelcaruyer.com/phantomas/fiber_bundle.html
@@ -64,10 +68,9 @@ may be found in its documentation_.
 
 Basic Usage
 =====================
-
 .. contents:: :local:
 
-Phantomas Web Designer divides the window in three panels:
+Phantom |alpha| s Web Designer divides the window in three panels:
 
 - Left panel allows you to navigate through the elements and edit them
 - Central panel displays the fiber in a what-you-see-is-what-you-get manner.
@@ -85,11 +88,11 @@ The largest panel displays the current phantom layout. At start, view is from
 plane XY.
 
 You may click to rotate, right-click to pan and use the mouse wheel to zoom.
-The view may be restored at any time by using the (`right panel`_)
+The view may be restored at any time by using the `right panel`_
 camera placements.
 
 To identify and view the structure of individual phantom elements, you may use
-the (`left panel`_) element navigator.
+the `left panel`_ element navigator.
 
 Left panel
 -----------------------
@@ -140,7 +143,7 @@ The editable elements in a fiber concern:
 
     + Outgoing
 
-A selection list for the fibers' control points will is available
+A selection list for the fibers' control points is available
 at the bottom.
 Hovering those will also highglight them in the scene to help identifying.
 
@@ -165,7 +168,22 @@ different colors in the scene:
 
 A control point is saved whenever its edition is quitted. When position was
 changed, the former version is on the scene in red color while the one to
-be saved is in green. The former may be recovered by pressing the *Undo* button.
+be saved is in green. The former may be recovered by pressing the *Undo* button,
+marked with an arrow.
+
+Position may be edited manually by using the given fields. As well, by clicking
+on the *Drag and Drop* button, marked with a pointer. This option will disable
+the manual fields while allowing an interactive edition in the scene itself.
+
+.. image:: img/draganddrop.png
+    :align: center
+
+The interactive edition allows different liberty grades:
+
+  - *Axes*, by using the arrows shown.
+  - *Planes*, by dragging the planes formed between the arrows.
+
+  - *The screen plane*, by clicking directly on the point.
 
 *New CP* button creates a new control point. It is to be
 placed in the mid-point between the current and the next one. *Remove CP*
@@ -175,7 +193,7 @@ removes the current control point after asking for confirmation.
 
 Right panel
 -----------------------
-Right panel concerns everything regarding the visualisation.
+Right panel concerns everything regarding the visualization.
 
 .. image:: img/rightpanel.png
     :align: center
@@ -184,12 +202,14 @@ Options are:
 
   - *Preview Switch*: Only available in editing mode.
     Allows the user to preview the phantom with any fade. Does not affect
-    the edition. Unactivate in the screenshot.
+    the edition. Unactive in the screenshot above.
   - *Axes Switch*: Shows and hides the coordinates axis. Active
-    in the screenshot. Each axis has a different color:
+    in the screenshot above. Each axis features a different color:
+
     + Red for X
-    + Blue for Y
-    + Green for Z
+    + Green for Y
+    + Blue for Z
+
   - *Position*: Move the scene to XY, XZ or ZY plane.
 
   - *Opacity*: Select [0 - 50%] the opacity of the faded elements.
@@ -199,7 +219,7 @@ Export Phantom
 At bottom-right corner the export button allows you, at any moment, to download
 the JSON file for the current phantom.
 
-The file is compatible with Phantomas and may be loaded as well in Phantomas
+The file is compatible with Phantom |alpha| s and may be loaded as well in Phantom |alpha| s
 Web Designer for further edition.
 
 Keyboard Shortcuts
@@ -211,13 +231,15 @@ Esc    Exit current edit
 ----  ---------------------------------------------
 P      Switch preview mode
 ----  ---------------------------------------------
+D      Switch drag and drop controls
+----  ---------------------------------------------
 A      Switch axes
 ----  ---------------------------------------------
-X      Move to XZ plane
+X      Move to X=0 plane
 ----  ---------------------------------------------
-Y      Move to XY plane
+Y      Move to Y=0 plane
 ----  ---------------------------------------------
-Z      Move to ZY plane
+Z      Move to Z=0 plane
 ----  ---------------------------------------------
 S      Save phantom
 ----  ---------------------------------------------
@@ -228,7 +250,24 @@ Del    Remove current element
 
 Source Code
 ============================
-Phantomas Web Designer is open source and may be
+Phantom |alpha| s Web Designer is open source and may be
 `downloaded and forked on GitHub`_. Pull Requests are welcome!
 
 .. _downloaded and forked on GitHub: https://github.com/ecaruyer/phantomas-web
+
+
+.. raw:: html
+
+  <center><br><br><br>
+
+-----------------------------------------
+
+This document was generated on |date| at |time|.
+
+
+
+.. |alpha| unicode:: U+03B1 .. alpha
+  :trim:
+
+.. |date| date::
+.. |time| date:: %H:%M

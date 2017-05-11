@@ -9,6 +9,7 @@ function switchViewButton() {
   * @desc Handler for preview button. Switches fade of the scene.
 */
   var button = document.getElementById('switchViewButton');
+
   if (!guiStatus.previewing) {
     phantom.addToScene(scene);
     button.value = "Back";
@@ -19,6 +20,10 @@ function switchViewButton() {
     guiStatus.retrieve();
     button.className = 'w3-btn w3-hover-aqua w3-border w3-block w3-ripple';
     button.value = "Preview";
+  }
+
+  if (guiStatus.dragAndDropping) {
+    dragAndDrop();
   }
 }
 
@@ -71,10 +76,13 @@ function cpSelectClick(fiberindex, cpindex, notclicked) {
   */
   if (!notclicked) {
     guiStatus.formerCP = phantom.fibers.source[fiberindex].controlPoints[cpindex].slice(0);
+    guiStatus.dragAndDropping = false;
+    cpEdit(cpindex);
   }
   phantom.cpHighlight(fiberindex, cpindex, 'red');
-  cpEdit(cpindex);
+  phantom.cpHighlight(fiberindex, cpindex, 'green');
   guiStatus.editing('CP', cpindex);
+  scene.removeControls();
 }
 
 // NEW MESH BUTTONS
@@ -163,7 +171,7 @@ function newCPonmouseover(fiber, cp) {
 */
   phantom.addCP(fiber, cp);
   phantom.addToScene(scene);
-  fiberSelectClick(fiber, true)
+  fiberSelectClick(fiber, true);
   phantom.cpHighlight(fiber, cp, 'red');
   phantom.cpHighlight(fiber, cp + 1, 'green');
   document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
@@ -174,11 +182,15 @@ function newCPonmouseout(fiber, cp) {
   * @param {Number} index Index of the fiber in {@link Phantom} array.
   * @param {Number} cp Index of the control point in {@link FiberSource} array.
   * @desc Restores the scene after unhover in new control point button.
+  * @returns {FiberSource} Actual source object.
 */
   phantom.removeCP(fiber, cp + 1);
   phantom.addToScene(scene);
   guiStatus.retrieve();
-  document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
+  var source = phantom.fibers.source[guiStatus.editingFiber];
+  document.getElementById('guiFiberLength').innerHTML = roundToPrecision(source.length);
+
+  return source;
 }
 
 function removeCPclick(fiber, cp) {

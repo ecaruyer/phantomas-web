@@ -8,10 +8,13 @@ function GuiStatus() {
   * @prop {Number} editingCP=undefined; Index of currently being edited control point. If any, undefined.
   * @prop {Number} editingRegion=undefined; Index of currently being edited isotropic region. If any, undefined.
   * @prop {Boolean} previewing=false Whether preview mode is active or not.
+  * @prop {Boolean} dragAndDropping=false Whether drag and drop control point edit mode is active or not.
   */
 
     this.previewing = false;
     document.getElementById("switchViewButton").disabled = true;
+
+    this.dragAndDropping = false;
 
     this.editingFiber = undefined;
     this.editingCP = undefined;
@@ -46,7 +49,9 @@ GuiStatus.prototype = {
     }
 
     document.getElementById("switchViewButton").disabled = false;
-    document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+    if (!this.previewing) {
+      document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+    }
   },
   retrieve: function() {
   /** @function retrieve
@@ -60,8 +65,9 @@ GuiStatus.prototype = {
         fiberSelectClick(this.editingFiber, true);
         if (this.editingCP !== undefined) {
           cpSelectClick(this.editingFiber, this.editingCP, true);
-          if (!document.getElementById('cpUndoButton').disabled) {
-            phantom.cpHighlight(guiStatus.editingFiber, this.editingCP, 'green');
+          if (guiStatus.dragAndDropping) {
+            guiStatus.dragAndDropping = false; //Simulate D&D bare click
+            document.getElementById('ddbutton').onclick();
           }
         }
       } else if (this.editingRegion !== undefined) {
@@ -78,6 +84,9 @@ GuiStatus.prototype = {
     * @desc Turns the scene into unediting status. Restores the GUI.
     */
     this.previewing = false;
+    this.dragAndDropping = false;
+    scene.removeControls();
+
     document.getElementById("switchViewButton").value = "Preview";
     document.getElementById("switchViewButton").disabled = true;
     document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
