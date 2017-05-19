@@ -1,11 +1,11 @@
 /**@overview Contains functions regarding the isotropic region edition GUI.*/
 
 function regionEdit(index) {
-/** @function regionEdit
-  * @memberof module:GUI Construction
-  * @param {Number} index The index in the array of the fiber to edit.
-  * @desc Adds the isotropic region edition GUI.
-  */
+  /** @function regionEdit
+   * @memberof module:GUI Construction
+   * @param {Number} index The index in the array of the fiber to edit.
+   * @desc Adds the isotropic region edition GUI.
+   */
 
   resizeGUI();
   scene.removeCPHighlight(true);
@@ -22,7 +22,9 @@ function regionEdit(index) {
   removebutton.id = "removebutton";
   removebutton.id = "Remove Isotropic Region (Del)"
   removebutton.className = "w3-btn w3-hover-red w3-border w3-border-white"
-  removebutton.onclick = function() { removeIsotropicRegionClick() };
+  removebutton.onclick = function() {
+    removeIsotropicRegionClick()
+  };
   editGUI.appendChild(removebutton);
   editGUI.appendChild(document.createElement("BR"));
   editGUI.appendChild(document.createElement("BR"));
@@ -60,7 +62,7 @@ function regionEdit(index) {
   radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.isotropicRegions.source[index].radius;
   radiusvalue.onchange = function() {
-    this.value = roundToPrecision(Math.max(1 / (10*precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
+    this.value = roundToPrecision(Math.max(1 / (10 * precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
     phantom.isotropicRegions.source[index].setRadius(this.value);
     // Update the radius value in the region selector list
     document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = 'radius ' + this.value;

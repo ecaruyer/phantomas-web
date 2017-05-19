@@ -183,9 +183,9 @@ function setupGUI() {
           saveClick();
           break;
         case 68: //D
-            if (document.getElementById('ddbutton')) { //If does not exist, won't fire.
-              document.getElementById('ddbutton').onclick();
-            }
+          if (document.getElementById('ddbutton')) { //If does not exist, won't fire.
+            document.getElementById('ddbutton').onclick();
+          }
           break;
         case 46: //Del
           if (guiStatus.editingFiber + 1) {

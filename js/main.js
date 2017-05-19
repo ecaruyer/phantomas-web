@@ -1,5 +1,5 @@
 /** @overview Main file. Contains {@link init}, {@link render}, {@link animate} and {@link show} functions, as well as main global functions and constants.
-*/
+ */
 var mesh, renderer, scene, camera, directionalLight, controls, phantom, dragAndDrop;
 var meshConstraints = {
   /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
@@ -15,32 +15,32 @@ var meshConstraints = {
   * @property {Number} maxTotalIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in the scene
   * @property {Number} maxMeshIsotropicRegionSegments Maximum number of Radial Segments in Isotropic Regions to appear in a single mesh
   */
-    maxTotalAxialSegments: 1440,
-    maxMeshAxialSegments: 64,
+  maxTotalAxialSegments: 1440,
+  maxMeshAxialSegments: 64,
 
-    maxTotalRadialSegments: 480,
-    maxMeshRadialSegments: 32,
+  maxTotalRadialSegments: 480,
+  maxMeshRadialSegments: 32,
 
-    maxTotalLineSegments: 960,
-    maxMeshLineSegments: 128,
+  maxTotalLineSegments: 960,
+  maxMeshLineSegments: 128,
 
-    maxTotalSkeletonSphereSegments: 240,
-    maxMeshSkeletonSphereSegments: 16,
+  maxTotalSkeletonSphereSegments: 240,
+  maxMeshSkeletonSphereSegments: 16,
 
-    maxTotalIsotropicRegionSegments: 1024,
-    maxMeshIsotropicRegionSegments: 32
+  maxTotalIsotropicRegionSegments: 1024,
+  maxMeshIsotropicRegionSegments: 32
 }
 
 /** @constant {Number} precision
-  * @desc Number of decimal digits present in all values given. Used in {@link roundToPrecision}.
-*/
+ * @desc Number of decimal digits present in all values given. Used in {@link roundToPrecision}.
+ */
 var precision = 1; // in amount of decimal digits
 function roundToPrecision(number) {
-/** @function roundToPrecision
-  * @desc Applies precision to any value. Uses {@link precision} constant.
-  * @param {Number|String} number Number to round
-  * @return {Number} The rounded number
-  */
+  /** @function roundToPrecision
+   * @desc Applies precision to any value. Uses {@link precision} constant.
+   * @param {Number|String} number Number to round
+   * @return {Number} The rounded number
+   */
 
   // Correct type
   number = Number(number);
@@ -56,27 +56,28 @@ window.onload = init;
 
 
 function render() {
-/** @function render
-  * @desc Renders the scene. Must be called anytime the scene is changed.
-  */
+  /** @function render
+   * @desc Renders the scene. Must be called anytime the scene is changed.
+   */
   renderer.render(scene, camera);
 }
 
 function animate() {
-/** @function animate
-  * @desc Called recursively. Updates the controls as well.
-  */
-  requestAnimationFrame( animate );
+  /** @function animate
+   * @desc Called recursively. Updates the controls as well.
+   */
+  requestAnimationFrame(animate);
   controls.update();
 }
+
 function init() {
-/** @function init
-  * @desc To be called when page is loaded, initialises the app. Starting from a XMLHttpRequest,
-  calls [show()]{@link show} and [setupGUI()]{@link module:GUI Construction.setupGUI}.
-  */
+  /** @function init
+    * @desc To be called when page is loaded, initialises the app. Starting from a XMLHttpRequest,
+    calls [show()]{@link show} and [setupGUI()]{@link module:GUI Construction.setupGUI}.
+    */
 
   if (location.href.indexOf('?') > 0) {
-    path = location.href.substring( location.href.indexOf('?') + 1);
+    path = location.href.substring(location.href.indexOf('?') + 1);
     makeRequest();
   } else {
     phantom = new Phantom();
@@ -105,10 +106,10 @@ function init() {
   }
 }
 /** @function show
-  * @desc Initialises everything regarding the THREE.js environtment. Adds window events.
-  * @requires THREE.js
-  * @requires TrackballControls.js
-*/
+ * @desc Initialises everything regarding the THREE.js environtment. Adds window events.
+ * @requires THREE.js
+ * @requires TrackballControls.js
+ */
 function show() { // The rendering engine is initialized
   renderer = new THREE.WebGLRenderer();
   var container = document.getElementById('container');
@@ -119,19 +120,19 @@ function show() { // The rendering engine is initialized
 
   // We create a scene and a camera. Position is to be corrected further in the code.
   camera = new THREE.PerspectiveCamera(50,
-                                       container.offsetWidth / (window.innerHeight),
-                                       1,
-                                       10000);
+    container.offsetWidth / (window.innerHeight),
+    1,
+    10000);
   camera.position.set(0, 0, 0);
 
   // Create, the scene and add cameras, lights.
   scene = new THREE.Scene();
   scene.add(camera);
-  scene.add(new THREE.AmbientLight( 0xffffff, .5 ) );
+  scene.add(new THREE.AmbientLight(0xffffff, .5));
   // Directional lights are added in all directions
-  for (var x = -100; x <= 100; x=x+200) {
-    for (var y = -100; y <= 100; y=y+200) {
-      for (var z = -100; z <= 100; z=z+20) {
+  for (var x = -100; x <= 100; x = x + 200) {
+    for (var y = -100; y <= 100; y = y + 200) {
+      for (var z = -100; z <= 100; z = z + 20) {
         var directionalLight = new THREE.DirectionalLight(0x555555, .15);
         directionalLight.position.x = x;
         directionalLight.position.y = y;
@@ -149,7 +150,7 @@ function show() { // The rendering engine is initialized
   renderer.render(scene, camera);
 
   // Add mouse control to the camera
-  controls = new THREE.TrackballControls( camera , renderer.domElement );
+  controls = new THREE.TrackballControls(camera, renderer.domElement);
   controls.enableZoom = true;
   controls.rotateSpeed = 2.5;
   controls.zoomSpeed = 1;
@@ -157,23 +158,24 @@ function show() { // The rendering engine is initialized
   controls.addEventListener('change', render);
 
   // Leave confirmation. From https://stackoverflow.com/questions/10311341/confirmation-before-closing-of-tab-browser
-  window.onbeforeunload = function (e) {
+  window.onbeforeunload = function(e) {
     e = e || window.event;
 
     // For IE and Firefox prior to version 4
     if (e) {
-        e.returnValue = 'Leave Phantomas?';
+      e.returnValue = 'Leave Phantomas?';
     }
 
     // For Safari
     return 'Leave Phantomas?';
   };
-  window.addEventListener( 'resize', onWindowResize, false );
-  function onWindowResize(){
+  window.addEventListener('resize', onWindowResize, false);
+
+  function onWindowResize() {
     camera.aspect = container.offsetWidth / (window.innerHeight);
     camera.updateProjectionMatrix();
 
-    renderer.setSize( container.offsetWidth, window.innerHeight);
+    renderer.setSize(container.offsetWidth, window.innerHeight);
     render();
 
     resizeGUI();

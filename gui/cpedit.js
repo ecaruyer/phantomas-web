@@ -1,11 +1,11 @@
 /**@overview Code creating and removing the Control Point edition UI*/
 
 function cpEdit(index) {
-/** @function cpEdit
-  * @memberof module:GUI Construction
-  * @desc Constructs the Control Point edition UI for a given index of a control point.
-  * @param {Number} index The index of the Control Point to edit.
-  */
+  /** @function cpEdit
+   * @memberof module:GUI Construction
+   * @desc Constructs the Control Point edition UI for a given index of a control point.
+   * @param {Number} index The index of the Control Point to edit.
+   */
   var fiber = phantom.fibers.source[guiStatus.editingFiber];
   var cp = fiber.controlPoints[index];
   var former = guiStatus.formerCP;
@@ -140,9 +140,12 @@ function cpEdit(index) {
   undobutton.onclick = function() {
     scene.removeControls();
 
-    xvalue.value = former[0]; xvalue.onchange();
-    yvalue.value = former[1]; yvalue.onchange();
-    zvalue.value = former[2]; zvalue.onchange();
+    xvalue.value = former[0];
+    xvalue.onchange();
+    yvalue.value = former[1];
+    yvalue.onchange();
+    zvalue.value = former[2];
+    zvalue.onchange();
 
     if (guiStatus.dragAndDropping) {
       dragAndDrop();
@@ -159,9 +162,15 @@ function cpEdit(index) {
   newcpbutton.style.float = "right";
   newcpbutton.className = 'w3-btn w3-hover-green w3-border w3-border-white w3-small w3-ripple'
   newcpbutton.innerHTML = "New CP";
-  newcpbutton.onmouseenter = function() { newCPonmouseover(guiStatus.editingFiber, guiStatus.editingCP); };
-  newcpbutton.onmouseleave = function() { fiber = newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP); } // It is necessary to renovate the reference
-  newcpbutton.onclick = function() { newCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
+  newcpbutton.onmouseenter = function() {
+    newCPonmouseover(guiStatus.editingFiber, guiStatus.editingCP);
+  };
+  newcpbutton.onmouseleave = function() {
+    fiber = newCPonmouseout(guiStatus.editingFiber, guiStatus.editingCP);
+  } // It is necessary to renovate the reference
+  newcpbutton.onclick = function() {
+    newCPclick(guiStatus.editingFiber, guiStatus.editingCP);
+  }
 
 
   var removecpbutton = document.createElement("BUTTON");
@@ -170,7 +179,9 @@ function cpEdit(index) {
   removecpbutton.innerHTML = "Remove CP";
   removecpbutton.id = 'removecpbutton';
   removecpbutton.title = "Remove CP (Del)"
-  removecpbutton.onclick = function() { removeCPclick(guiStatus.editingFiber, guiStatus.editingCP); }
+  removecpbutton.onclick = function() {
+    removeCPclick(guiStatus.editingFiber, guiStatus.editingCP);
+  }
 
   // As style is float, must be appended from right to left
   buttons.appendChild(removecpbutton);
@@ -186,11 +197,11 @@ function cpEdit(index) {
 
 // Removes the whole CP edit field and creates a new one (except the CP edit field). Useful when attempting to refresh.
 function exitCPedit() {
-/** @function exitCPedit
-  * @memberof module:GUI Construction
-  * @desc Removes former Control Point edition UI.
-  <br>Restores {@link guiStatus}.
-  */
+  /** @function exitCPedit
+    * @memberof module:GUI Construction
+    * @desc Removes former Control Point edition UI.
+    <br>Restores {@link guiStatus}.
+    */
   var editGUI = document.getElementById('editGUI');
   var cpTable = document.getElementById("cpTable");
 

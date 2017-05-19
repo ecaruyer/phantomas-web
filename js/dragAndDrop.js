@@ -1,10 +1,10 @@
 /** @overview Contains THREE.js functions responsible of the Drag and Dropping feature.
-*/
+ */
 
 function dragAndDrop() {
   /** @function dragAndDrop
-    * @desc Builds or resets Drag and Drop interactive controls in the scene.
-    */
+   * @desc Builds or resets Drag and Drop interactive controls in the scene.
+   */
 
   var control = new THREE.TransformControls(camera, renderer.domElement);
 
@@ -42,10 +42,10 @@ function dragAndDrop() {
 }
 
 THREE.Scene.prototype.removeControls = function() {
-/** @method removeControls
-  * @memberof module:THREE.Scene
-  * @desc Removes all Drag and Drop controls present in the Scene.
-  */
+  /** @method removeControls
+   * @memberof module:THREE.Scene
+   * @desc Removes all Drag and Drop controls present in the Scene.
+   */
   var remove = [];
   var scene = this;
   scene.children.forEach(function(object) {
@@ -53,7 +53,7 @@ THREE.Scene.prototype.removeControls = function() {
       remove.push(object);
     }
   });
-  remove.forEach( function(object) {
+  remove.forEach(function(object) {
     object.dispose();
     scene.remove(object);
   });

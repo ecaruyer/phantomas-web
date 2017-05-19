@@ -3,20 +3,20 @@
 
 // Resizes selector objects so those fit in the screen
 function resizeGUI() {
-/** @function resizeGUI
-  * @memberof module:GUI Managers
-  * @desc Resizes element selector lists so those just take the amount of space
-  left in the screen. This avoids overflows and maintains the page size same as
-  the window size.
-  <br>Called when elements are added or removed and when window is resized.
-  */
-  
+  /** @function resizeGUI
+    * @memberof module:GUI Managers
+    * @desc Resizes element selector lists so those just take the amount of space
+    left in the screen. This avoids overflows and maintains the page size same as
+    the window size.
+    <br>Called when elements are added or removed and when window is resized.
+    */
+
   // PRIVATE FUNCTION Returns amout of window height in text lines
   function countDocumentLines() {
     // From http://stackoverflow.com/questions/4392868/javascript-find-divs-line-height-not-css-property-but-actual-line-height
-    function getLineHeight(element){
+    function getLineHeight(element) {
       var temp = document.createElement(element.nodeName);
-      temp.setAttribute("style","margin:0px;padding:0px;font-family:"+element.style.fontFamily+";font-size:"+element.style.fontSize);
+      temp.setAttribute("style", "margin:0px;padding:0px;font-family:" + element.style.fontFamily + ";font-size:" + element.style.fontSize);
       temp.innerHTML = "test";
       temp = element.parentNode.appendChild(temp);
       var ret = temp.clientHeight;
@@ -56,6 +56,6 @@ function resizeGUI() {
 
   // Final size to be between total number of elements (no select scroll) and minsize
   // 1.2 factor is due to line height correction
-  fiberSelector.style.height = (Math.min( Math.max(lines - regionNumber, minsize), fiberNumber) * 1.2).toString() + 'em';
-  regionSelector.style.height = (Math.min( Math.max(lines - fiberNumber, minsize), regionNumber) * 1.2).toString() + 'em';
+  fiberSelector.style.height = (Math.min(Math.max(lines - regionNumber, minsize), fiberNumber) * 1.2).toString() + 'em';
+  regionSelector.style.height = (Math.min(Math.max(lines - fiberNumber, minsize), regionNumber) * 1.2).toString() + 'em';
 }
