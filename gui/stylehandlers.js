@@ -63,8 +63,8 @@ function optionSelect(option) {
 }
 
 function selectOption(list, number) {
-/** @function optionSelect
-  * @memberof module:GUI Managers
+/** @function selectOption
+  * @memberof module:GUI Handlers
   * @param {DOM} list List's DOM element.
   * @param {Number} number Index of option to select
   * @desc Changes class of option as if it was clicked, given the list and its index.
