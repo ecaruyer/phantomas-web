@@ -131,5 +131,40 @@ function regionEdit(index) {
 
   regionprops.appendChild(position);
 
+  //BUTTONS UNDER Position
+  var buttons = document.createElement("LI");
+  position.appendChild(buttons);
+  buttons.innerHTML = "&nbsp;&nbsp;&nbsp;"
+
+  var ddbutton = document.createElement("BUTTON");
+  ddbutton.id = 'ddbutton';
+  if (guiStatus.dragAndDropping) { //Acting only when hovering over CPs
+    ddbutton.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
+  } else {
+    ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple';
+  }
+  ddbutton.tile = "Drag and Drop point to edit it";
+  ddbutton.style = 'margin-top: 10px; margin-bottom: 10px';
+  ddbutton.innerHTML = '<i class="icons">&#xE901;</i>';
+  ddbutton.onclick = function() {
+    // undobutton.disabled = false;
+    if (!guiStatus.dragAndDropping) {
+      guiStatus.dragAndDropping = true;
+      this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
+      xvalue.disabled = true;
+      yvalue.disabled = true;
+      zvalue.disabled = true;
+      dragAndDrop();
+    } else {
+      guiStatus.dragAndDropping = false;
+      this.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+      xvalue.disabled = false;
+      yvalue.disabled = false;
+      zvalue.disabled = false;
+      scene.removeControls();
+    }
+  }
+  buttons.appendChild(ddbutton);
+
   field.appendChild(regionprops);
 }
