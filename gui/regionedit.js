@@ -92,7 +92,7 @@ function regionEdit(index) {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('x', xvalue.value);
     if (guiStatus.dragAndDropping) {
-      dragAndDrop();
+      ddControls.refresh();
     }
   }
   xpos.appendChild(xvalue);
@@ -112,7 +112,7 @@ function regionEdit(index) {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('y', yvalue.value);
     if (guiStatus.dragAndDropping) {
-      dragAndDrop();
+      ddControls.refresh();
     }
   }
   ypos.appendChild(yvalue);

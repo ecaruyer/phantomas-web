@@ -6,8 +6,8 @@ function dragAndDrop() {
    * @desc Builds or resets Drag and Drop interactive controls in the scene.
    */
 
-  var control = new THREE.TransformControls(camera, renderer.domElement);
-  control.name = 'dragAndDrop';
+  ddControls = new THREE.TransformControls(camera, renderer.domElement);
+  ddControls.name = 'dragAndDrop';
   scene.removeControls();
 
   if (guiStatus.editingFiber+1) {
@@ -15,7 +15,7 @@ function dragAndDrop() {
     scene.removeCPHighlight();
     var object = phantom.cpHighlight(guiStatus.editingFiber, guiStatus.editingCP, 'green');
 
-    control.addEventListener('change', function() {
+    ddControls.addEventListener('change', function() {
       var pos = this.object.position;
       pos.x = roundToPrecision(pos.x);
       pos.y = roundToPrecision(pos.y);
@@ -29,7 +29,7 @@ function dragAndDrop() {
       document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
     });
 
-    control.addEventListener('mouseUp', function() {
+    ddControls.addEventListener('mouseUp', function() {
       var pos = object.position;
       phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'x', pos.x, true);
       phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'y', pos.y, true);
@@ -39,7 +39,7 @@ function dragAndDrop() {
   } else if (guiStatus.editingRegion+1) {
     var object = phantom.isotropicRegions.sphere[guiStatus.editingRegion].mesh;
 
-    control.addEventListener('change', function() {
+    ddControls.addEventListener('change', function() {
       var pos = this.object.position;
       pos.x = roundToPrecision(pos.x);
       pos.y = roundToPrecision(pos.y);
@@ -51,16 +51,19 @@ function dragAndDrop() {
       render();
     });
 
-    control.addEventListener('mouseUp', function() {
+    ddControls.addEventListener('mouseUp', function() {
       var pos = object.position;
       phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('x', pos.x, true);
       phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('y', pos.y, true);
       phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('z', pos.z);
     });
-  }
 
-  control.attach(object);
-  scene.add(control);
+    ddControls.refresh = function() {
+      ddControls.attach(phantom.isotropicRegions.sphere[guiStatus.editingRegion].mesh);
+    }
+  }
+  ddControls.attach(object);
+  scene.add(ddControls);
   render();
 }
 

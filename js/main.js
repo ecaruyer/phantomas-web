@@ -1,6 +1,6 @@
 /** @overview Main file. Contains {@link init}, {@link render}, {@link animate} and {@link show} functions, as well as main global functions and constants.
  */
-var mesh, renderer, scene, camera, directionalLight, controls, phantom, dragAndDrop;
+var mesh, renderer, scene, camera, directionalLight, controls, phantom, ddControls;
 var meshConstraints = {
   /** @constant {object} meshConstraints Constant used in {@link Phantom.addFiber} and {@link Phantom.addIsotropicRegion} for defining segments in meshes.
   Used as a parameter for WEBGL stability.

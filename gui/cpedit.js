@@ -105,9 +105,9 @@ function cpEdit(index) {
     if (!guiStatus.dragAndDropping) {
       guiStatus.dragAndDropping = true;
       this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
-      xvalue.disabled = true;
-      yvalue.disabled = true;
-      zvalue.disabled = true;
+      // xvalue.disabled = true;
+      // yvalue.disabled = true;
+      // zvalue.disabled = true;
       dragAndDrop();
     } else {
       guiStatus.dragAndDropping = false;
