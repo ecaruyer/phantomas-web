@@ -1,23 +1,23 @@
 /**@overview Contains Class definitions for {@link FiberSkeleton}, {@link FiberTube} and {@link IsotropicRegion}.*/
 
 function FiberSkeleton(fiber, parameters) {
-/** @class FiberSkeleton
-  * @classdesc FiberSkeleton creates 3D representation of control points and fiber path
-    from a given fiber.<br>
-    Subject-Observer pattern must be enabled from its {@link FiberSource} reference and fired from subject with {@link FiberSkeleton.refresh|refresh();}.
-  * @property {THREE.Line} line The thread representing the path. Ready for {@link scene}.add.
-  * @property {THREE.Mesh} spheres Big mesh containing all control-point marking spheres. Ready for {@link scene}.add.
-  * @property {FiberSource} fiber Reference to source fiber object.
-  * @property {THREE.Color} color Color of the thread.
-  * @property {Number} sphereSegments Amount of segments (in each dimension) each controlpoint sphere will feature.
-  * @property {Number} lineSegments Amount of segments the thread will feature.
-  *
-  * @param {FiberSource} fiber Reference fiber.
-  * @param {Object} [parameters] Optional parameters
-  * @param {Number} [parameters.lineSegments=256] Number of axial segments to feature in line's {@link FiberSkeleton}
-  * @param {Number} [parameters.sphereSegments=32] Number of radial segments to feature in each control point of {@link FiberSkeleton}
-  * @param {THREE.Color} [parameters.color] Color of the thread. If not specified, generated randomly from {@link colors}.
-  */
+  /** @class FiberSkeleton
+    * @classdesc FiberSkeleton creates 3D representation of control points and fiber path
+      from a given fiber.<br>
+      Subject-Observer pattern must be enabled from its {@link FiberSource} reference and fired from subject with {@link FiberSkeleton.refresh|refresh();}.
+    * @property {THREE.Line} line The thread representing the path. Ready for {@link scene}.add.
+    * @property {THREE.Mesh} spheres Big mesh containing all control-point marking spheres. Ready for {@link scene}.add.
+    * @property {FiberSource} fiber Reference to source fiber object.
+    * @property {THREE.Color} color Color of the thread.
+    * @property {Number} sphereSegments Amount of segments (in each dimension) each controlpoint sphere will feature.
+    * @property {Number} lineSegments Amount of segments the thread will feature.
+    *
+    * @param {FiberSource} fiber Reference fiber.
+    * @param {Object} [parameters] Optional parameters
+    * @param {Number} [parameters.lineSegments=256] Number of axial segments to feature in line's {@link FiberSkeleton}
+    * @param {Number} [parameters.sphereSegments=32] Number of radial segments to feature in each control point of {@link FiberSkeleton}
+    * @param {THREE.Color} [parameters.color] Color of the thread. If not specified, generated randomly from {@link colors}.
+    */
   this.fiber = fiber;
   this.points = fiber.controlPoints; //Private property
 
@@ -41,23 +41,27 @@ function FiberSkeleton(fiber, parameters) {
 
   // Create line thread
   // Interpolate points for THREE.BufferAttribute needs
-  discretePoints = new Float32Array(3*this.lineSegments+3);
+  discretePoints = new Float32Array(3 * this.lineSegments + 3);
   for (var i = 0; i <= this.lineSegments; i++) {
-    discretePoints.set([fiber.interpolate(i/this.lineSegments)[0][0],
-                         fiber.interpolate(i/this.lineSegments)[0][1],
-                         fiber.interpolate(i/this.lineSegments)[0][2]], 3*i);
+    discretePoints.set([fiber.interpolate(i / this.lineSegments)[0][0],
+      fiber.interpolate(i / this.lineSegments)[0][1],
+      fiber.interpolate(i / this.lineSegments)[0][2]
+    ], 3 * i);
   }
   // Create trajectory
   var trajectory = new THREE.BufferGeometry();
   trajectory.addAttribute('position', new THREE.BufferAttribute(discretePoints, 3));
   // Create thread material
-  var thread = new THREE.LineBasicMaterial({ color:this.color, linewidth: 1 });
+  var thread = new THREE.LineBasicMaterial({
+    color: this.color,
+    linewidth: 1
+  });
   // / Build line
   this.line = new THREE.Line(trajectory, thread);
 
   // Create sphere mesh for controlPoints
   // sphere is the prototype sphere
-  var sphere = new THREE.SphereGeometry(fiber.radius/5, this.sphereSegments, this.sphereSegments);
+  var sphere = new THREE.SphereGeometry(fiber.radius / 5, this.sphereSegments, this.sphereSegments);
   var sphereGeometry = new THREE.Geometry();
   // All spheres to be added are meshed in one single geometry
   var meshes = [];
@@ -67,18 +71,20 @@ function FiberSkeleton(fiber, parameters) {
     meshes[i].updateMatrix();
     sphereGeometry.merge(meshes[i].geometry, meshes[i].matrix);
   }
-  var surface = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+  var surface = new THREE.MeshBasicMaterial({
+    color: 0xffff00
+  });
   // Build spheres mesh
   this.spheres = new THREE.Mesh(sphereGeometry, surface);
 }
 
 FiberSkeleton.prototype.refresh = function() {
   /** @function refresh
-    * @memberof FiberSkeleton
-    * @desc Updates thread and spheres position from self properties. Must be fired when those change.
-    */
+   * @memberof FiberSkeleton
+   * @desc Updates thread and spheres position from self properties. Must be fired when those change.
+   */
   // Spheres mesh must be built again
-  var sphere = new THREE.SphereGeometry(this.fiber.radius/5, this.sphereSegments, this.sphereSegments);
+  var sphere = new THREE.SphereGeometry(this.fiber.radius / 5, this.sphereSegments, this.sphereSegments);
   var sphereGeometry = new THREE.Geometry();
   var meshes = [];
   for (var i = 0; i < this.points.length; i++) {
@@ -90,11 +96,12 @@ FiberSkeleton.prototype.refresh = function() {
   this.spheres.geometry = sphereGeometry;
 
   // Thread trajectory must be built again as well
-  var discretePoints = new Float32Array(3*this.lineSegments+3);
+  var discretePoints = new Float32Array(3 * this.lineSegments + 3);
   for (var i = 0; i <= this.lineSegments; i++) {
-    discretePoints.set([this.fiber.interpolate(i/this.lineSegments)[0][0],
-                         this.fiber.interpolate(i/this.lineSegments)[0][1],
-                         this.fiber.interpolate(i/this.lineSegments)[0][2]], 3*i);
+    discretePoints.set([this.fiber.interpolate(i / this.lineSegments)[0][0],
+      this.fiber.interpolate(i / this.lineSegments)[0][1],
+      this.fiber.interpolate(i / this.lineSegments)[0][2]
+    ], 3 * i);
   }
   var trajectory = new THREE.BufferGeometry();
   trajectory.addAttribute('position', new THREE.BufferAttribute(discretePoints, 3));
@@ -147,15 +154,18 @@ function FiberTube(fiber, parameters) {
   this.curve = Object.create(THREE.Curve.prototype); //Private property
   // .getPoint must be part of curve object
   this.curve.getPoint = function(t) {
-      var tx = fiber.interpolate(t)[0][0];
-      var ty = fiber.interpolate(t)[0][1];
-      var tz = fiber.interpolate(t)[0][2];
-  return new THREE.Vector3(tx, ty, tz);
+    var tx = fiber.interpolate(t)[0][0];
+    var ty = fiber.interpolate(t)[0][1];
+    var tz = fiber.interpolate(t)[0][2];
+    return new THREE.Vector3(tx, ty, tz);
   }
   // Geometry and materials are created
   var geometry = new THREE.TubeGeometry(this.curve,
-                        this.axialSegments , radius, this.radialSegments);
-  var material = new THREE.MeshPhongMaterial( { color:this.color, shading: THREE.FlatShading } );
+    this.axialSegments, radius, this.radialSegments);
+  var material = new THREE.MeshPhongMaterial({
+    color: this.color,
+    shading: THREE.FlatShading
+  });
   // Transparency must be enabled so to be able to fade the tube
   material.transparent = true;
   // Double side is needed so a tube appareance is acquired
@@ -164,11 +174,11 @@ function FiberTube(fiber, parameters) {
 }
 FiberTube.prototype.refresh = function() {
   /** @function refresh
-    * @memberof FiberTube
-    * @desc Updates tube shape and position from self properties. Must be fired when those change.
-    */
+   * @memberof FiberTube
+   * @desc Updates tube shape and position from self properties. Must be fired when those change.
+   */
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
-                this.axialSegments, this.fiber.radius, this.radialSegments);
+    this.axialSegments, this.fiber.radius, this.radialSegments);
 }
 
 /* IsotropicRegion creates a mesh from an IsotropicRegionSource.
@@ -229,8 +239,11 @@ function IsotropicRegion(source, parameters) {
     this.heightSegments = parameters.heightSegments;
   }
 
-  var geometry = new THREE.SphereGeometry( source.radius, this.widthSegments, this.heightSegments );
-  var material = new THREE.MeshPhongMaterial( { color:this.color, shading: THREE.FlatShading } );
+  var geometry = new THREE.SphereGeometry(source.radius, this.widthSegments, this.heightSegments);
+  var material = new THREE.MeshPhongMaterial({
+    color: this.color,
+    shading: THREE.FlatShading
+  });
   // Transparency must be enabled so to be able to fade the tube
   material.transparent = true;
   this.mesh = new THREE.Mesh(geometry, material);
@@ -238,9 +251,9 @@ function IsotropicRegion(source, parameters) {
 }
 IsotropicRegion.prototype.refresh = function() {
   /** @function refresh
-    * @memberof IsotropicRegion
-    * @desc Updates sphere position and radius from self properties. Must be fired when those change.
-    */
-    this.mesh.geometry = new THREE.SphereGeometry( this.source.radius, this.widthSegments, this.heightSegments );
-    this.mesh.position.set(this.source.center[0], this.source.center[1], this.source.center[2]);
+   * @memberof IsotropicRegion
+   * @desc Updates sphere position and radius from self properties. Must be fired when those change.
+   */
+  this.mesh.geometry = new THREE.SphereGeometry(this.source.radius, this.widthSegments, this.heightSegments);
+  this.mesh.position.set(this.source.center[0], this.source.center[1], this.source.center[2]);
 }

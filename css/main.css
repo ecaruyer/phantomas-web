@@ -14,9 +14,9 @@ input[type=number], select {
 }
 
 ul, li {
-    list-style: none;
-    padding-left:0;
-    color: white;
+  list-style: none;
+  padding-left: 0;
+  color: white;
 }
 
 .enabledList {
@@ -24,50 +24,51 @@ ul, li {
   overflow-x: hidden;
   cursor: pointer;
   padding-left: 5px;
-
   border-style: solid;
   border-width: 1px;
   border-color: grey;
   border-right: 0;
 }
+
 .disabledList {
   background-color: grey;
   padding-left: 10px;
 }
 
-.optionUnselected {
-}
+.optionUnselected {}
+
 .optionSelected {
   padding-left: 15px;
-  color:yellow;
-  font-weight:bold;
+  color: yellow;
+  font-weight: bold;
 }
-.optionOnMouseOver {
-  font-weight:bold;
-}
-.optionSelectedAndOnMouseOver {
-  padding-left: 20px;
-  color:yellow;
-  font-weight:bold;
 
-  font-style: oblique;
+.optionOnMouseOver {
+  font-weight: bold;
+  background-color: DimGrey;
+}
+
+.optionSelectedAndOnMouseOver {
+  background-color: DimGrey;
+  padding-left: 20px;
+  color: yellow;
+  font-weight: bold;
+  /*font-style: oblique;*/
 }
 
 #leftGUI {
   float: left;
   text-align: left;
   display: inline-block;
-
   width: 19%;
   margin: 0;
-	padding: .5%;
+  padding: .5%;
 }
 
 #container {
   display: inline-block;
   margin: 0;
   padding: 0;
-
   width: 73%;
   height: 99%;
 }
@@ -76,20 +77,16 @@ ul, li {
   float: right;
   text-align: center;
   display: inline-block;
-  
   width: 4%;
-
   margin: 0;
-	padding: .5%;
+  padding: .5%;
 }
 
 #bottomButtons {
   position: absolute;
   bottom: 0;
   right: 0;
-
   width: 4%;
-
   padding: .5%;
   padding-left: 0;
 }

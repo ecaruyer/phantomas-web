@@ -1,12 +1,12 @@
 /** @function loadPhantom
-  * @desc Loads a Phantom contained in a JSON file and puts it into the scene.<br>
-  * Contains all the functions necessary to translate Phantomas' JSON structure
-  * to {@link FiberSource} parameters.
-  * @param {String} string
-  * The string containing the parsed phantom variable.
-  * @return {Phantom} The phantom ready to be added to the scene.
-*/
-function loadPhantom( string ) {
+ * @desc Loads a Phantom contained in a JSON file and puts it into the scene.<br>
+ * Contains all the functions necessary to translate Phantomas' JSON structure
+ * to {@link FiberSource} parameters.
+ * @param {String} string
+ * The string containing the parsed phantom variable.
+ * @return {Phantom} The phantom ready to be added to the scene.
+ */
+function loadPhantom(string) {
   var phantom = new Phantom();
   var loadedFibers = JSON.parse(string).fiber_geometries;
   var loadedRegions = JSON.parse(string).isotropic_regions;
@@ -26,8 +26,9 @@ function loadPhantom( string ) {
       var newcp = [];
       for (var i = 0; i < fiber.control_points.length; i = i + 3) {
         newcp.push([roundToPrecision(fiber.control_points[i]),
-                    roundToPrecision(fiber.control_points[i+1]),
-                    roundToPrecision(fiber.control_points[i+2])]);
+          roundToPrecision(fiber.control_points[i + 1]),
+          roundToPrecision(fiber.control_points[i + 2])
+        ]);
       }
       phantom.addFiber(new FiberSource(newcp, fiber.tangents, roundToPrecision(fiber.radius), fiber.color), parameters);
     }

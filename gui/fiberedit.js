@@ -1,11 +1,11 @@
 /**@overview Contains functions regarding the fiber edition GUI.*/
 
-function fiberEdit( index ) {
-/** @function fiberEdit
-  * @memberof module:GUI Construction
-  * @param {Number} index The index in the array of the fiber to edit.
-  * @desc Adds the fiber edition GUI.
-*/
+function fiberEdit(index) {
+  /** @function fiberEdit
+   * @memberof module:GUI Construction
+   * @param {Number} index The index in the array of the fiber to edit.
+   * @desc Adds the fiber edition GUI.
+   */
   scene.removeCPHighlight(true);
 
   // editGUI is emptied
@@ -20,7 +20,9 @@ function fiberEdit( index ) {
   removebutton.id = "removebutton";
   removebutton.title = "Remove Fiber (Del)"
   removebutton.className = "w3-btn w3-hover-red w3-border w3-border-white"
-  removebutton.onclick = function() { removeFiberClick() };
+  removebutton.onclick = function() {
+    removeFiberClick()
+  };
   editGUI.appendChild(removebutton);
   editGUI.appendChild(document.createElement("BR"));
   editGUI.appendChild(document.createElement("BR"));
@@ -70,7 +72,7 @@ function fiberEdit( index ) {
   radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.fibers.source[index].radius;
   radiusvalue.onchange = function() {
-    this.value = roundToPrecision(Math.max(1 / (10*precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
+    this.value = roundToPrecision(Math.max(1 / (10 * precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
     phantom.fibers.source[index].radius = this.value;
     phantom.fibers.source[index].notify();
   }
@@ -115,11 +117,11 @@ function fiberEdit( index ) {
 
 // This is a separate function so it may be refreshed independently
 function addCPselect() {
-/** @function addCPselect
-  * @memberof module:GUI Construction
-  * @desc Adds the control point selector UI for the current fiber.
-  <br>Built in a separate function so it may be refreshed independently.
-  */
+  /** @function addCPselect
+    * @memberof module:GUI Construction
+    * @desc Adds the control point selector UI for the current fiber.
+    <br>Built in a separate function so it may be refreshed independently.
+    */
 
   var editGUI = document.getElementById('editGUI');
 
@@ -145,7 +147,7 @@ function addCPselect() {
   // cplist.size = phantom.fibers.source[fiberindex].controlPoints.length + 1;
   cplist.id = 'cpSelector';
   cplist.style.width = '60px'
-  cplist.onmouseenter = function () {
+  cplist.onmouseenter = function() {
     if (cplist.childNodes[0].className == 'optionUnselected') {
       scene.removeCPHighlight();
       cpEdit(guiStatus.editingCP);
@@ -153,7 +155,7 @@ function addCPselect() {
       scene.removeCPHighlight(true);
     }
   };
-  cplist.onmouseleave = function () {
+  cplist.onmouseleave = function() {
     guiStatus.retrieve();
   }
 
@@ -162,13 +164,13 @@ function addCPselect() {
   option.innerHTML = '*n*'
   option.title = "Exit edit (Esc)"
   option.className = 'optionSelected';
-  option.onmouseenter = function () {
+  option.onmouseenter = function() {
     optionOnMouseOver(this);
   }
   option.onmouseleave = function() {
     optionOnMouseLeave(this);
   }
-  option.onclick = function () {
+  option.onclick = function() {
     exitCPedit();
     optionSelect(this);
   };
