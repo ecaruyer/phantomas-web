@@ -311,7 +311,7 @@ IsotropicRegionSource.prototype = {
     }
     render();
   },
-  setCenter: function(axis, value) {
+  setCenter: function(axis, value, notrefresh) {
     /** @function setCenter
      * @memberof IsotropicRegionSource
      * @param {string} axis Axis in which to apply the new value
@@ -331,7 +331,10 @@ IsotropicRegionSource.prototype = {
       default:
         console.error('Incorrect axis label for IsotropicRegion.setCenter(label, value)');
     }
-    this.notify();
+
+    if (!notrefresh) {
+      this.notify();
+    }
   },
   setRadius: function(radius) {
     /** @function setRadius
