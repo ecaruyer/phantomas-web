@@ -91,6 +91,9 @@ function regionEdit(index) {
   xvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('x', xvalue.value);
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
   }
   xpos.appendChild(xvalue);
   positionul.appendChild(xpos);
@@ -108,6 +111,9 @@ function regionEdit(index) {
   yvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('y', yvalue.value);
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
   }
   ypos.appendChild(yvalue);
   positionul.appendChild(ypos);
@@ -125,6 +131,9 @@ function regionEdit(index) {
   zvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('z', zvalue.value);
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
   }
   zpos.appendChild(zvalue);
   positionul.appendChild(zpos);
@@ -151,16 +160,10 @@ function regionEdit(index) {
     if (!guiStatus.dragAndDropping) {
       guiStatus.dragAndDropping = true;
       this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
-      xvalue.disabled = true;
-      yvalue.disabled = true;
-      zvalue.disabled = true;
       dragAndDrop();
     } else {
       guiStatus.dragAndDropping = false;
       this.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
-      xvalue.disabled = false;
-      yvalue.disabled = false;
-      zvalue.disabled = false;
       scene.removeControls();
     }
   }
