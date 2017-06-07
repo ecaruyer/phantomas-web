@@ -57,7 +57,6 @@ function regionSelectClick(index, notclicked) {
     * @desc Events to be fired when an isotropic region was selected in the list.
     <br>May be called to tweak the scene.
     */
-  guiStatus.editing('region', index);
   if (!notclicked) {
     guiStatus.editing('region', index);
     regionEdit(index);
@@ -308,6 +307,10 @@ function opacitySelectChange(selector) {
 
   phantom.highlightOpacity = selector.value / 100;
   guiStatus.retrieve();
+
+  if ((guiStatus.editingRegion + 1) & (guiStatus.dragAndDropping) ) {
+    dragAndDrop()
+  }
 }
 
 function saveClick() {

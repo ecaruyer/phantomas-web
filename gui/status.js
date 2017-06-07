@@ -73,6 +73,10 @@ GuiStatus.prototype = {
         }
       } else if (this.editingRegion !== undefined) {
         regionSelectClick(this.editingRegion, true)
+        if (guiStatus.dragAndDropping) {
+          guiStatus.dragAndDropping = false; //Simulate D&D bare click
+          document.getElementById('ddbutton').onclick(); console.log('jaja');
+        }
       } else {
         phantom.addToScene(scene);
         editExit();

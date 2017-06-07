@@ -57,10 +57,6 @@ function dragAndDrop() {
       phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('y', pos.y, true);
       phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('z', pos.z);
     });
-
-    ddControls.refresh = function() {
-      ddControls.attach(phantom.isotropicRegions.sphere[guiStatus.editingRegion].mesh);
-    }
   }
   ddControls.attach(object);
   scene.add(ddControls);

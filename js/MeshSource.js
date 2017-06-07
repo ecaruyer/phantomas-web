@@ -207,7 +207,7 @@ function IsotropicRegion(source, parameters) {
     * @classdesc IsotropicRegion creates a 3D representation of an Isotropic Region.
     <br>Subject-Observer pattern must be enabled from its {@link FiberSource} reference and fired from subject with {@link FiberSkeleton.refresh|refresh();}.
     * @property {THREE.Mesh} mesh Mesh containing the Isotropic Region sphere. Ready for {@link scene}.add.
-    * @property {IsotropicRegionSource} fiber Reference to source fiber object.
+    * @property {IsotropicRegionSource} source Reference to source isotropic region object.
     * @property {THREE.Color} color Color of the sphere.
     * @property {Number} widthSegments Amount of width segments to feature in the sphere mesh.
     * @property {Number} heightSegments Amount of height segments to feature in the sphere mesh.
