@@ -28,9 +28,15 @@ function switchViewButton() {
 }
 
 function toggleSkeleton() {
+  var button = document.getElementById('skeletonButton');
+  if (guiStatus.skeleting) {
+    button.className = 'w3-btn w3-border w3-hover-grey w3-block w3-ripple';
+    guiStatus.skeleting = false;
+  } else {
+    guiStatus.skeleting = true;
+    button.className = 'w3-button w3-white w3-border w3-hover-grey w3-block w3-ripple'
+  }
 
-
-  console.log('——————————▒▒▒░░░░░░░░░░▄▐░░░░ ▒░░░░░░▄▄▄░░▄██▄░░░ ░░░░░░▐▀█▀▌░░░░▀█▄░ ░░░░░░▐█▄█▌░░░░░░▀█▄ ░░░░░░░▀▄▀░░░▄▄▄▄▄▀▀ ░░░░░▄▄▄██▀▀▀▀░░░░░ ░░░░█▀▄▄▄█░▀▀░░░░░░ ░░░░▌░▄▄▄▐▌▀▀▀░░░░░ ░▄░▐░░░▄▄░█░▀▀░░░░░ ░▀█▌░░░▄░▀█▀░▀░░░░░ ░░░░░░░░▄▄▐▌▄▄░░░░░ ░░░░░░░░▀███▀█░▄░░░ ░░░░░░░▐▌▀▄▀▄▀▐▄░░░ ░░░░░░░▐▀░░░░░░▐▌░░ ░░░░░░░█░░░░░░░░█░░ ░░░░░░▐▌░░░░░░░░░█░ ');
 }
 
 

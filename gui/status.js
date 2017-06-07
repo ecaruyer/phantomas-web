@@ -19,6 +19,7 @@ function GuiStatus() {
   this.editingFiber = undefined;
   this.editingCP = undefined;
   this.editingRegion = undefined;
+  this.skeleting = undefined;
 }
 
 GuiStatus.prototype = {
