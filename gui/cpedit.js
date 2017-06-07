@@ -28,10 +28,13 @@ function cpEdit(index) {
   // Called on each CP position selector
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
-    scene.removeCPHighlight();
+    // scene.removeCPHighlight();
     phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
     document.getElementById('guiFiberLength').innerHTML = roundToPrecision(fiber.length);
     undobutton.disabled = false;
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
   }
 
   var xpos = document.createElement("LI");
