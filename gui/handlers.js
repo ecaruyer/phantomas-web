@@ -27,6 +27,13 @@ function switchViewButton() {
   }
 }
 
+function toggleSkeleton() {
+
+
+  console.log('——————————▒▒▒░░░░░░░░░░▄▐░░░░ ▒░░░░░░▄▄▄░░▄██▄░░░ ░░░░░░▐▀█▀▌░░░░▀█▄░ ░░░░░░▐█▄█▌░░░░░░▀█▄ ░░░░░░░▀▄▀░░░▄▄▄▄▄▀▀ ░░░░░▄▄▄██▀▀▀▀░░░░░ ░░░░█▀▄▄▄█░▀▀░░░░░░ ░░░░▌░▄▄▄▐▌▀▀▀░░░░░ ░▄░▐░░░▄▄░█░▀▀░░░░░ ░▀█▌░░░▄░▀█▀░▀░░░░░ ░░░░░░░░▄▄▐▌▄▄░░░░░ ░░░░░░░░▀███▀█░▄░░░ ░░░░░░░▐▌▀▄▀▄▀▐▄░░░ ░░░░░░░▐▀░░░░░░▐▌░░ ░░░░░░░█░░░░░░░░█░░ ░░░░░░▐▌░░░░░░░░░█░ ');
+}
+
+
 // disable booleans must be true when the user does not click directly the option.
 // This saves resources by not rebuilding editingGUI and does not reclick selectors, which would be annoying.
 function fiberSelectClick(index, notclicked) {
