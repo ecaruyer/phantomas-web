@@ -152,7 +152,7 @@ function regionEdit(index) {
   } else {
     ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple';
   }
-  ddbutton.tile = "Drag and Drop point to edit it";
+  ddbutton.title = "Drag and Drop (D)";
   ddbutton.style = 'margin-top: 10px; margin-bottom: 10px';
   ddbutton.innerHTML = '<i class="icons">&#xE901;</i>';
   ddbutton.onclick = function() {

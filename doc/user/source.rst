@@ -125,6 +125,11 @@ The editable elements in a region concern:
 
   - Its position (x y z)
 
+Drag and Drop interactive controls for editing the position of the isotropic
+region can be deployed by clicking the button under the position fields.
+When drag and drop controls are active it stays yellow (as shown in the picture)
+and it can be turned off at any moment by clicking over again.
+
 Editing a Fiber
 ```````````````````````````````````````
 .. image:: img/fiberedit.png
@@ -172,8 +177,8 @@ be saved is in green. The former may be recovered by pressing the *Undo* button,
 marked with an arrow.
 
 Position may be edited manually by using the given fields. As well, by clicking
-on the *Drag and Drop* button, marked with a pointer. This option will disable
-the manual fields while allowing an interactive edition in the scene itself.
+on the *Drag and Drop* button, marked with a pointer. This option will allow an
+interactive edition in the scene itself.
 
 .. image:: img/draganddrop.png
     :align: center
