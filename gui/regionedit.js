@@ -36,28 +36,31 @@ function regionEdit(index) {
 
   // TITLE AND COLOR
   var titleAndColor = document.createElement("LEGEND");
-  var colorSpan = document.createElement("span");
-  colorSpan.style.color = phantom.isotropicRegions.sphere[index].color.getStyle();
-  colorSpan.style.fontSize = 'x-large';
-  colorSpan.innerHTML = '&#9632;&nbsp;&nbsp;';
+  var label = document.createElement("LABEL");
+  label.style.color = phantom.isotropicRegions.sphere[index].color.getStyle();
+  label.className = 'nameFieldLabel';
+  label.innerHTML = '&#9632;';
+  label.htmlFor = "nameInput";
 
-  var titleSpan = document.createElement("span");
   var nameInput = document.createElement("INPUT");
   nameInput.type = 'text';
+  nameInput.name = 'nameInput';
   nameInput.value = phantom.isotropicRegions.source[index].name;
-  nameInput.className = "nameField";
+  nameInput.className = "w3-input w3-border nameField";
   // Disable key bindings when writing
   nameInput.onkeyup = function(event) {
     event.stopPropagation();
+    if (event.keyCode == 13) {
+      this.blur();
+    }
   };
   nameInput.onchange = function() {
     phantom.isotropicRegions.source[index].name = this.value;
     document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = this.value;
   };
 
-  titleSpan.appendChild(nameInput);
-  titleAndColor.appendChild(colorSpan);
-  titleAndColor.appendChild(titleSpan);
+  titleAndColor.appendChild(label);
+  titleAndColor.appendChild(nameInput);
 
   field.appendChild(titleAndColor);
 

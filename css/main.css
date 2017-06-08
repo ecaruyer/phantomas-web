@@ -19,6 +19,26 @@ ul, li {
   color: white;
 }
 
+.nameFieldLabel {
+  display: inline-block;
+  font-size: x-large;
+}
+.nameField {
+  max-width: 75%;
+  margin-left: 5px;
+  margin-top: 5px;
+  display: inline;
+  color: white;
+  background-color: black;
+}
+.nameField:focus {
+  color: black;
+  background-color: white;
+}
+.nameField:hover:not(:focus) {
+  background-color: grey;
+}
+
 .enabledList {
   overflow: scroll;
   overflow-x: hidden;

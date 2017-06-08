@@ -34,29 +34,31 @@ function fiberEdit(index) {
 
   // NUMBER OF CONTROL POINTS AND COLOR
   var controlPointsAndColor = document.createElement("LEGEND");
-  var colorSpan = document.createElement("span");
-  colorSpan.style.color = phantom.fibers.tube[index].color.getStyle();
-  colorSpan.style.fontSize = 'x-large';
-  colorSpan.innerHTML = '&#9632;&nbsp;&nbsp;';
+  var label = document.createElement("LABEL");
+  label.style.color = phantom.fibers.source[index].color.getStyle();
+  label.className = 'nameFieldLabel';
+  label.innerHTML = '&#9632;';
+  label.htmlFor = "nameInput";
 
-  var controlPointsSpan = document.createElement("span");
-  controlPointsSpan.id = 'guiFiberTitle';
   var nameInput = document.createElement("INPUT");
   nameInput.type = 'text';
+  nameInput.name = 'nameInput';
   nameInput.value = phantom.fibers.source[index].name;
-  nameInput.className = "nameField";
+  nameInput.className = "w3-input w3-border nameField";
   // Disable key bindings when writing
   nameInput.onkeyup = function(event) {
     event.stopPropagation();
+    if (event.keyCode == 13) {
+      this.blur();
+    }
   };
   nameInput.onchange = function() {
     phantom.fibers.source[index].name = this.value;
     document.getElementById('fiberSelector').childNodes[index + 1].childNodes[1].innerHTML = this.value;
   };
 
-  controlPointsSpan.appendChild(nameInput);
-  controlPointsAndColor.appendChild(colorSpan);
-  controlPointsAndColor.appendChild(controlPointsSpan);
+  controlPointsAndColor.appendChild(label);
+  controlPointsAndColor.appendChild(nameInput);
 
   field.appendChild(controlPointsAndColor);
 
