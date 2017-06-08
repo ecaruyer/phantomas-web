@@ -6,6 +6,7 @@
  * The string containing the parsed phantom variable.
  * @return {Phantom} The phantom ready to be added to the scene.
  */
+ var prova;
 function loadPhantom(string) {
   var phantom = new Phantom();
   var loadedFibers = JSON.parse(string).fiber_geometries;
@@ -30,13 +31,13 @@ function loadPhantom(string) {
           roundToPrecision(fiber.control_points[i + 2])
         ]);
       }
-      phantom.addFiber(new FiberSource(newcp, fiber.tangents, roundToPrecision(fiber.radius), fiber.color), parameters);
+      phantom.addFiber(new FiberSource(newcp, property.toString(), fiber.tangents, roundToPrecision(fiber.radius), fiber.color), parameters);
     }
   }
   for (var property in loadedRegions) {
     if (loadedRegions.hasOwnProperty(property)) {
       var region = loadedRegions[property.toString()];
-      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, roundToPrecision(region.radius), region.color), parameters);
+      phantom.addIsotropicRegion(new IsotropicRegionSource(region.center, property.toString(), roundToPrecision(region.radius), region.color), parameters);
     }
   }
 

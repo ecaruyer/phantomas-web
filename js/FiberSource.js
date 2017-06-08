@@ -14,7 +14,7 @@ var colors = [0xFF1E00, 0xFFB300, 0x1533AD, 0x00BF32, 0xBF4030,
 ];
 
 
-function FiberSource(controlPoints, tangents, radius, color) {
+function FiberSource(controlPoints, name,  tangents, radius, color) {
   /** @class FiberSource
   * @classdesc A fiber bundle in Phantomas is defined as a cylindrical tube wrapped around
   its centerline. The centerline itself is a continuous curve in 3D, and can be
@@ -26,6 +26,7 @@ function FiberSource(controlPoints, tangents, radius, color) {
 
   * @param {array} controlPoints Array-of-arrays (N, 3) containing the 3-D coordinates
   of the fiber Control Points.
+  * @param {string} [name] Name of the fiber, if any.
   * @param {string} [tangents='symmetric'] Way the tangents are to be computed.
   Available options: 'incoming', 'outgoing', 'symmetric'
   * @param {number} [radius=1] Fiber radius; same dimensions as controlPoints.
@@ -36,7 +37,14 @@ function FiberSource(controlPoints, tangents, radius, color) {
   */
 
   // Initialize properties. By default tangents = 'symmetric', radius = 1.
+
+  // No need of rounding as rounded from load.js
   this.controlPoints = controlPoints;
+
+  if (name === undefined) {
+    name = (this.controlPoints.length/3).toString() + "_points";
+  }
+  this.name = name;
 
   if (tangents === undefined) {
     tangents = 'symmetric';
@@ -46,6 +54,7 @@ function FiberSource(controlPoints, tangents, radius, color) {
   if (radius === undefined) {
     radius = 1;
   }
+  // No need of rounding as rounded from load.js
   this.radius = radius;
 
   if (color === undefined) {
@@ -276,7 +285,7 @@ FiberSource.prototype = {
   }
 }
 
-function IsotropicRegionSource(center, radius, color) {
+function IsotropicRegionSource(center, name, radius, color) {
   /** @class IsotropicRegionSource
     * @classdesc An Isotropic Region is defined in Phantomas as an empty spherical space.<br>
     * IsotropicRegionSource is the basic Class for the representation of an Isotropic Region. Objects containing
@@ -285,14 +294,27 @@ function IsotropicRegionSource(center, radius, color) {
 
     * @param {array} center Array containing the 3-D coordinates
     of the center point in which the Isotropic Region is located.
+    * @param {string} [name] Name of the isotropic region, if any.
     * @param {number} [radius=1] Isotropic Region radius.
     * @param {number} [color] Color in which the Isotropic Region should be displayed in. If not
     specified, to be picked randomly from {@link colors}.
 
     * @property {array} observers Objects to be notified when some change is applied
   */
+
+  // No need of rounding as rounded from load.js
   this.center = center;
+
+  if (radius === undefined) {
+    radius = 1;
+  }
+  // No need of rounding as rounded from load.js
   this.radius = radius;
+
+  if (name === undefined) {
+    name = "radius_" + this.radius.toString();
+  }
+  this.name = name;
 
   if (color === undefined) {
     color = new THREE.Color(colors[Math.floor(Math.random() * colors.length)]);
