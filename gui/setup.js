@@ -56,7 +56,7 @@ function setupGUI() {
       selectColorSpan.style.color = backgroundColor.getStyle();
       selectColorSpan.innerHTML = '&#9632;&nbsp;';
 
-      selectTextSpan.innerHTML = fiber.controlPoints.length.toString() + " points";
+      selectTextSpan.innerHTML = fiber.name;
 
       option.appendChild(selectColorSpan);
       option.appendChild(selectTextSpan);
@@ -118,7 +118,7 @@ function setupGUI() {
       selectColorSpan.style.color = backgroundColor.getStyle();
       selectColorSpan.innerHTML = '&#9632;&nbsp;';
 
-      selectTextSpan.innerHTML = "radius " + region.radius.toString();
+      selectTextSpan.innerHTML = region.name;
 
       option.appendChild(selectColorSpan);
       option.appendChild(selectTextSpan);

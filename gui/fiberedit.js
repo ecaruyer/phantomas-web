@@ -37,14 +37,26 @@ function fiberEdit(index) {
   var colorSpan = document.createElement("span");
   colorSpan.style.color = phantom.fibers.tube[index].color.getStyle();
   colorSpan.style.fontSize = 'x-large';
-  colorSpan.innerHTML = '&nbsp;&nbsp;&#9632;';
+  colorSpan.innerHTML = '&#9632;&nbsp;&nbsp;';
 
   var controlPointsSpan = document.createElement("span");
   controlPointsSpan.id = 'guiFiberTitle';
-  controlPointsSpan.innerHTML = phantom.fibers.source[index].controlPoints.length + " Points";
+  var nameInput = document.createElement("INPUT");
+  nameInput.type = 'text';
+  nameInput.value = phantom.fibers.source[index].name;
+  nameInput.className = "nameField";
+  // Disable key bindings when writing
+  nameInput.onkeyup = function(event) {
+    event.stopPropagation();
+  };
+  nameInput.onchange = function() {
+    phantom.fibers.source[index].name = this.value;
+    document.getElementById('fiberSelector').childNodes[index + 1].childNodes[1].innerHTML = this.value;
+  };
 
-  controlPointsAndColor.appendChild(controlPointsSpan);
+  controlPointsSpan.appendChild(nameInput);
   controlPointsAndColor.appendChild(colorSpan);
+  controlPointsAndColor.appendChild(controlPointsSpan);
 
   field.appendChild(controlPointsAndColor);
 

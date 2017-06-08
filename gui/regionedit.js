@@ -39,13 +39,25 @@ function regionEdit(index) {
   var colorSpan = document.createElement("span");
   colorSpan.style.color = phantom.isotropicRegions.sphere[index].color.getStyle();
   colorSpan.style.fontSize = 'x-large';
-  colorSpan.innerHTML = '&nbsp;&nbsp;&#9632;';
+  colorSpan.innerHTML = '&#9632;&nbsp;&nbsp;';
 
   var titleSpan = document.createElement("span");
-  titleSpan.innerHTML = "Editing region ";
+  var nameInput = document.createElement("INPUT");
+  nameInput.type = 'text';
+  nameInput.value = phantom.isotropicRegions.source[index].name;
+  nameInput.className = "nameField";
+  // Disable key bindings when writing
+  nameInput.onkeyup = function(event) {
+    event.stopPropagation();
+  };
+  nameInput.onchange = function() {
+    phantom.isotropicRegions.source[index].name = this.value;
+    document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = this.value;
+  };
 
-  titleAndColor.appendChild(titleSpan);
+  titleSpan.appendChild(nameInput);
   titleAndColor.appendChild(colorSpan);
+  titleAndColor.appendChild(titleSpan);
 
   field.appendChild(titleAndColor);
 
