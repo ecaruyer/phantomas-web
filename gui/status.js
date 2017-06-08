@@ -106,5 +106,18 @@ GuiStatus.prototype = {
     this.editingFiber = undefined;
     this.editingCP = undefined;
     this.editingRegion = undefined;
+  },
+  isEditing: function() {
+    /** @function isEditing
+     * @memberof module:GUI Managers.GuiStatus
+     * @desc Returns true or false depending on if the user is or not in edit mode.
+     * @returns {Boolean} If the user is or not in edit mode
+     */
+
+    if ((this.editingFiber !== undefined) || (this.editingRegion !== undefined)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

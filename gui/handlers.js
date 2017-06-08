@@ -12,6 +12,9 @@ function switchViewButton() {
 
   if (!guiStatus.previewing) {
     phantom.addToScene(scene);
+    if (guiStatus.isEditing()) {
+      phantom.addSkeleton(scene);
+    }
     button.value = "Back";
     button.className = 'w3-button w3-aqua w3-hover-cyan w3-border w3-block w3-ripple';
     guiStatus.previewing = true;
@@ -28,6 +31,10 @@ function switchViewButton() {
 }
 
 function toggleSkeleton() {
+  /** @function toggleSkeleton
+   * @memberof module:GUI Handlers
+   * @desc Handler for toggle skeleton button. Reveals all skeleton forms of the phantom.
+   */
   var button = document.getElementById('skeletonButton');
   if (guiStatus.skeleting) {
     button.className = 'w3-btn w3-border w3-hover-grey w3-block w3-ripple';

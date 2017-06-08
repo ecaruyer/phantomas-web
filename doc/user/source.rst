@@ -208,6 +208,8 @@ Options are:
   - *Preview Switch*: Only available in editing mode.
     Allows the user to preview the phantom with any fade. Does not affect
     the edition. Unactive in the screenshot above.
+  - *Skeleton Swith*: When activated, the whole skeleton structure for the
+    phantom is shown at all times. Unactive in the screenshot above.
   - *Axes Switch*: Shows and hides the coordinates axis. Active
     in the screenshot above. Each axis features a different color:
 
@@ -235,6 +237,8 @@ Keyboard shortcuts are available for most commonly used functions:
 Esc    Exit current edit
 ----  ---------------------------------------------
 P      Switch preview mode
+----  ---------------------------------------------
+W      Switch skeleton structure
 ----  ---------------------------------------------
 D      Switch drag and drop controls
 ----  ---------------------------------------------

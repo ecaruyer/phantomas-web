@@ -182,6 +182,9 @@ function setupGUI() {
         case 83: //S
           saveClick();
           break;
+        case 87: //W
+          document.getElementById('skeletonButton').onclick();
+          break;
         case 68: //D
           if (document.getElementById('ddbutton')) { //If does not exist, won't fire.
             document.getElementById('ddbutton').onclick();
