@@ -62,6 +62,9 @@ GuiStatus.prototype = {
      */
     if (this.previewing) {
       phantom.addToScene(scene);
+      if (this.skeleting) {
+        phantom.addSkeleton(scene);
+      }
     } else {
       if (this.editingFiber !== undefined) {
         fiberSelectClick(this.editingFiber, true);
@@ -80,6 +83,9 @@ GuiStatus.prototype = {
         }
       } else {
         phantom.addToScene(scene);
+        if (this.skeleting) {
+          phantom.addSkeleton(scene);
+        }
         editExit();
       }
     }

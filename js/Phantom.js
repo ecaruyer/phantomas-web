@@ -370,7 +370,8 @@ Phantom.prototype = {
     /** @function addAsSkeleton
       * @memberof Phantom
       * @param {THREE.Scene} scene Scene in which the Phantom will be added to.
-      * @desc Adds all Phantom bundles to given scene in a Skeleton form..
+      * @desc Adds all Phantom bundles to given scene in a Skeleton form with
+      faded tubes.
       <br>Will {@link render}.
       */
 
@@ -382,6 +383,18 @@ Phantom.prototype = {
       scene.add(skeleton.line, skeleton.spheres)
     });
     // Render so changes are made visible
+    render();
+  },
+  addSkeleton: function(scene) {
+    /** @function addSkeleton
+      * @memberof Phantom
+      * @param {THREE.Scene} scene Scene in which the Phantom will be added to.
+      * @desc Adds all Phantom bundles to given scene in a Skeleton form.
+      <br>Will {@link render}.
+      */
+    this.fibers.skeleton.forEach(function(skeleton) {
+      scene.add(skeleton.line, skeleton.spheres)
+    });
     render();
   },
   fiberHighlight: function(n) {
