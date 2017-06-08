@@ -43,6 +43,7 @@ function cpEdit(index) {
   xpos.appendChild(xposlabel);
   var xvalue = document.createElement("INPUT");
   xvalue.id = 'xvalue';
+  xvalue.className = "w3-input w3-border field";
   xvalue.style.width = "65px";
   xvalue.type = "number";
   xvalue.step = Math.pow(10, -precision);;
@@ -50,6 +51,12 @@ function cpEdit(index) {
   xvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     cpValueOnChange(index, 'x', this.value);
+  };
+  xvalue.onkeyup = function(event) {
+    event.stopPropagation();
+    if (event.keyCode == 13) {
+      this.blur();
+    }
   };
   xpos.appendChild(xvalue);
   position.appendChild(xpos);
@@ -60,6 +67,7 @@ function cpEdit(index) {
   ypos.appendChild(yposlabel);
   var yvalue = document.createElement("INPUT");
   yvalue.id = 'yvalue';
+  yvalue.className = "w3-input w3-border field";
   yvalue.style.width = "65px";
   yvalue.type = "number";
   yvalue.step = Math.pow(10, -precision);
@@ -68,6 +76,7 @@ function cpEdit(index) {
     this.value = roundToPrecision(this.value);
     cpValueOnChange(index, 'y', this.value);
   };
+  yvalue.onkeyup = xvalue.onkeyup;
   ypos.appendChild(yvalue);
   position.appendChild(ypos);
 
@@ -77,6 +86,7 @@ function cpEdit(index) {
   zpos.appendChild(zposlabel);
   var zvalue = document.createElement("INPUT");
   zvalue.id = 'zvalue';
+  zvalue.className = "w3-input w3-border field";
   zvalue.style.width = "65px";
   zvalue.type = "number";
   zvalue.step = Math.pow(10, -precision);
@@ -85,6 +95,7 @@ function cpEdit(index) {
     this.value = roundToPrecision(this.value);
     cpValueOnChange(index, 'z', this.value);
   };
+  zvalue.onkeyup = xvalue.onkeyup;
   zpos.appendChild(zvalue);
   position.appendChild(zpos);
 

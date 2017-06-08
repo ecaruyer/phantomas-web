@@ -5,14 +5,6 @@ hml, html, body {
   background-color: black;
 }
 
-input[type=number], select {
-  background-color: black;
-  color: white;
-  border-width: thin;
-  border-style: solid;
-  height: 23px;
-}
-
 ul, li {
   list-style: none;
   padding-left: 0;
@@ -21,22 +13,25 @@ ul, li {
 
 .nameFieldLabel {
   display: inline-block;
-  font-size: x-large;
+  font-size: xx-large;
 }
-.nameField {
-  max-width: 75%;
+.field {
+  max-width: 70%;
+  height: 1.2em;
   margin-left: 5px;
   margin-top: 5px;
+  padding: 3px;
   display: inline;
   color: white;
   background-color: black;
 }
-.nameField:focus {
+.field:focus {
   color: black;
   background-color: white;
 }
-.nameField:hover:not(:focus) {
+.field:hover:not(:focus) {
   background-color: grey;
+  cursor: text;
 }
 
 .enabledList {

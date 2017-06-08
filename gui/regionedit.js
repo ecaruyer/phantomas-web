@@ -46,7 +46,7 @@ function regionEdit(index) {
   nameInput.type = 'text';
   nameInput.name = 'nameInput';
   nameInput.value = phantom.isotropicRegions.source[index].name;
-  nameInput.className = "w3-input w3-border nameField";
+  nameInput.className = "w3-input w3-border field";
   // Disable key bindings when writing
   nameInput.onkeyup = function(event) {
     event.stopPropagation();
@@ -72,6 +72,7 @@ function regionEdit(index) {
 
   var radiusvalue = document.createElement("INPUT");
   radiusvalue.style.width = "50px";
+  radiusvalue.className = "w3-input w3-border field";
   radiusvalue.type = "number";
   radiusvalue.min = 0;
   radiusvalue.step = Math.pow(10, -precision);
@@ -81,7 +82,9 @@ function regionEdit(index) {
     phantom.isotropicRegions.source[index].setRadius(this.value);
     // Update the radius value in the region selector list
     document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = 'radius ' + this.value;
-  }
+  };
+  radiusvalue.onkeyup = nameInput.onkeyup;
+
 
   radius.appendChild(radiuslabel);
   radius.appendChild(radiusvalue);
@@ -99,6 +102,7 @@ function regionEdit(index) {
   xpos.appendChild(xposlabel);
   var xvalue = document.createElement("INPUT");
   xvalue.id = 'xvalue';
+  xvalue.className = "w3-input w3-border field";
   xvalue.style.width = "60px";
   xvalue.type = "number";
   xvalue.step = Math.pow(10, -precision);
@@ -109,7 +113,8 @@ function regionEdit(index) {
     if (guiStatus.dragAndDropping) {
       dragAndDrop();
     }
-  }
+  };
+  xvalue.onkeyup = nameInput.onkeyup;
   xpos.appendChild(xvalue);
   positionul.appendChild(xpos);
 
@@ -119,6 +124,7 @@ function regionEdit(index) {
   ypos.appendChild(yposlabel);
   var yvalue = document.createElement("INPUT");
   yvalue.id = 'yvalue';
+  yvalue.className = "w3-input w3-border field";
   yvalue.style.width = "60px";
   yvalue.type = "number";
   yvalue.step = Math.pow(10, -precision);
@@ -130,6 +136,7 @@ function regionEdit(index) {
       dragAndDrop();
     }
   }
+  yvalue.onkeyup = nameInput.onkeyup;
   ypos.appendChild(yvalue);
   positionul.appendChild(ypos);
 
@@ -139,6 +146,7 @@ function regionEdit(index) {
   zpos.appendChild(zposlabel);
   var zvalue = document.createElement("INPUT");
   zvalue.id = 'zvalue';
+  zvalue.className = "w3-input w3-border field";
   zvalue.style.width = "60px";
   zvalue.type = "number";
   zvalue.step = Math.pow(10, -precision);
@@ -150,6 +158,7 @@ function regionEdit(index) {
       dragAndDrop();
     }
   }
+  zvalue.onkeyup = nameInput.onkeyup;
   zpos.appendChild(zvalue);
   positionul.appendChild(zpos);
 

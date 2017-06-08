@@ -44,7 +44,7 @@ function fiberEdit(index) {
   nameInput.type = 'text';
   nameInput.name = 'nameInput';
   nameInput.value = phantom.fibers.source[index].name;
-  nameInput.className = "w3-input w3-border nameField";
+  nameInput.className = "w3-input w3-border field";
   // Disable key bindings when writing
   nameInput.onkeyup = function(event) {
     event.stopPropagation();
@@ -82,6 +82,7 @@ function fiberEdit(index) {
   var radiusvalue = document.createElement("INPUT");
   radiusvalue.style.width = "50px";
   radiusvalue.type = "number";
+  radiusvalue.className = "w3-input w3-border field";
   radiusvalue.min = 0;
   radiusvalue.step = Math.pow(10, -precision);
   radiusvalue.value = phantom.fibers.source[index].radius;
@@ -89,7 +90,8 @@ function fiberEdit(index) {
     this.value = roundToPrecision(Math.max(1 / (10 * precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
     phantom.fibers.source[index].radius = this.value;
     phantom.fibers.source[index].notify();
-  }
+  };
+  radiusvalue.onkeyup = nameInput.onkeyup;
 
   radius.appendChild(radiuslabel);
   radius.appendChild(radiusvalue);
@@ -100,11 +102,14 @@ function fiberEdit(index) {
   tangentslabel.innerHTML = "Tangents: ";
 
   var tangents = document.createElement("SELECT");
+  tangents.className = "w3-input w3-border field";
   tangents.style.margin = '3px';
+  tangents.style.height = '1.8em';
   tangents.onchange = function() {
     phantom.fibers.source[index].tangents = this.value;
     phantom.fibers.source[index].polyCalc();
     phantom.fibers.source[index].notify();
+    this.blur();
   }
   var symmetric = document.createElement("OPTION");
   symmetric.value = "symmetric";
