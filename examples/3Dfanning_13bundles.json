@@ -1,6 +1,6 @@
 {
   "fiber_geometries": {
-    "0": {
+    "x150": {
       "control_points": [
         -43.3,
         25,
@@ -14,9 +14,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 16757504
+      "color": 16753267
     },
-    "1": {
+    "x120": {
       "control_points": [
         -25,
         43.3,
@@ -30,9 +30,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 4810198
+      "color": 16744512
     },
-    "2": {
+    "090": {
       "control_points": [
         0,
         50,
@@ -46,9 +46,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 7308246
+      "color": 10899712
     },
-    "3": {
+    "x060": {
       "control_points": [
         25,
         43.3,
@@ -62,9 +62,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 6610821
+      "color": 16733696
     },
-    "4": {
+    "x030": {
       "control_points": [
         43.3,
         25,
@@ -78,9 +78,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 12533808
+      "color": 3727204
     },
-    "5": {
+    "z150": {
       "control_points": [
         0,
         25,
@@ -94,9 +94,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 7308246
+      "color": 16719360
     },
-    "6": {
+    "z120": {
       "control_points": [
         0,
         43.3,
@@ -110,9 +110,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 16733696
+      "color": 12533808
     },
-    "7": {
+    "z060": {
       "control_points": [
         0,
         43.3,
@@ -126,9 +126,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 2395968
+      "color": 3651278
     },
-    "8": {
+    "z030": {
       "control_points": [
         0,
         25,
@@ -142,9 +142,9 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 2899330
+      "color": 6345902
     },
-    "9": {
+    "y045+z+x": {
       "control_points": [
         28.9,
         28.9,
@@ -158,29 +158,13 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 16743424
+      "color": 16744512
     },
-    "10": {
+    "y045+z-x": {
       "control_points": [
         -28.9,
         28.9,
         28.9,
-        0,
-        -10,
-        0,
-        0,
-        -50,
-        0
-      ],
-      "tangents": "outgoing",
-      "radius": 4,
-      "color": 16758643
-    },
-    "11": {
-      "control_points": [
-        28.9,
-        28.9,
-        -28.9,
         0,
         -10,
         0,
@@ -192,7 +176,23 @@
       "radius": 4,
       "color": 16766323
     },
-    "12": {
+    "y045-z+x": {
+      "control_points": [
+        28.9,
+        28.9,
+        -28.9,
+        0,
+        -10,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "tangents": "outgoing",
+      "radius": 4,
+      "color": 3651278
+    },
+    "y045-z-x": {
       "control_points": [
         -28.9,
         28.9,
@@ -206,7 +206,7 @@
       ],
       "tangents": "outgoing",
       "radius": 4,
-      "color": 296349
+      "color": 31777
     }
   },
   "isotropic_regions": {}

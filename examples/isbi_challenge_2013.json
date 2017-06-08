@@ -1,6 +1,6 @@
 {
   "fiber_geometries": {
-    "0": {
+    "lu_1": {
       "control_points": [
         -20,
         35,
@@ -14,9 +14,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 12542000
+      "color": 7308246
     },
-    "1": {
+    "rcrossing_wheel_3": {
       "control_points": [
         46.1,
         18.4,
@@ -53,7 +53,7 @@
       "radius": 2,
       "color": 4810198
     },
-    "2": {
+    "rcrossing_wheel_0": {
       "control_points": [
         18.7,
         33.5,
@@ -88,9 +88,9 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 87654
+      "color": 16733760
     },
-    "3": {
+    "rcrossing_wheel_1": {
       "control_points": [
         13.9,
         42.6,
@@ -127,7 +127,7 @@
       "radius": 2,
       "color": 3527840
     },
-    "4": {
+    "cc_7": {
       "control_points": [
         40,
         -5,
@@ -141,9 +141,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 12533808
+      "color": 16753267
     },
-    "5": {
+    "cc_6": {
       "control_points": [
         30,
         -5,
@@ -157,9 +157,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 10899712
+      "color": 10893312
     },
-    "6": {
+    "cc_5": {
       "control_points": [
         30,
         -30,
@@ -173,9 +173,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 7308246
+      "color": 10899712
     },
-    "7": {
+    "cc_3": {
       "control_points": [
         30,
         10,
@@ -189,9 +189,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 12555312
+      "color": 16719360
     },
-    "8": {
+    "cc_1": {
       "control_points": [
         30,
         35,
@@ -205,9 +205,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16719360
+      "color": 16758643
     },
-    "9": {
+    "l4sitecrossing_1": {
       "control_points": [
         -15.9,
         43.9,
@@ -242,9 +242,9 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 43634
+      "color": 16757504
     },
-    "10": {
+    "l4sitecrossing_2": {
       "control_points": [
         -25.9,
         1.2,
@@ -279,9 +279,9 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 12555312
+      "color": 10908672
     },
-    "11": {
+    "l4sitecrossing_3": {
       "control_points": [
         -24.4,
         31.8,
@@ -316,9 +316,9 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 12555312
+      "color": 87654
     },
-    "12": {
+    "l4sitecrossing_4": {
       "control_points": [
         -46.7,
         14.8,
@@ -353,9 +353,9 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 1389485
+      "color": 16733760
     },
-    "13": {
+    "cc_9": {
       "control_points": [
         49.8,
         -5,
@@ -369,9 +369,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 4810198
+      "color": 10908672
     },
-    "14": {
+    "cc_8": {
       "control_points": [
         45,
         -5,
@@ -385,9 +385,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16762432
+      "color": 466033
     },
-    "15": {
+    "lcontouring_fiber_2": {
       "control_points": [
         -13.5,
         -42.9,
@@ -422,9 +422,9 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 7308246
+      "color": 12547632
     },
-    "16": {
+    "lcontouring_fiber_1": {
       "control_points": [
         -27.7,
         -39.4,
@@ -459,9 +459,9 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 16733760
+      "color": 6345902
     },
-    "17": {
+    "ru_1": {
       "control_points": [
         20,
         -35,
@@ -475,9 +475,9 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 4810198
+      "color": 6274510
     },
-    "18": {
+    "rcrossing_wheel_2": {
       "control_points": [
         31.1,
         14,
@@ -512,9 +512,9 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 6274510
+      "color": 10883840
     },
-    "19": {
+    "rcst_2": {
       "control_points": [
         11.5,
         11.5,
@@ -531,9 +531,9 @@
       ],
       "tangents": "incoming",
       "radius": 4,
-      "color": 3651278
+      "color": 16762432
     },
-    "20": {
+    "rcst_1": {
       "control_points": [
         11.5,
         11.5,
@@ -550,9 +550,9 @@
       ],
       "tangents": "incoming",
       "radius": 4,
-      "color": 48946
+      "color": 10899712
     },
-    "21": {
+    "rcst_0": {
       "control_points": [
         15,
         -5,
@@ -569,9 +569,9 @@
       ],
       "tangents": "incoming",
       "radius": 2,
-      "color": 3727204
+      "color": 12555312
     },
-    "22": {
+    "rcrossing_wheel_7": {
       "control_points": [
         9.5,
         33.9,
@@ -606,9 +606,9 @@
       ],
       "tangents": "symmetric",
       "radius": 3,
-      "color": 6610821
+      "color": 6345902
     },
-    "23": {
+    "rcontouring_fiber_1": {
       "control_points": [
         11.2,
         -41.6,
@@ -643,9 +643,9 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 16757504
+      "color": 16751936
     },
-    "24": {
+    "rcontouring_fiber_2": {
       "control_points": [
         31.2,
         -36.7,
@@ -680,9 +680,9 @@
       ],
       "tangents": "symmetric",
       "radius": 2,
-      "color": 296349
+      "color": 16766323
     },
-    "25": {
+    "lcst_1": {
       "control_points": [
         -15,
         -5,
@@ -699,9 +699,9 @@
       ],
       "tangents": "incoming",
       "radius": 6,
-      "color": 12555312
+      "color": 31777
     },
-    "26": {
+    "lcingulum": {
       "control_points": [
         -5,
         45,
@@ -724,36 +724,36 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16733696
+      "color": 10893312
     }
   },
   "isotropic_regions": {
-    "0": {
+    "region1": {
       "center": [
         7.5,
         0,
         -10
       ],
       "radius": 10,
-      "color": 12533808
+      "color": 6274510
     },
-    "1": {
+    "region2": {
       "center": [
         17.5,
         -22.5,
         -20
       ],
       "radius": 12.5,
-      "color": 2129760
+      "color": 16766323
     },
-    "2": {
+    "region3": {
       "center": [
         -17.5,
         -22.5,
         -20
       ],
       "radius": 12.5,
-      "color": 16719360
+      "color": 10908672
     }
   }
 }
