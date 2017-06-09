@@ -207,8 +207,6 @@ function newCPclick(fiber, cp) {
   exitCPedit();
   cpSelectClick(fiber, cp + 1);
   selectOption(document.getElementById("cpSelector"), cp + 2);
-  document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
-  document.getElementById('fiberSelector').childNodes[guiStatus.editingFiber + 1].childNodes[1].innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " points";
 }
 
 function newCPonmouseover(fiber, cp) {

@@ -121,9 +121,14 @@ Editing an Isotropic Region
 
 The editable elements in a region concern:
 
+  - Its name
+  - Its color
   - Its radius
 
   - Its position (x y z)
+
+Name and color are editable from the title fields. Click to the square
+representing the color for deploying color editing interface.
 
 Drag and Drop interactive controls for editing the position of the isotropic
 region can be deployed by clicking the button under the position fields.
@@ -139,6 +144,8 @@ When entering fiber edition mode, its structure will feature in the scene.
 
 The editable elements in a fiber concern:
 
+  - Its name
+  - Its color
   - Its radius
 
   - Its tangent-computing mode:
@@ -147,6 +154,9 @@ The editable elements in a fiber concern:
     + Incoming
 
     + Outgoing
+
+Name and color are editable from the title fields. Click to the square
+representing the color for deploying color editing interface.
 
 A selection list for the fibers' control points is available
 at the bottom.

@@ -85,8 +85,6 @@ function regionEdit(index) {
   radiusvalue.onchange = function() {
     this.value = roundToPrecision(Math.max(1 / (10 * precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
     phantom.isotropicRegions.source[index].setRadius(this.value);
-    // Update the radius value in the region selector list
-    document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = 'radius ' + this.value;
   };
   radiusvalue.onkeyup = nameInput.onkeyup;
 
