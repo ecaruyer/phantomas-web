@@ -45,6 +45,7 @@ function cpEdit(index) {
   xvalue.id = 'xvalue';
   xvalue.className = "w3-input w3-border field";
   xvalue.style.width = "65px";
+  xvalue.style.marginTop = xvalue.style.marginBottom = "2px";
   xvalue.type = "number";
   xvalue.step = Math.pow(10, -precision);;
   xvalue.value = cp[0];
@@ -69,6 +70,7 @@ function cpEdit(index) {
   yvalue.id = 'yvalue';
   yvalue.className = "w3-input w3-border field";
   yvalue.style.width = "65px";
+  yvalue.style.marginTop = yvalue.style.marginBottom = "2px";
   yvalue.type = "number";
   yvalue.step = Math.pow(10, -precision);
   yvalue.value = cp[1];
@@ -88,6 +90,7 @@ function cpEdit(index) {
   zvalue.id = 'zvalue';
   zvalue.className = "w3-input w3-border field";
   zvalue.style.width = "65px";
+  zvalue.style.marginTop = zvalue.style.marginBottom = "2px";
   zvalue.type = "number";
   zvalue.step = Math.pow(10, -precision);
   zvalue.value = cp[2];
@@ -137,6 +140,7 @@ function cpEdit(index) {
   undobutton.tile = "Undo (U)";
   undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
   undobutton.style = ddbutton.style;
+  undobutton.style.marginLeft = '2px';
   undobutton.innerHTML = '<i class="icons">&#xE900;</i>';
   // If nothing to undo, button is disabled. If something to, greenpoint of editing is shown.
   if (
@@ -186,6 +190,7 @@ function cpEdit(index) {
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
+  removecpbutton.style.marginLeft = "2px";
   removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small w3-ripple'
   removecpbutton.innerHTML = "Remove CP";
   removecpbutton.id = 'removecpbutton';

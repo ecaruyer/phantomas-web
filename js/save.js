@@ -7,6 +7,8 @@ Phantom.prototype.export = function() {
     * @memberof Phantom
     * @desc Parses Fibers and Isotropic Regions in the Phantom and returns a parsed, indented string.
     <br>The JSON is fully compatible with Phantomas. Name string is used as name for property in JSON file.
+    Uppercase, spaces and non-alphanumeric characters are removed. In case two elements
+    share the same name, numeric values will be added at the end.
     <br>Information from fibers:
     <ul><li>Control points
     <li>Tangents
@@ -48,8 +50,20 @@ Phantom.prototype.export = function() {
       });
     });
 
-    // Replace and turn spaces into underscore
-    var name = (source.name.toLowerCase()).replace(" ", "_");
+    // Lowercase and replace spaces for underscore. Remove non alphanumeric characters.
+    var name = (source.name.toLowerCase()).replace(" ", "_").replace(/\W+/g, "");
+    // Check wheter this name exists or is empty. If so, add numbering.
+    var found = 0;
+    if (name == "") {
+      name = found.toString();
+    }
+    while (parsable_phantom.fiber_geometries[name]) {
+      if (found) { // If already numbered we clear the number present
+        name = name.slice(0, (found - 1).toString().length * -1);
+      }
+      name += found.toString();
+      found++;
+    }
 
     var parsable_fiber = new ParsableFiber(control_points, source.tangents, source.radius, source.color);
     parsable_phantom.fiber_geometries[name] = parsable_fiber;
@@ -57,7 +71,21 @@ Phantom.prototype.export = function() {
 
   // ISOTROPICREGIONS
   this.isotropicRegions.source.forEach(function(source, index) {
-    var name = (source.name.toLowerCase()).replace(" ", "_");
+    // Lowercase and replace spaces for underscore. Remove non alphanumeric characters.
+    var name = (source.name.toLowerCase()).replace(" ", "_").replace(/\W+/g, "");
+    // Check wheter this name exists or is empty. If so, add numbering.
+    var found = 0;
+    if (name == "") {
+      name = found.toString();
+    }
+    while (parsable_phantom.isotropic_regions[name]) {
+      if (found) { // If already numbered we clear the number present
+        name = name.slice(0, (found - 1).toString().length * -1);
+      }
+      name += found.toString();
+      found++;
+    }
+
     var parsable_region = new ParsableRegion(source.center, source.radius, source.color);
     parsable_phantom.isotropic_regions[name] = parsable_region;
   });
