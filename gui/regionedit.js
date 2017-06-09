@@ -35,12 +35,16 @@ function regionEdit(index) {
   var regionprops = document.createElement("UL");
 
   // TITLE AND COLOR
-  var titleAndColor = document.createElement("LEGEND");
-  var label = document.createElement("LABEL");
-  label.style.color = phantom.isotropicRegions.sphere[index].color.getStyle();
-  label.className = 'nameFieldLabel';
-  label.innerHTML = '&#9632;';
-  label.htmlFor = "nameInput";
+  var regioncolor = phantom.isotropicRegions.source[index].color;
+  var colorpicker = document.createElement("INPUT");
+  colorpicker.type = "color";
+  colorpicker.value = "#" + regioncolor.getHexString();
+  colorpicker.className = 'w3-btn nameFieldLabel';
+  colorpicker.onchange = function() {
+    phantom.isotropicRegions.source[index].color = new THREE.Color(parseInt(this.value.slice(1,7), 16));
+    phantom.isotropicRegions.source[index].notify();
+    document.getElementById('regionSelector').childNodes[index + 1].childNodes[0].style.color = phantom.isotropicRegions.source[index].color.getStyle();
+  }
 
   var nameInput = document.createElement("INPUT");
   nameInput.type = 'text';
@@ -59,7 +63,8 @@ function regionEdit(index) {
     document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = this.value;
   };
 
-  titleAndColor.appendChild(label);
+  var titleAndColor = document.createElement("LEGEND");
+  titleAndColor.appendChild(colorpicker);
   titleAndColor.appendChild(nameInput);
 
   field.appendChild(titleAndColor);

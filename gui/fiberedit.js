@@ -33,12 +33,16 @@ function fiberEdit(index) {
   var fiberprops = document.createElement("UL");
 
   // NUMBER OF CONTROL POINTS AND COLOR
-  var controlPointsAndColor = document.createElement("LEGEND");
-  var label = document.createElement("LABEL");
-  label.style.color = phantom.fibers.source[index].color.getStyle();
-  label.className = 'nameFieldLabel';
-  label.innerHTML = '&#9632;';
-  label.htmlFor = "nameInput";
+  var fibercolor = phantom.fibers.source[index].color;
+  var colorpicker = document.createElement("INPUT");
+  colorpicker.type = "color";
+  colorpicker.value = "#" + fibercolor.getHexString();
+  colorpicker.className = 'w3-btn nameFieldLabel';
+  colorpicker.onchange = function() {
+    phantom.fibers.source[index].color = new THREE.Color(parseInt(this.value.slice(1,7), 16));
+    phantom.fibers.source[index].notify();
+    document.getElementById('fiberSelector').childNodes[index + 1].childNodes[0].style.color = phantom.fibers.source[index].color.getStyle();
+  }
 
   var nameInput = document.createElement("INPUT");
   nameInput.type = 'text';
@@ -57,7 +61,8 @@ function fiberEdit(index) {
     document.getElementById('fiberSelector').childNodes[index + 1].childNodes[1].innerHTML = this.value;
   };
 
-  controlPointsAndColor.appendChild(label);
+  var controlPointsAndColor = document.createElement("LEGEND");
+  controlPointsAndColor.appendChild(colorpicker);
   controlPointsAndColor.appendChild(nameInput);
 
   field.appendChild(controlPointsAndColor);

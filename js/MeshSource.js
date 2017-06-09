@@ -107,7 +107,7 @@ FiberSkeleton.prototype.refresh = function() {
   trajectory.addAttribute('position', new THREE.BufferAttribute(discretePoints, 3));
   this.line.geometry = trajectory;
   // Line color is to be kept
-  this.line.material.color = this.color;
+  this.line.material.color = this.fiber.color;
 }
 
 function FiberTube(fiber, parameters) {
@@ -179,6 +179,7 @@ FiberTube.prototype.refresh = function() {
    */
   this.mesh.geometry = new THREE.TubeGeometry(this.curve,
     this.axialSegments, this.fiber.radius, this.radialSegments);
+  this.mesh.material.color = this.fiber.color;
 }
 
 /* IsotropicRegion creates a mesh from an IsotropicRegionSource.
@@ -255,5 +256,6 @@ IsotropicRegion.prototype.refresh = function() {
    * @desc Updates sphere position and radius from self properties. Must be fired when those change.
    */
   this.mesh.geometry = new THREE.SphereGeometry(this.source.radius, this.widthSegments, this.heightSegments);
+  this.mesh.material.color = this.source.color;
   this.mesh.position.set(this.source.center[0], this.source.center[1], this.source.center[2]);
 }

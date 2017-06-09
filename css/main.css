@@ -12,8 +12,14 @@ ul, li {
 }
 
 .nameFieldLabel {
-  display: inline-block;
-  font-size: xx-large;
+  background:none;
+  border:none;
+  padding:0;
+  width: 2em;
+  height: 1.8em;
+}
+.nameFieldLabel:hover {
+  padding:1px;
 }
 .field {
   max-width: 70%;
