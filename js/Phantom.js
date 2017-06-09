@@ -264,8 +264,9 @@ Phantom.prototype = {
     var parameters = {
       nbElements: this.fibers.source.length + this.isotropicRegions.source.length
     };
+    var name = "fiber_" + (this.fibers.source.length+1).toString();
 
-    this.addFiber(new FiberSource(cp, 'symmetric', radius), parameters);
+    this.addFiber(new FiberSource(cp, name, 'symmetric', radius), parameters);
   },
   newIsotropicRegion: function() {
     /** @function newIsotropicRegion
@@ -282,8 +283,9 @@ Phantom.prototype = {
     var parameters = {
       nbElements: this.fibers.source.length + this.isotropicRegions.source.length
     };
+    var name = "region_" + (this.isotropicRegions.source.length+1).toString();
 
-    this.addIsotropicRegion(new IsotropicRegionSource(center, radius), parameters);
+    this.addIsotropicRegion(new IsotropicRegionSource(center, name, radius), parameters);
   },
   resetColors: function() {
     /** @function resetColors
