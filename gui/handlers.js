@@ -16,12 +16,12 @@ function switchViewButton() {
       phantom.addSkeleton(scene);
     }
     button.value = "Back";
-    button.className = 'w3-button w3-aqua w3-hover-cyan w3-border w3-block w3-ripple';
+    button.className = 'w3-button w3-aqua w3-hover-cyan w3-border-top w3-border-left w3-border-right w3-block w3-ripple';
     guiStatus.previewing = true;
   } else {
     guiStatus.previewing = false;
     guiStatus.retrieve();
-    button.className = 'w3-btn w3-hover-aqua w3-border w3-block w3-ripple';
+    button.className = 'w3-btn w3-border-top w3-border-left w3-border-right w3-hover-aqua w3-block w3-ripple';
     button.value = "Preview";
   }
 
@@ -42,7 +42,7 @@ function toggleSkeleton() {
     guiStatus.retrieve();
   } else {
     guiStatus.skeleting = true;
-    phantom.addSkeleton(scene);
+    phantom.addAsSkeleton(scene);
     button.className = 'w3-button w3-white w3-border w3-hover-grey w3-block w3-ripple'
   }
 

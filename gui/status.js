@@ -52,7 +52,7 @@ GuiStatus.prototype = {
 
     document.getElementById("switchViewButton").disabled = false;
     if (!this.previewing) {
-      document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+      document.getElementById("switchViewButton").className = 'w3-btn w3-border-top w3-border-left w3-border-right w3-hover-aqua w3-block w3-ripple';
     }
   },
   retrieve: function() {
@@ -79,12 +79,13 @@ GuiStatus.prototype = {
         regionSelectClick(this.editingRegion, true)
         if (guiStatus.dragAndDropping) {
           guiStatus.dragAndDropping = false; //Simulate D&D bare click
-          document.getElementById('ddbutton').onclick(); console.log('jaja');
+          document.getElementById('ddbutton').onclick();
         }
       } else {
-        phantom.addToScene(scene);
         if (this.skeleting) {
-          phantom.addSkeleton(scene);
+          phantom.addAsSkeleton(scene);
+        } else {
+          phantom.addToScene(scene);
         }
         editExit();
       }
@@ -101,7 +102,7 @@ GuiStatus.prototype = {
 
     document.getElementById("switchViewButton").value = "Preview";
     document.getElementById("switchViewButton").disabled = true;
-    document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+    document.getElementById("switchViewButton").className = 'w3-btn w3-border-top w3-border-left w3-border-right w3-hover-aqua w3-block w3-ripple';
 
     this.editingFiber = undefined;
     this.editingCP = undefined;

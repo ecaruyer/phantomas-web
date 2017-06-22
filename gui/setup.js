@@ -231,7 +231,7 @@ function editExit() {
   var newfiberbutton = document.createElement("BUTTON");
   newfiberbutton.style.float = "right";
   newfiberbutton.innerHTML = "New Fiber";
-  newfiberbutton.className = "w3-btn w3-hover-green w3-border w3-border-white"
+  newfiberbutton.className = "w3-btn w3-hover-green w3-border-top w3-border-bottom w3-border-left w3-border-white"
   newfiberbutton.onclick = function() {
     newFiberClick()
   };

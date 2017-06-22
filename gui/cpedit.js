@@ -138,9 +138,8 @@ function cpEdit(index) {
   var undobutton = document.createElement("BUTTON");
   undobutton.id = 'cpUndoButton';
   undobutton.tile = "Undo (U)";
-  undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
+  undobutton.className = 'w3-btn w3-hover-blue w3-border-top w3-border-bottom w3-border-right w3-border-white w3-small'
   undobutton.style = ddbutton.style;
-  undobutton.style.marginLeft = '2px';
   undobutton.innerHTML = '<i class="icons">&#xE900;</i>';
   // If nothing to undo, button is disabled. If something to, greenpoint of editing is shown.
   if (
@@ -190,8 +189,7 @@ function cpEdit(index) {
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
-  removecpbutton.style.marginLeft = "2px";
-  removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small w3-ripple'
+  removecpbutton.className = 'w3-btn w3-hover-red w3-border-top w3-border-bottom w3-border-right w3-border-white w3-small w3-ripple'
   removecpbutton.innerHTML = "Remove CP";
   removecpbutton.id = 'removecpbutton';
   removecpbutton.title = "Remove CP (Del)"

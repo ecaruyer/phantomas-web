@@ -116,7 +116,7 @@ Phantom.prototype = {
 
     if (replaceindex !== undefined) {
 
-      this.fibers.source[replaceindex] = new FiberSource(fiber.controlPoints, fiber.tangents, fiber.radius, fiber.color);
+      this.fibers.source[replaceindex] = new FiberSource(fiber.controlPoints, fiber.name, fiber.tangents, fiber.radius, fiber.color);
       this.fibers.skeleton[replaceindex] = new FiberSkeleton(this.fibers.source[replaceindex], parameters);
       this.fibers.tube[replaceindex] = new FiberTube(this.fibers.source[replaceindex], parameters);
 
