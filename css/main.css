@@ -5,18 +5,39 @@ hml, html, body {
   background-color: black;
 }
 
-input[type=number], select {
-  background-color: black;
-  color: white;
-  border-width: thin;
-  border-style: solid;
-  height: 23px;
-}
-
 ul, li {
   list-style: none;
   padding-left: 0;
   color: white;
+}
+
+.nameFieldLabel {
+  background:none;
+  border:none;
+  padding:0;
+  width: 2em;
+  height: 1.8em;
+}
+.nameFieldLabel:hover {
+  padding:1px;
+}
+.field {
+  max-width: 70%;
+  height: 1.2em;
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 3px;
+  display: inline;
+  color: white;
+  background-color: black;
+}
+.field:focus {
+  color: black;
+  background-color: white;
+}
+.field:hover:not(:focus) {
+  background-color: grey;
+  cursor: text;
 }
 
 .enabledList {

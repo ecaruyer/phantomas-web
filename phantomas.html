@@ -61,9 +61,11 @@
   </div>
 
   <div id="rightGUI">
-    <button id='switchViewButton' title="Preview (P)" class='w3-btn w3-border w3-hover-aqua w3-block w3-ripple' onclick="switchViewButton();">
+    <button id='switchViewButton' title="Preview (P)" class='w3-btn w3-border-top w3-border-left w3-border-right w3-hover-aqua w3-block w3-ripple' onclick="switchViewButton();">
     <i class="icons">&#xE9CE;</i></button>
-    <br><br>
+    <button id='skeletonButton' title="View skeleton (V)" class='w3-btn w3-border w3-hover-grey w3-block w3-ripple' onclick="toggleSkeleton();">
+    <i class="icons">&#xE902;</i></button>
+    <br>
 
     <ul>
       <li>
@@ -85,7 +87,7 @@
     <label>
     <i class="icons">&#xE91C;<span style='font-family:default;'>(%)</span></i>
     </label>
-    <input id='opacitySelector' style='width:100%' type="number" min='0' max='50' step='5' onchange='opacitySelectChange(this);' />
+    <input id='opacitySelector' class="w3-input w3-border field" style='width:100%' type="number" min='0' max='50' step='5' onchange='opacitySelectChange(this);' />
 
     <div id="bottomButtons">
       <button class="w3-button w3-grey w3-hover-green w3-ripple w3-block" onclick="saveClick();" title="Save (S)">

@@ -116,7 +116,7 @@ Phantom.prototype = {
 
     if (replaceindex !== undefined) {
 
-      this.fibers.source[replaceindex] = new FiberSource(fiber.controlPoints, fiber.tangents, fiber.radius, fiber.color);
+      this.fibers.source[replaceindex] = new FiberSource(fiber.controlPoints, fiber.name, fiber.tangents, fiber.radius, fiber.color);
       this.fibers.skeleton[replaceindex] = new FiberSkeleton(this.fibers.source[replaceindex], parameters);
       this.fibers.tube[replaceindex] = new FiberTube(this.fibers.source[replaceindex], parameters);
 
@@ -264,8 +264,9 @@ Phantom.prototype = {
     var parameters = {
       nbElements: this.fibers.source.length + this.isotropicRegions.source.length
     };
+    var name = "fiber_" + (this.fibers.source.length+1).toString();
 
-    this.addFiber(new FiberSource(cp, 'symmetric', radius), parameters);
+    this.addFiber(new FiberSource(cp, name, 'symmetric', radius), parameters);
   },
   newIsotropicRegion: function() {
     /** @function newIsotropicRegion
@@ -282,8 +283,9 @@ Phantom.prototype = {
     var parameters = {
       nbElements: this.fibers.source.length + this.isotropicRegions.source.length
     };
+    var name = "region_" + (this.isotropicRegions.source.length+1).toString();
 
-    this.addIsotropicRegion(new IsotropicRegionSource(center, radius), parameters);
+    this.addIsotropicRegion(new IsotropicRegionSource(center, name, radius), parameters);
   },
   resetColors: function() {
     /** @function resetColors
@@ -370,7 +372,8 @@ Phantom.prototype = {
     /** @function addAsSkeleton
       * @memberof Phantom
       * @param {THREE.Scene} scene Scene in which the Phantom will be added to.
-      * @desc Adds all Phantom bundles to given scene in a Skeleton form..
+      * @desc Adds all Phantom bundles to given scene in a Skeleton form with
+      faded tubes.
       <br>Will {@link render}.
       */
 
@@ -382,6 +385,18 @@ Phantom.prototype = {
       scene.add(skeleton.line, skeleton.spheres)
     });
     // Render so changes are made visible
+    render();
+  },
+  addSkeleton: function(scene) {
+    /** @function addSkeleton
+      * @memberof Phantom
+      * @param {THREE.Scene} scene Scene in which the Phantom will be added to.
+      * @desc Adds all Phantom bundles to given scene in a Skeleton form.
+      <br>Will {@link render}.
+      */
+    this.fibers.skeleton.forEach(function(skeleton) {
+      scene.add(skeleton.line, skeleton.spheres)
+    });
     render();
   },
   fiberHighlight: function(n) {

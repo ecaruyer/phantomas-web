@@ -12,13 +12,16 @@ function switchViewButton() {
 
   if (!guiStatus.previewing) {
     phantom.addToScene(scene);
+    if (guiStatus.isEditing()) {
+      phantom.addSkeleton(scene);
+    }
     button.value = "Back";
-    button.className = 'w3-button w3-aqua w3-hover-cyan w3-border w3-block w3-ripple';
+    button.className = 'w3-button w3-aqua w3-hover-cyan w3-border-top w3-border-left w3-border-right w3-block w3-ripple';
     guiStatus.previewing = true;
   } else {
     guiStatus.previewing = false;
     guiStatus.retrieve();
-    button.className = 'w3-btn w3-hover-aqua w3-border w3-block w3-ripple';
+    button.className = 'w3-btn w3-border-top w3-border-left w3-border-right w3-hover-aqua w3-block w3-ripple';
     button.value = "Preview";
   }
 
@@ -26,6 +29,25 @@ function switchViewButton() {
     dragAndDrop();
   }
 }
+
+function toggleSkeleton() {
+  /** @function toggleSkeleton
+   * @memberof module:GUI Handlers
+   * @desc Handler for toggle skeleton button. Reveals all skeleton forms of the phantom.
+   */
+  var button = document.getElementById('skeletonButton');
+  if (guiStatus.skeleting) {
+    button.className = 'w3-btn w3-border w3-hover-grey w3-block w3-ripple';
+    guiStatus.skeleting = false;
+    guiStatus.retrieve();
+  } else {
+    guiStatus.skeleting = true;
+    phantom.addAsSkeleton(scene);
+    button.className = 'w3-button w3-white w3-border w3-hover-grey w3-block w3-ripple'
+  }
+
+}
+
 
 // disable booleans must be true when the user does not click directly the option.
 // This saves resources by not rebuilding editingGUI and does not reclick selectors, which would be annoying.
@@ -46,6 +68,9 @@ function fiberSelectClick(index, notclicked) {
     guiStatus.editingFiber = index;
   }
   phantom.revealSkeleton(scene, index);
+  if (guiStatus.skeleting) {
+    phantom.addSkeleton(scene);
+  }
 }
 
 function regionSelectClick(index, notclicked) {
@@ -57,12 +82,14 @@ function regionSelectClick(index, notclicked) {
     * @desc Events to be fired when an isotropic region was selected in the list.
     <br>May be called to tweak the scene.
     */
-  guiStatus.editing('region', index);
   if (!notclicked) {
     guiStatus.editing('region', index);
     regionEdit(index);
   }
   phantom.addToScene(scene);
+  if (guiStatus.skeleting) {
+    phantom.addSkeleton(scene);
+  }
   phantom.regionHighlight(index);
 }
 
@@ -95,6 +122,9 @@ function newFiberClick() {
    */
   phantom.newFiber();
   phantom.addToScene(scene);
+  if (guiStatus.skeleting) {
+    phantom.addSkeleton(scene);
+  }
 
   setupGUI();
   selectOption(document.getElementById("fiberSelector"), phantom.fibers.source.length);
@@ -109,6 +139,9 @@ function newIsotropicRegionClick() {
 
   phantom.newIsotropicRegion();
   phantom.addToScene(scene);
+  if (guiStatus.skeleting) {
+    phantom.addSkeleton(scene);
+  }
 
   setupGUI();
   selectOption(document.getElementById("regionSelector"), phantom.isotropicRegions.source.length);
@@ -128,6 +161,10 @@ function removeFiberClick() {
     phantom.fibers.skeleton.splice(index, 1);
 
     phantom.addToScene(scene);
+    if (guiStatus.skeleting) {
+      phantom.addSkeleton(scene);
+    }
+
     setupGUI();
   }
 }
@@ -143,6 +180,10 @@ function removeIsotropicRegionClick() {
     phantom.isotropicRegions.sphere.splice(index, 1);
 
     phantom.addToScene(scene);
+    if (guiStatus.skeleting) {
+      phantom.addSkeleton(scene);
+    }
+
     setupGUI();
   }
 }
@@ -157,13 +198,15 @@ function newCPclick(fiber, cp) {
    */
   // Control point was yet created by hover function; it just needs to be formerly added.
   phantom.addToScene(scene);
+  if (guiStatus.skeleting) {
+    phantom.addSkeleton(scene);
+  }
+
   guiStatus.editing('CP', cp + 1);
   guiStatus.retrieve();
   exitCPedit();
   cpSelectClick(fiber, cp + 1);
   selectOption(document.getElementById("cpSelector"), cp + 2);
-  document.getElementById("guiFiberTitle").innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " Points";
-  document.getElementById('fiberSelector').childNodes[guiStatus.editingFiber + 1].childNodes[1].innerHTML = phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + " points";
 }
 
 function newCPonmouseover(fiber, cp) {
@@ -175,6 +218,10 @@ function newCPonmouseover(fiber, cp) {
    */
   phantom.addCP(fiber, cp);
   phantom.addToScene(scene);
+  if (guiStatus.skeleting) {
+    phantom.addSkeleton(scene);
+  }
+
   fiberSelectClick(fiber, true);
   phantom.cpHighlight(fiber, cp, 'red');
   phantom.cpHighlight(fiber, cp + 1, 'green');
@@ -191,6 +238,10 @@ function newCPonmouseout(fiber, cp) {
    */
   phantom.removeCP(fiber, cp + 1);
   phantom.addToScene(scene);
+  if (guiStatus.skeleting) {
+    phantom.addSkeleton(scene);
+  }
+
   guiStatus.retrieve();
   var source = phantom.fibers.source[guiStatus.editingFiber];
   document.getElementById('guiFiberLength').innerHTML = roundToPrecision(source.length);
@@ -206,6 +257,10 @@ function removeCPclick(fiber, cp) {
   if (window.confirm("Are you sure you want to remove this control point? This action cannot be undone.")) {
     phantom.removeCP(fiber, cp);
     phantom.addToScene(scene);
+    if (guiStatus.skeleting) {
+      phantom.addSkeleton(scene);
+    }
+
     guiStatus.editing('CP', undefined);
     guiStatus.retrieve();
     exitCPedit();
@@ -308,6 +363,10 @@ function opacitySelectChange(selector) {
 
   phantom.highlightOpacity = selector.value / 100;
   guiStatus.retrieve();
+
+  if ((guiStatus.editingRegion + 1) & (guiStatus.dragAndDropping) ) {
+    dragAndDrop()
+  }
 }
 
 function saveClick() {

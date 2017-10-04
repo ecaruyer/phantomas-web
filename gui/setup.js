@@ -56,7 +56,7 @@ function setupGUI() {
       selectColorSpan.style.color = backgroundColor.getStyle();
       selectColorSpan.innerHTML = '&#9632;&nbsp;';
 
-      selectTextSpan.innerHTML = fiber.controlPoints.length.toString() + " points";
+      selectTextSpan.innerHTML = fiber.name;
 
       option.appendChild(selectColorSpan);
       option.appendChild(selectTextSpan);
@@ -118,7 +118,7 @@ function setupGUI() {
       selectColorSpan.style.color = backgroundColor.getStyle();
       selectColorSpan.innerHTML = '&#9632;&nbsp;';
 
-      selectTextSpan.innerHTML = "radius " + region.radius.toString();
+      selectTextSpan.innerHTML = region.name;
 
       option.appendChild(selectColorSpan);
       option.appendChild(selectTextSpan);
@@ -182,6 +182,9 @@ function setupGUI() {
         case 83: //S
           saveClick();
           break;
+        case 87: //W
+          document.getElementById('skeletonButton').onclick();
+          break;
         case 68: //D
           if (document.getElementById('ddbutton')) { //If does not exist, won't fire.
             document.getElementById('ddbutton').onclick();
@@ -228,7 +231,7 @@ function editExit() {
   var newfiberbutton = document.createElement("BUTTON");
   newfiberbutton.style.float = "right";
   newfiberbutton.innerHTML = "New Fiber";
-  newfiberbutton.className = "w3-btn w3-hover-green w3-border w3-border-white"
+  newfiberbutton.className = "w3-btn w3-hover-green w3-border-top w3-border-bottom w3-border-left w3-border-white"
   newfiberbutton.onclick = function() {
     newFiberClick()
   };

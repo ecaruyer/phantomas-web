@@ -1,6 +1,6 @@
 {
   "fiber_geometries": {
-    "0": {
+    "+y-z": {
       "control_points": [
         0,
         50,
@@ -14,9 +14,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16757504
+      "color": 16744512
     },
-    "1": {
+    "-y+x": {
       "control_points": [
         0,
         -50,
@@ -30,9 +30,9 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 16733696
+      "color": 6274510
     },
-    "2": {
+    "-x+z": {
       "control_points": [
         -50,
         0,
@@ -46,7 +46,7 @@
       ],
       "tangents": "symmetric",
       "radius": 4,
-      "color": 296349
+      "color": 3727204
     }
   },
   "isotropic_regions": {}

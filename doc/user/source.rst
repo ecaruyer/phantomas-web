@@ -121,9 +121,19 @@ Editing an Isotropic Region
 
 The editable elements in a region concern:
 
+  - Its name
+  - Its color
   - Its radius
 
   - Its position (x y z)
+
+Name and color are editable from the title fields. Click to the square
+representing the color for deploying color editing interface.
+
+Drag and Drop interactive controls for editing the position of the isotropic
+region can be deployed by clicking the button under the position fields.
+When drag and drop controls are active it stays yellow (as shown in the picture)
+and it can be turned off at any moment by clicking over again.
 
 Editing a Fiber
 ```````````````````````````````````````
@@ -134,6 +144,8 @@ When entering fiber edition mode, its structure will feature in the scene.
 
 The editable elements in a fiber concern:
 
+  - Its name
+  - Its color
   - Its radius
 
   - Its tangent-computing mode:
@@ -142,6 +154,9 @@ The editable elements in a fiber concern:
     + Incoming
 
     + Outgoing
+
+Name and color are editable from the title fields. Click to the square
+representing the color for deploying color editing interface.
 
 A selection list for the fibers' control points is available
 at the bottom.
@@ -172,8 +187,8 @@ be saved is in green. The former may be recovered by pressing the *Undo* button,
 marked with an arrow.
 
 Position may be edited manually by using the given fields. As well, by clicking
-on the *Drag and Drop* button, marked with a pointer. This option will disable
-the manual fields while allowing an interactive edition in the scene itself.
+on the *Drag and Drop* button, marked with a pointer. This option will allow an
+interactive edition in the scene itself.
 
 .. image:: img/draganddrop.png
     :align: center
@@ -203,6 +218,8 @@ Options are:
   - *Preview Switch*: Only available in editing mode.
     Allows the user to preview the phantom with any fade. Does not affect
     the edition. Unactive in the screenshot above.
+  - *Skeleton Swith*: When activated, the whole skeleton structure for the
+    phantom is shown at all times. Unactive in the screenshot above.
   - *Axes Switch*: Shows and hides the coordinates axis. Active
     in the screenshot above. Each axis features a different color:
 
@@ -230,6 +247,8 @@ Keyboard shortcuts are available for most commonly used functions:
 Esc    Exit current edit
 ----  ---------------------------------------------
 P      Switch preview mode
+----  ---------------------------------------------
+W      Switch skeleton structure
 ----  ---------------------------------------------
 D      Switch drag and drop controls
 ----  ---------------------------------------------

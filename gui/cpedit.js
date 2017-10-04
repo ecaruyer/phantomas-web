@@ -28,10 +28,13 @@ function cpEdit(index) {
   // Called on each CP position selector
   function cpValueOnChange(index, axis, value) {
     fiber.setControlPoint(index, axis, Number(value));
-    scene.removeCPHighlight();
+    // scene.removeCPHighlight();
     phantom.cpHighlight(guiStatus.editingFiber, index, 'green');
     document.getElementById('guiFiberLength').innerHTML = roundToPrecision(fiber.length);
     undobutton.disabled = false;
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
   }
 
   var xpos = document.createElement("LI");
@@ -40,13 +43,21 @@ function cpEdit(index) {
   xpos.appendChild(xposlabel);
   var xvalue = document.createElement("INPUT");
   xvalue.id = 'xvalue';
+  xvalue.className = "w3-input w3-border field";
   xvalue.style.width = "65px";
+  xvalue.style.marginTop = xvalue.style.marginBottom = "2px";
   xvalue.type = "number";
   xvalue.step = Math.pow(10, -precision);;
   xvalue.value = cp[0];
   xvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     cpValueOnChange(index, 'x', this.value);
+  };
+  xvalue.onkeyup = function(event) {
+    event.stopPropagation();
+    if (event.keyCode == 13) {
+      this.blur();
+    }
   };
   xpos.appendChild(xvalue);
   position.appendChild(xpos);
@@ -57,7 +68,9 @@ function cpEdit(index) {
   ypos.appendChild(yposlabel);
   var yvalue = document.createElement("INPUT");
   yvalue.id = 'yvalue';
+  yvalue.className = "w3-input w3-border field";
   yvalue.style.width = "65px";
+  yvalue.style.marginTop = yvalue.style.marginBottom = "2px";
   yvalue.type = "number";
   yvalue.step = Math.pow(10, -precision);
   yvalue.value = cp[1];
@@ -65,6 +78,7 @@ function cpEdit(index) {
     this.value = roundToPrecision(this.value);
     cpValueOnChange(index, 'y', this.value);
   };
+  yvalue.onkeyup = xvalue.onkeyup;
   ypos.appendChild(yvalue);
   position.appendChild(ypos);
 
@@ -74,7 +88,9 @@ function cpEdit(index) {
   zpos.appendChild(zposlabel);
   var zvalue = document.createElement("INPUT");
   zvalue.id = 'zvalue';
+  zvalue.className = "w3-input w3-border field";
   zvalue.style.width = "65px";
+  zvalue.style.marginTop = zvalue.style.marginBottom = "2px";
   zvalue.type = "number";
   zvalue.step = Math.pow(10, -precision);
   zvalue.value = cp[2];
@@ -82,6 +98,7 @@ function cpEdit(index) {
     this.value = roundToPrecision(this.value);
     cpValueOnChange(index, 'z', this.value);
   };
+  zvalue.onkeyup = xvalue.onkeyup;
   zpos.appendChild(zvalue);
   position.appendChild(zpos);
 
@@ -97,7 +114,7 @@ function cpEdit(index) {
   } else {
     ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple';
   }
-  ddbutton.tile = "Drag and Drop point to edit it";
+  ddbutton.title = "Drag and Drop (D)";
   ddbutton.style = 'margin-top: 10px; margin-bottom: 10px';
   ddbutton.innerHTML = '<i class="icons">&#xE901;</i>';
   ddbutton.onclick = function() {
@@ -105,9 +122,6 @@ function cpEdit(index) {
     if (!guiStatus.dragAndDropping) {
       guiStatus.dragAndDropping = true;
       this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
-      xvalue.disabled = true;
-      yvalue.disabled = true;
-      zvalue.disabled = true;
       dragAndDrop();
     } else {
       guiStatus.dragAndDropping = false;
@@ -124,7 +138,7 @@ function cpEdit(index) {
   var undobutton = document.createElement("BUTTON");
   undobutton.id = 'cpUndoButton';
   undobutton.tile = "Undo (U)";
-  undobutton.className = 'w3-btn w3-hover-blue w3-border w3-border-white w3-small'
+  undobutton.className = 'w3-btn w3-hover-blue w3-border-top w3-border-bottom w3-border-right w3-border-white w3-small'
   undobutton.style = ddbutton.style;
   undobutton.innerHTML = '<i class="icons">&#xE900;</i>';
   // If nothing to undo, button is disabled. If something to, greenpoint of editing is shown.
@@ -175,7 +189,7 @@ function cpEdit(index) {
 
   var removecpbutton = document.createElement("BUTTON");
   removecpbutton.style.float = "right";
-  removecpbutton.className = 'w3-btn w3-hover-red w3-border w3-border-white w3-small w3-ripple'
+  removecpbutton.className = 'w3-btn w3-hover-red w3-border-top w3-border-bottom w3-border-right w3-border-white w3-small w3-ripple'
   removecpbutton.innerHTML = "Remove CP";
   removecpbutton.id = 'removecpbutton';
   removecpbutton.title = "Remove CP (Del)"

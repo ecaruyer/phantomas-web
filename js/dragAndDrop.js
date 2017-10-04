@@ -6,38 +6,60 @@ function dragAndDrop() {
    * @desc Builds or resets Drag and Drop interactive controls in the scene.
    */
 
-  var control = new THREE.TransformControls(camera, renderer.domElement);
-
+  ddControls = new THREE.TransformControls(camera, renderer.domElement);
+  ddControls.name = 'dragAndDrop';
   scene.removeControls();
-  scene.removeCPHighlight();
-  var object = phantom.cpHighlight(guiStatus.editingFiber, guiStatus.editingCP, 'green');
 
-  control.name = 'dragAndDrop';
+  if (guiStatus.editingFiber+1) {
 
-  control.addEventListener('change', function() {
-    var pos = this.object.position;
-    pos.x = roundToPrecision(pos.x);
-    pos.y = roundToPrecision(pos.y);
-    pos.z = roundToPrecision(pos.z);
+    scene.removeCPHighlight();
+    var object = phantom.cpHighlight(guiStatus.editingFiber, guiStatus.editingCP, 'green');
 
-    document.getElementById('xvalue').value = pos.x;
-    document.getElementById('yvalue').value = pos.y;
-    document.getElementById('zvalue').value = pos.z;
-    render();
+    ddControls.addEventListener('change', function() {
+      var pos = this.object.position;
+      pos.x = roundToPrecision(pos.x);
+      pos.y = roundToPrecision(pos.y);
+      pos.z = roundToPrecision(pos.z);
 
-    document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
-  });
+      document.getElementById('xvalue').value = pos.x;
+      document.getElementById('yvalue').value = pos.y;
+      document.getElementById('zvalue').value = pos.z;
+      render();
 
-  control.addEventListener('mouseUp', function() {
-    var pos = object.position;
-    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'x', pos.x);
-    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'y', pos.y);
-    phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'z', pos.z);
-  });
+      document.getElementById('guiFiberLength').innerHTML = roundToPrecision(phantom.fibers.source[guiStatus.editingFiber].length);
+    });
 
+    ddControls.addEventListener('mouseUp', function() {
+      var pos = object.position;
+      phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'x', pos.x, true);
+      phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'y', pos.y, true);
+      phantom.fibers.source[guiStatus.editingFiber].setControlPoint(guiStatus.editingCP, 'z', pos.z);
+    });
 
-  control.attach(object);
-  scene.add(control);
+  } else if (guiStatus.editingRegion+1) {
+    var object = phantom.isotropicRegions.sphere[guiStatus.editingRegion].mesh;
+
+    ddControls.addEventListener('change', function() {
+      var pos = this.object.position;
+      pos.x = roundToPrecision(pos.x);
+      pos.y = roundToPrecision(pos.y);
+      pos.z = roundToPrecision(pos.z);
+
+      document.getElementById('xvalue').value = pos.x;
+      document.getElementById('yvalue').value = pos.y;
+      document.getElementById('zvalue').value = pos.z;
+      render();
+    });
+
+    ddControls.addEventListener('mouseUp', function() {
+      var pos = object.position;
+      phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('x', pos.x, true);
+      phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('y', pos.y, true);
+      phantom.isotropicRegions.source[guiStatus.editingRegion].setCenter('z', pos.z);
+    });
+  }
+  ddControls.attach(object);
+  scene.add(ddControls);
   render();
 }
 

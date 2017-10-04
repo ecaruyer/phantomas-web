@@ -19,6 +19,7 @@ function GuiStatus() {
   this.editingFiber = undefined;
   this.editingCP = undefined;
   this.editingRegion = undefined;
+  this.skeleting = undefined;
 }
 
 GuiStatus.prototype = {
@@ -51,7 +52,7 @@ GuiStatus.prototype = {
 
     document.getElementById("switchViewButton").disabled = false;
     if (!this.previewing) {
-      document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+      document.getElementById("switchViewButton").className = 'w3-btn w3-border-top w3-border-left w3-border-right w3-hover-aqua w3-block w3-ripple';
     }
   },
   retrieve: function() {
@@ -61,6 +62,9 @@ GuiStatus.prototype = {
      */
     if (this.previewing) {
       phantom.addToScene(scene);
+      if (this.skeleting) {
+        phantom.addSkeleton(scene);
+      }
     } else {
       if (this.editingFiber !== undefined) {
         fiberSelectClick(this.editingFiber, true);
@@ -73,8 +77,16 @@ GuiStatus.prototype = {
         }
       } else if (this.editingRegion !== undefined) {
         regionSelectClick(this.editingRegion, true)
+        if (guiStatus.dragAndDropping) {
+          guiStatus.dragAndDropping = false; //Simulate D&D bare click
+          document.getElementById('ddbutton').onclick();
+        }
       } else {
-        phantom.addToScene(scene);
+        if (this.skeleting) {
+          phantom.addAsSkeleton(scene);
+        } else {
+          phantom.addToScene(scene);
+        }
         editExit();
       }
     }
@@ -90,10 +102,23 @@ GuiStatus.prototype = {
 
     document.getElementById("switchViewButton").value = "Preview";
     document.getElementById("switchViewButton").disabled = true;
-    document.getElementById("switchViewButton").className = 'w3-btn w3-border w3-hover-aqua w3-block w3-ripple';
+    document.getElementById("switchViewButton").className = 'w3-btn w3-border-top w3-border-left w3-border-right w3-hover-aqua w3-block w3-ripple';
 
     this.editingFiber = undefined;
     this.editingCP = undefined;
     this.editingRegion = undefined;
+  },
+  isEditing: function() {
+    /** @function isEditing
+     * @memberof module:GUI Managers.GuiStatus
+     * @desc Returns true or false depending on if the user is or not in edit mode.
+     * @returns {Boolean} If the user is or not in edit mode
+     */
+
+    if ((this.editingFiber !== undefined) || (this.editingRegion !== undefined)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

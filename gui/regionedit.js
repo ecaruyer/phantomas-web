@@ -35,17 +35,37 @@ function regionEdit(index) {
   var regionprops = document.createElement("UL");
 
   // TITLE AND COLOR
+  var regioncolor = phantom.isotropicRegions.source[index].color;
+  var colorpicker = document.createElement("INPUT");
+  colorpicker.type = "color";
+  colorpicker.value = "#" + regioncolor.getHexString();
+  colorpicker.className = 'w3-btn nameFieldLabel';
+  colorpicker.onchange = function() {
+    phantom.isotropicRegions.source[index].color = new THREE.Color(parseInt(this.value.slice(1,7), 16));
+    phantom.isotropicRegions.source[index].notify();
+    document.getElementById('regionSelector').childNodes[index + 1].childNodes[0].style.color = phantom.isotropicRegions.source[index].color.getStyle();
+  }
+
+  var nameInput = document.createElement("INPUT");
+  nameInput.type = 'text';
+  nameInput.name = 'nameInput';
+  nameInput.value = phantom.isotropicRegions.source[index].name;
+  nameInput.className = "w3-input w3-border field";
+  // Disable key bindings when writing
+  nameInput.onkeyup = function(event) {
+    event.stopPropagation();
+    if (event.keyCode == 13) {
+      this.blur();
+    }
+  };
+  nameInput.onchange = function() {
+    phantom.isotropicRegions.source[index].name = this.value;
+    document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = this.value;
+  };
+
   var titleAndColor = document.createElement("LEGEND");
-  var colorSpan = document.createElement("span");
-  colorSpan.style.color = phantom.isotropicRegions.sphere[index].color.getStyle();
-  colorSpan.style.fontSize = 'x-large';
-  colorSpan.innerHTML = '&nbsp;&nbsp;&#9632;';
-
-  var titleSpan = document.createElement("span");
-  titleSpan.innerHTML = "Editing region ";
-
-  titleAndColor.appendChild(titleSpan);
-  titleAndColor.appendChild(colorSpan);
+  titleAndColor.appendChild(colorpicker);
+  titleAndColor.appendChild(nameInput);
 
   field.appendChild(titleAndColor);
 
@@ -57,6 +77,7 @@ function regionEdit(index) {
 
   var radiusvalue = document.createElement("INPUT");
   radiusvalue.style.width = "50px";
+  radiusvalue.className = "w3-input w3-border field";
   radiusvalue.type = "number";
   radiusvalue.min = 0;
   radiusvalue.step = Math.pow(10, -precision);
@@ -64,9 +85,9 @@ function regionEdit(index) {
   radiusvalue.onchange = function() {
     this.value = roundToPrecision(Math.max(1 / (10 * precision), Math.abs(this.value))); //Radius cannot be negative, must be at least precision value.
     phantom.isotropicRegions.source[index].setRadius(this.value);
-    // Update the radius value in the region selector list
-    document.getElementById('regionSelector').childNodes[index + 1].childNodes[1].innerHTML = 'radius ' + this.value;
-  }
+  };
+  radiusvalue.onkeyup = nameInput.onkeyup;
+
 
   radius.appendChild(radiuslabel);
   radius.appendChild(radiusvalue);
@@ -84,6 +105,7 @@ function regionEdit(index) {
   xpos.appendChild(xposlabel);
   var xvalue = document.createElement("INPUT");
   xvalue.id = 'xvalue';
+  xvalue.className = "w3-input w3-border field";
   xvalue.style.width = "60px";
   xvalue.type = "number";
   xvalue.step = Math.pow(10, -precision);
@@ -91,7 +113,11 @@ function regionEdit(index) {
   xvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('x', xvalue.value);
-  }
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
+  };
+  xvalue.onkeyup = nameInput.onkeyup;
   xpos.appendChild(xvalue);
   positionul.appendChild(xpos);
 
@@ -101,6 +127,7 @@ function regionEdit(index) {
   ypos.appendChild(yposlabel);
   var yvalue = document.createElement("INPUT");
   yvalue.id = 'yvalue';
+  yvalue.className = "w3-input w3-border field";
   yvalue.style.width = "60px";
   yvalue.type = "number";
   yvalue.step = Math.pow(10, -precision);
@@ -108,7 +135,11 @@ function regionEdit(index) {
   yvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('y', yvalue.value);
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
   }
+  yvalue.onkeyup = nameInput.onkeyup;
   ypos.appendChild(yvalue);
   positionul.appendChild(ypos);
 
@@ -118,6 +149,7 @@ function regionEdit(index) {
   zpos.appendChild(zposlabel);
   var zvalue = document.createElement("INPUT");
   zvalue.id = 'zvalue';
+  zvalue.className = "w3-input w3-border field";
   zvalue.style.width = "60px";
   zvalue.type = "number";
   zvalue.step = Math.pow(10, -precision);
@@ -125,11 +157,44 @@ function regionEdit(index) {
   zvalue.onchange = function() {
     this.value = roundToPrecision(this.value);
     phantom.isotropicRegions.source[index].setCenter('z', zvalue.value);
+    if (guiStatus.dragAndDropping) {
+      dragAndDrop();
+    }
   }
+  zvalue.onkeyup = nameInput.onkeyup;
   zpos.appendChild(zvalue);
   positionul.appendChild(zpos);
 
   regionprops.appendChild(position);
+
+  //BUTTONS UNDER Position
+  var buttons = document.createElement("LI");
+  position.appendChild(buttons);
+  buttons.innerHTML = "&nbsp;&nbsp;&nbsp;"
+
+  var ddbutton = document.createElement("BUTTON");
+  ddbutton.id = 'ddbutton';
+  if (guiStatus.dragAndDropping) { //Acting only when hovering over CPs
+    ddbutton.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
+  } else {
+    ddbutton.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple';
+  }
+  ddbutton.title = "Drag and Drop (D)";
+  ddbutton.style = 'margin-top: 10px; margin-bottom: 10px';
+  ddbutton.innerHTML = '<i class="icons">&#xE901;</i>';
+  ddbutton.onclick = function() {
+    // undobutton.disabled = false;
+    if (!guiStatus.dragAndDropping) {
+      guiStatus.dragAndDropping = true;
+      this.className = 'w3-btn w3-yellow w3-hover-khaki w3-border w3-ripple w3-small';
+      dragAndDrop();
+    } else {
+      guiStatus.dragAndDropping = false;
+      this.className = 'w3-btn w3-hover-yellow w3-border w3-border-white w3-small w3-ripple'
+      scene.removeControls();
+    }
+  }
+  buttons.appendChild(ddbutton);
 
   field.appendChild(regionprops);
 }

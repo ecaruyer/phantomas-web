@@ -41,11 +41,14 @@ function resizeGUI() {
 
   // The resizable elements are selectors. We subtract space taken by other gui elements if those are present.
   if (guiStatus.editingFiber !== undefined) {
-    lines -= 12 + Math.max(phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + 1, 12);
+    lines -= 14 + Math.max(
+      phantom.fibers.source[guiStatus.editingFiber].controlPoints.length + 1,
+      12
+    );
     var cpEditor = document.getElementById("cpEditor");
     cpEditor.style.width = (leftGUI.offsetWidth - 65).toString() + 'px';
   } else if (guiStatus.editingRegion !== undefined) {
-    lines -= 16;
+    lines -= 18;
   }
 
   // +1 is due to *none* option.
